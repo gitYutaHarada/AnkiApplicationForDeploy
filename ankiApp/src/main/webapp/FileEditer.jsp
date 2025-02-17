@@ -14,7 +14,7 @@ if (request.getAttribute("select_id") != null)
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="/AnkiApplication/css/style.css">
+	<link rel="stylesheet" href="/css/style.css">
 	<title><%=userbean.getName()%>の<%=fileofdata.getFileName()%></title>
 </head>
 <body>
@@ -48,7 +48,7 @@ if (request.getAttribute("select_id") != null)
 		%>
 		<tbody>
 			<tr>
-				<form action="/AnkiApplication/FileEditerController" method="post">
+				<form action="/FileEditerController" method="post">
 					<td>
 						<%=fileofdata.getQuestionById(i)%>
 						<%
@@ -100,13 +100,13 @@ if (request.getAttribute("select_id") != null)
 		}
 	%>
 	<div id="create_anki">
-		<form action="/AnkiApplication/FileEditerController" method="post">
+		<form action="/FileEditerController" method="post">
 			<input type="text" name="create_question" placeholder="質問を入力">
 			<input type="text" name="create_answer" placeholder="答えを入力"><br/>
 	
 			<button type="submit" name="action" value="create">Ankiカードの作成</button>
 		</form><br/><br/>
-		<form action="/AnkiApplication/AnkiTime" method="post">
+		<form action="/AnkiTime" method="post">
 			<button type="submit">Anki開始！</button>
 			<input type="hidden" name="id" value="0">
 			<input type="hidden" name="question_answer" value="question">		

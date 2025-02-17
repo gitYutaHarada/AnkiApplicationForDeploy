@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/AnkiApplication/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 <title>新規登録</title>
 </head>
 <body>
@@ -40,11 +40,11 @@ if (isSuccessInsert == 1 && isName_int == 1 && isPass_int == 1) { %>
 
 
 
-	<form action="/AnkiApplication/CreateSuccessController" method="post">
+	<form action="/CreateSuccessController" method="post">
 		新しい名前：<input type="text" name="name"><br /> 新しいパスワード<input type="password" name="pass"><br />
 		<button type="submit">新規登録</button>
 	</form><br/><br/>
-	<form action="/AnkiApplication/LoginBackController" method="post">
+	<form action="/LoginBackController" method="post">
 		<button type="submit">ログイン画面に戻る</button>
 	</form>
 </body>

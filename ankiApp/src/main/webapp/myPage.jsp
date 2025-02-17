@@ -19,7 +19,7 @@ if (request.getAttribute("deleteFile_count") != null)
 <html>
 <head>
 <meta charset="UTF-8">
-	<link rel="stylesheet" href="/AnkiApplication/css/style.css">
+	<link rel="stylesheet" href="/css/style.css">
 	<title>ログイン成功！</title>
 	<link href="myPageCss.css" rel="stylesheet" type="text/css">
 </head>
@@ -32,7 +32,7 @@ if (request.getAttribute("deleteFile_count") != null)
 			for (int i = 0; i < userbean.getFileNamesSize(); i++) {
 		%>
 		<th>
-			<form action="/AnkiApplication/FileEditerJspController" method="post">
+			<form action="/FileEditerJspController" method="post">
 				<figcaption><%=userbean.getFileName(i)%></figcaption>
 				<button type="submit">
 					<img src="images/file.jpg" alt="Image <%=i + 1%>" name="" width="100" height="100">
@@ -43,7 +43,7 @@ if (request.getAttribute("deleteFile_count") != null)
 		
 			</form>
 			<br/>
-			<form action="/AnkiApplication/MyPageController" method="post" onsubmit="return confirmDelete()">
+			<form action="/MyPageController" method="post" onsubmit="return confirmDelete()">
 				<button type="submit" name="action" value="remove">ファイルの削除</button>
 		
 				<input type="hidden" name="remove_fileName" value="<%=userbean.getFileName(i)%>">
@@ -54,7 +54,7 @@ if (request.getAttribute("deleteFile_count") != null)
 		</th>
 	</table>
 	<br/>
-	<form action="/AnkiApplication/MyPageController" method="post">
+	<form action="/MyPageController" method="post">
 		<label for="create_imageName">作成するファイル名:</label>
 		<input type="text" id="create_imageName" name="create_fileName" placeholder="ファイル名を入力">
 		<button type="submit" name="action" value="create">新しいファイルの作成</button>
