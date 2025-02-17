@@ -39,7 +39,7 @@ public class LoginBackController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		request.setCharacterEncoding("utf-8");
-		RequestDispatcher requestdispatcher = request.getRequestDispatcher("login.jsp");
+		RequestDispatcher requestdispatcher = request.getRequestDispatcher("index.jsp");
 		requestdispatcher.forward(request, response);
 		
 	}

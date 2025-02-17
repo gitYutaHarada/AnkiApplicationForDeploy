@@ -66,7 +66,7 @@ public class LoginController extends HttpServlet {
         	String miss = "miss";
         	request.setAttribute("miss", miss);
 
-        	RequestDispatcher requestdispatcher = request.getRequestDispatcher("login.jsp");
+        	RequestDispatcher requestdispatcher = request.getRequestDispatcher("index.jsp");
     		requestdispatcher.forward(request, response);
         }
 

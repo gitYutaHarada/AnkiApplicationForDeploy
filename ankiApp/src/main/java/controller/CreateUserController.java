@@ -39,7 +39,7 @@ public class CreateUserController extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/createUser.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("createUser.jsp");
 		requestDispatcher.forward(request, response);
 	}
 
