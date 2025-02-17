@@ -1,0 +1,134 @@
+@charset "UTF-8";
+/* style.css */
+
+/* 基本リセット */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 全体のスタイル */
+body {
+    background-color: #eef5ff; /* 優しい青系の背景色 */
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+/* コンテンツを中央に配置するコンテナ */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 見出しのスタイル */
+h1, h2, h3, h4, h5, h6 {
+  color: #003366;
+  margin-bottom: 20px;
+}
+
+table {
+    width: 60%;
+    margin: 10px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+}
+
+#question_answer {
+    background-color: #4a90e2;
+    color: white;
+}
+
+/* 段落の余白 */
+p {
+  margin-bottom: 15px;
+}
+
+/* リンクのスタイル */
+a {
+  color: #003366;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* フォームのスタイル */
+form {
+  display: inline-block;         /* フォーム自体を中央に配置 */
+  border: 2px solid #0073e6;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+/* 入力フィールド */
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 90%;
+  max-width: 300px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #0073e6;
+  border-radius: 4px;
+}
+
+/* ボタンのスタイル */
+button,
+input[type="submit"] {
+	background-color: #4a90e2;
+	color: black;
+	border: none;
+	padding: 8px 12px;
+	margin: 5px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+button:hover,
+input[type="submit"]:hover {
+  background-color: #005bb5;
+}
+
+.form-container {
+    width: 40%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    background-color: white;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#file_editer{
+	text-align: center;
+	margin: auto;
+}
+
+#file_content{
+	text-align: center;
+	margin: auto;
+	float: left;
+	width: 60%;
+}
+#create_anki{
+	text-align: center;
+	margin: auto;
+	float: right;
+	width: 40%;
+}
+
