@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/ankiApp/css/style.css">
 	<title>Insert title here</title>
 </head>
 <body>
@@ -27,7 +27,7 @@
 	<%
 		}
 	%>
-	<form action="/AnkiTime" method="post">
+	<form action="/ankiApp/AnkiTime" method="post">
 		<button type="submit" name="action" value="back">戻る</button>
 		<%
 			if("answer".equals(question_answer)){
@@ -44,5 +44,6 @@
 		
 		<input type="hidden" name="question_answer" value=<%=question_answer %>>
 		<input type="hidden" name="id" value=<%=id %>>
+	</form>
 </body>
 </html>

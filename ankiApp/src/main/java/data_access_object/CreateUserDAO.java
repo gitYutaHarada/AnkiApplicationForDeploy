@@ -15,9 +15,9 @@ import bean.UserBean;
 import bean.UserInformationBean;
 
 public class CreateUserDAO {
-	private final String URL = "jdbc:mysql://localhost:3306/userinformation";
-	private final String USER = "root";
-	private final String PASS = "mysql";
+	private final String URL = "jdbc:mysql://d6uoc91fueyqgpyr:ht52jrafaw0f8qlh@nba02whlntki5w2p.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/yngwlvduglko28ms";
+	private final String USER = "d6uoc91fueyqgpyr";
+	private final String PASS = "ht52jrafaw0f8qlh";
 	private Connection connection = null;
 
 	public void connectDB() throws SQLException, ClassNotFoundException {
