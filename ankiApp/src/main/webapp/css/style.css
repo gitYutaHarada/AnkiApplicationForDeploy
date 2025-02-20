@@ -48,7 +48,9 @@ th, td {
 
 /* 段落の余白 */
 p {
-  margin-bottom: 15px;
+	position: relative;
+	text-align: center;
+  	margin-bottom: 15px;
 }
 
 /* リンクのスタイル */
@@ -134,6 +136,7 @@ input {
 
 #back{
 	all: unset; /* すべてのスタイルをリセット */
+	position: absolute;
 	float: left;
 
 }
