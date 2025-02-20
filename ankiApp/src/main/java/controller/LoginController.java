@@ -62,17 +62,17 @@ public class LoginController extends HttpServlet {
 	    		
 	    		RequestDispatcher requestdispatcher = request.getRequestDispatcher("myPage.jsp");
 	    		requestdispatcher.forward(request, response);
-    		}
+    		}else{
+            	String miss = "miss";
+            	request.setAttribute("miss", miss);
+
+            	RequestDispatcher requestdispatcher = request.getRequestDispatcher("index.jsp");
+        		requestdispatcher.forward(request, response);
+            }
         }else if("logout".equals(action)){
         	RequestDispatcher requestdispatcher = request.getRequestDispatcher("index.jsp");
     		requestdispatcher.forward(request, response);
-        } else{
-        	String miss = "miss";
-        	request.setAttribute("miss", miss);
-
-        	RequestDispatcher requestdispatcher = request.getRequestDispatcher("index.jsp");
-    		requestdispatcher.forward(request, response);
-        }
+        } 
 
 		
 		
