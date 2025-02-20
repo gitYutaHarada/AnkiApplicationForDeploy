@@ -59,7 +59,7 @@ public class AnkiTime extends HttpServlet {
 		
 		if(id == fileofdata.getMaxId() && "next".equals(action)) {
 			question_answer = "last";
-			System.out.println("id="+id);
+			id++;
 		}else if("back".equals(action)) {
 			System.out.println("back");
 			id = utils.backOrNextId(fileofdata, "back", id);
@@ -72,11 +72,8 @@ public class AnkiTime extends HttpServlet {
 			id = utils.backOrNextId(fileofdata, "next", id);
 			question_answer = "question";
 		}else if("convert_first".equals(action)) {
-			System.out.println("question_answer="+question_answer);
-			System.out.println("minID="+fileofdata.getMinId());
 			id = fileofdata.getMinId();
-			question_answer = "question";
-			
+			question_answer = "question";	
 		}
 		
 		//formで戻るボタンが押されたら
