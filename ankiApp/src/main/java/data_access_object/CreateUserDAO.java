@@ -66,10 +66,6 @@ public class CreateUserDAO {
 		Statement statement = null;
 		ResultSet serch_id = null;
 		String searchNewMinId_aql = "SELECT id From user ORDER BY id";
-		String createFiles_sql = "CREATE TABLE FILEOF_" + name + "("
-				+ "fileId INT PRIMARY KEY AUTO_INCREMENT,"
-				+ "fileName varchar(20)"
-				+ ");";
 
 		int newId = 1;
 
@@ -96,9 +92,6 @@ public class CreateUserDAO {
 		}
 		//新しいIDをセットしたSQL文
 		String insert_sql = "INSERT INTO user VALUES (" + newId + ", '" + name + "', '" + password + "')";
-
-		int createFile_int = executeUpdateSql(createFiles_sql);
-
 		return executeUpdateSql(insert_sql);
 	}
 	
