@@ -18,6 +18,7 @@ public class Utils {
 			while(isFileOfData(fileofdata, id) && id != fileofdata.getMinId()) {
 				id--;
 			}
+			System.out.println(id);
 			return id;
 		}else {
 			while(isFileOfData(fileofdata, id) && id != fileofdata.getMaxId()) {
