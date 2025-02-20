@@ -27,7 +27,7 @@
 	<%
 		}
 	%>
-	<form action="/ankiApp/AnkiTime" method="post">
+	<form action="/AnkiTime" method="post">
 		<button type="submit" name="action" value="back">戻る</button>
 		<%
 			if("answer".equals(question_answer)){
