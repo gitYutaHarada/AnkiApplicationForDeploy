@@ -25,7 +25,7 @@ if("miss".equals(miss_str)){
     <form action="/LoginController" method="post">
         名前<input type="text" name="name"/><br/>
         パスワード<input type="password" name="pass"/><br/>
-        <button type="submit" name="action" value="login"></button>
+        <button type="submit" name="action" value="login">ログイン</button>
     </form>
     <br/><br/>
 <!--    https://anki-app-a437e2d7cac2.herokuapp.com-->
