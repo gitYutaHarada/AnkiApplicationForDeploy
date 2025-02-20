@@ -70,6 +70,10 @@ public class LoginController extends HttpServlet {
         		requestdispatcher.forward(request, response);
             }
         }else if("logout".equals(action)){
+        	HttpSession session = request.getSession(false);
+        	if (session != null) {
+        	    session.invalidate();
+        	}
         	RequestDispatcher requestdispatcher = request.getRequestDispatcher("index.jsp");
     		requestdispatcher.forward(request, response);
         } 
