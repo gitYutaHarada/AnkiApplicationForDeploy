@@ -14,7 +14,7 @@
 <body>
 	<form id="back" action="/FileEditerController" method="post">
 		<button type="submit" name="action" value="back">ファイル編集画面に戻る</button>
-	</form>
+	</form></br>
 	<p><%=userbean.getName() %>の<%=fileofdata.getFileName() %></p>
 	<% 
 		String question_answer = (String)request.getAttribute("question_answer");

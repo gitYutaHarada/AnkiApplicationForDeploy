@@ -20,7 +20,7 @@ if (request.getAttribute("select_id") != null)
 <body>
 	<form id="back" action="/MyPageController" method="post">
 		<button type="submit" name="action" value="back">マイページに戻る</button>
-	</form>
+	</form></br>
 	<p><strong><%=userbean.getName()%></strong>の<strong><%=fileofdata.getFileName()%></strong>という名前のファイルの編集画面</p>
 	<%
 		int i = 0;
