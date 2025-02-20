@@ -8,7 +8,7 @@ request.setCharacterEncoding("utf-8");
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/ankiApp/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>ログイン画面</title>
 </head>
 <body>
@@ -22,7 +22,7 @@ if("miss".equals(miss_str)){
 }
 %>
     <p>名前とパスワードを入力してください</p>
-    <form action="/ankiApp/LoginController" method="post">
+    <form action="/LoginController" method="post">
         名前<input type="text" name="name"/><br/>
         パスワード<input type="password" name="pass"/><br/>
         <input type="submit" value="送信">
