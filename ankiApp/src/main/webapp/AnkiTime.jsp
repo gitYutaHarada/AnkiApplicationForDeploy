@@ -13,7 +13,6 @@
 </head>
 <body>
 	<p><%=userbean.getName() %>の<%=fileofdata.getFileName() %></p>
-	<a herf="FileEditer.jsp">編集画面に戻る</a>
 	<% 
 		String question_answer = (String)request.getAttribute("question_answer");
 		int id = ((int)request.getAttribute("id") != 0) ? (int)request.getAttribute("id") : fileofdata.getMinId();

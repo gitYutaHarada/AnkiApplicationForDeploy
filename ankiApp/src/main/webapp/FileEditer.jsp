@@ -18,6 +18,9 @@ if (request.getAttribute("select_id") != null)
 	<title><%=userbean.getName()%>の<%=fileofdata.getFileName()%></title>
 </head>
 <body>
+	<form action="/MyPageController" method="post">
+		<button type="submit" name="action" value="back">マイページに戻る</button>
+	</form>
 	<p><strong><%=userbean.getName()%></strong>の<strong><%=fileofdata.getFileName()%></strong>という名前のファイルの編集画面</p>
 	<%
 		int i = 0;
@@ -100,9 +103,6 @@ if (request.getAttribute("select_id") != null)
 		}
 	%>
 	<div id="create_anki">
-		<form action="/MyPageController" method="post">
-			<button type="submit" name="action" value="back">マイページに戻る</button>
-		</form>
 		<form action="/FileEditerController" method="post">
 			<input type="text" name="create_question" placeholder="質問を入力">
 			<input type="text" name="create_answer" placeholder="答えを入力"><br/>
