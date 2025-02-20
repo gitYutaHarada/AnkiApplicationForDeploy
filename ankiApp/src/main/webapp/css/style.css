@@ -124,13 +124,13 @@ input {
 
 #file_content{
 	text-align: center;
-	margin: auto;
+	margin: 50px auto;
 	float: left;
 	width: 60%;
 }
 #create_anki{
 	text-align: center;
-	margin: auto;
+	margin: 50px auto;
 	float: right;
 	width: 40%;
 }
