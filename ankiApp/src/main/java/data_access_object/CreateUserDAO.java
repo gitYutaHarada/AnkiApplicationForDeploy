@@ -339,7 +339,6 @@ public class CreateUserDAO {
 	public int deleteData(String name, String fileName) {
 		String deleteData_sql = "DROP TABLE DATAOF_" + fileName + "_" + name;
 		int deleteData_int = 0;
-		System.out.println(deleteData_sql);
 
 		if(isData(fileName, name) == true) deleteData_int = executeUpdateSql(deleteData_sql);
 		return deleteData_int;

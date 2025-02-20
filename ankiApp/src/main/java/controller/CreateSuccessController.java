@@ -53,8 +53,6 @@ public class CreateSuccessController extends HttpServlet {
         if(isValidString_name == 1 && isValidString_pass == 1) {
     		CreateUserDAO create_dao = new CreateUserDAO();
             int isSuccessInsert = create_dao.createUser(name, pass);
-            
-            System.out.println(isSuccessInsert);
             UserInformationBean userInfo_dto = create_dao.select();
             request.setAttribute("userInfo_dto", userInfo_dto);
             
