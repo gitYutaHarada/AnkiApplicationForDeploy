@@ -108,7 +108,7 @@ public class CreateUserDAO {
 		List<String> fileNamesList = new ArrayList<>();
 		String getAllFileName_sql = "SELECT TABLE_NAME "
 		        + "FROM INFORMATION_SCHEMA.TABLES "
-		        + "WHERE TABLE_NAME LIKE 'dataof\\_%\\_" + name + "';";
+		        + "WHERE TABLE_NAME LIKE 'DATAOF\\_%\\_" + name + "';";
 		
 		try {
 			connectDB();
