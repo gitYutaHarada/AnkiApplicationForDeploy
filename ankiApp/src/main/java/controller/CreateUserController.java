@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class CreateUserController
  */
-@WebServlet("/ankiApp/CreateUserController")
+@WebServlet("/CreateUserController")
 public class CreateUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -22,13 +22,14 @@ if("miss".equals(miss_str)){
 }
 %>
     <p>名前とパスワードを入力してください</p>
-    <form action="LoginController" method="post">
+    <form action="/LoginController" method="post">
         名前<input type="text" name="name"/><br/>
         パスワード<input type="password" name="pass"/><br/>
         <input type="submit" value="送信">
     </form>
     <br/><br/>
-	<form action="https://anki-app-a437e2d7cac2.herokuapp.com/LoginController" method="post">
+<!--    https://anki-app-a437e2d7cac2.herokuapp.com-->
+	<form action="/ankiApp/CreateUserController" method="post">
 		<p>名前とパスワードをお持ちでない方</p>
 		<input type="submit" value="新規登録">
 	</form>
