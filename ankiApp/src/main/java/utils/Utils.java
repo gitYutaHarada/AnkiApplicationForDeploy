@@ -15,9 +15,10 @@ public class Utils {
 	public int backOrNextId(FileOfData fileofdata, String backOrNext, int id) {
 		if("back".equals(backOrNext)) {
 			System.out.println(id +"::" + fileofdata.getMaxId());
-			System.out.println(isFileOfData(fileofdata, id));
 			//idが最小ではなくそのidが存在するときwhile文を抜ける
 			id--;
+			System.out.println(isFileOfData(fileofdata, id));
+
 			while(isFileOfData(fileofdata, id) && id != fileofdata.getMinId()) {
 				id--;
 			}
