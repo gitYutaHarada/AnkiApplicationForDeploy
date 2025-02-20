@@ -35,8 +35,12 @@
 		}
 	%>
 	<form action="/AnkiTime" method="post">
-		<button type="submit" name="action" value="back">戻る</button>
 		<%
+			if(id != fileofdata.getMinId()){	
+		%>
+				<button type="submit" name="action" value="back">戻る</button>		
+		<%
+			}
 			if("answer".equals(question_answer)){
 		%>		
 				<button type="submit" name="action" value="convert_question">質問へ</button>
