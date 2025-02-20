@@ -14,7 +14,7 @@ if (request.getAttribute("select_id") != null)
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="/ankiApp/css/style.css">
+	<link rel="stylesheet" href="/css/style.css">
 	<title><%=userbean.getName()%>の<%=fileofdata.getFileName()%></title>
 </head>
 <body>

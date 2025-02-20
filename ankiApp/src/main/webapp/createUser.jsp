@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/ankiApp/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 <title>新規登録</title>
 </head>
 <body>

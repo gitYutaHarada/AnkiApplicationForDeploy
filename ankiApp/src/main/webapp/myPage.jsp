@@ -19,7 +19,7 @@ if (request.getAttribute("deleteFile_count") != null)
 <html>
 <head>
 <meta charset="UTF-8">
-	<link rel="stylesheet" href="/ankiApp/css/style.css">
+	<link rel="stylesheet" href="/css/style.css">
 	<title>ログイン成功！</title>
 	<link href="myPageCss.css" rel="stylesheet" type="text/css">
 </head>
