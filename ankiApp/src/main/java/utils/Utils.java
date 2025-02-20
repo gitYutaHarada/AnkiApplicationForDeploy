@@ -19,7 +19,7 @@ public class Utils {
 			id--;
 			System.out.println(isFileOfData(fileofdata, id));
 
-			while(isFileOfData(fileofdata, id) && id != fileofdata.getMinId()) {
+			while(!isFileOfData(fileofdata, id) && id != fileofdata.getMinId()) {
 				id--;
 			}
 			System.out.println(id);
