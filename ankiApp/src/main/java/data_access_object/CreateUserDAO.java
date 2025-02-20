@@ -168,9 +168,9 @@ public class CreateUserDAO {
 		int DataId_max_min = 0;
 		String getDataOfFile_sql;
 		if("max".equals(max_min)) {
-			getDataOfFile_sql = "SELECT MAX(dataId) AS maxDataId FROM dataof_" + fileName + "_" + name;
+			getDataOfFile_sql = "SELECT MAX(dataId) AS maxDataId FROM DATAOF_" + fileName + "_" + name;
 		}else {
-			getDataOfFile_sql = "SELECT MIN(dataId) AS maxDataId FROM dataof_" + fileName + "_" + name;
+			getDataOfFile_sql = "SELECT MIN(dataId) AS maxDataId FROM DATAOF_" + fileName + "_" + name;
 		}
 	
 		try {
@@ -285,7 +285,7 @@ public class CreateUserDAO {
 	public int serchidByQuestion(String name, String fileName, String question, String answer) {
 		Statement statement = null;
 		ResultSet result_set = null;
-		String serchId_sql = "SELECT dataId FROM dataof_" + fileName + "_" + name + " WHERE question = '" + question + "'";
+		String serchId_sql = "SELECT dataId FROM DATAOF_" + fileName + "_" + name + " WHERE question = '" + question + "'";
 		int id = 0;
 		
 		try {
@@ -315,7 +315,7 @@ public class CreateUserDAO {
 	public boolean isData(String fileName, String name) {
 		Statement statement = null;
 		ResultSet result_set = null;
-		String isData_sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'dataof_" + fileName + "_" + name + "';";
+		String isData_sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DATAOF_" + fileName + "_" + name + "';";
 		Boolean isData = false;
 		try {
 			connectDB();
@@ -344,7 +344,7 @@ public class CreateUserDAO {
 		return isData;
 	}
 	public int deleteData(String name, String fileName) {
-		String deleteData_sql = "DROP TABLE dataof_" + fileName + "_" + name;
+		String deleteData_sql = "DROP TABLE DATAOF_" + fileName + "_" + name;
 		int deleteData_int = 0;
 		System.out.println(deleteData_sql);
 
@@ -360,7 +360,7 @@ public class CreateUserDAO {
 	}
 	
 	public void editFileOfData(FileOfData fileofdata, int select_id, String name, String edit_question, String edit_answer) {
-		String editFileOfData_sql = "UPDATE dataof_" + fileofdata.getFileName() + "_" + name
+		String editFileOfData_sql = "UPDATE DATAOF_" + fileofdata.getFileName() + "_" + name
 				 + " SET question = '" + edit_question + "',"
 				 + "answer = '" + edit_answer + "' "
 				 + "WHERE dataId = " + select_id;
