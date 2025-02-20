@@ -143,6 +143,5 @@ input {
 #back_createUser{
 	all: unset; /* すべてのスタイルをリセット */
 	margin: auto;
-	position: absolute;
 }
 
