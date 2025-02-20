@@ -14,22 +14,14 @@ public class Utils {
 	}
 	public int backOrNextId(FileOfData fileofdata, String backOrNext, int id) {
 		if("back".equals(backOrNext)) {
-			do {
+			while(isFileOfData(fileofdata, id) && id != fileofdata.getMinId()) {
 				id--;
-				System.out.println(id);
-			}while(isFileOfData(fileofdata, id) && id != fileofdata.getMinId());
+			}
 			return id;
-			
 		}else {
 			while(isFileOfData(fileofdata, id) && id != fileofdata.getMaxId()) {
 				id++;
-				System.out.println(id);
 			}
-
-			System.out.println(isFileOfData(fileofdata, id));
-			System.out.println(fileofdata.getMaxId());
-			System.out.println(id);
-
 			return id;
 		}
 	}
