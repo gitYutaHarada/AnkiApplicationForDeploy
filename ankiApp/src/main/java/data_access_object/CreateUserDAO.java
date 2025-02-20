@@ -62,6 +62,46 @@ public class CreateUserDAO {
 
 	}
 	
+	public int createUser(String name, String password) {
+		Statement statement = null;
+		ResultSet serch_id = null;
+		String searchNewMinId_aql = "SELECT id From user ORDER BY id";
+		String createFiles_sql = "CREATE TABLE FILEOF_" + name + "("
+				+ "fileId INT PRIMARY KEY AUTO_INCREMENT,"
+				+ "fileName varchar(20)"
+				+ ");";
+
+		int newId = 1;
+
+		try {
+			if (!isNameAvailable(name)) {
+				return 0;
+			}
+			connectDB();
+
+			statement = connection.createStatement();
+			serch_id = statement.executeQuery(searchNewMinId_aql);
+
+			Set<Integer> userIds = new HashSet<>();
+			//userIdsにすべてのIDを入れる
+			while (serch_id.next()) {
+				userIds.add(serch_id.getInt("id"));
+			}
+			//新しい最小のIDを探す
+			while (userIds.contains(newId)) {
+				newId++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//新しいIDをセットしたSQL文
+		String insert_sql = "INSERT INTO user VALUES (" + newId + ", '" + name + "', '" + password + "')";
+
+		int createFile_int = executeUpdateSql(createFiles_sql);
+
+		return executeUpdateSql(insert_sql);
+	}
+	
 	public List<String> getAllFileName(String name) {
 		Statement statement = null;
 		ResultSet result_set = null;
@@ -154,45 +194,7 @@ public class CreateUserDAO {
 		disconnect();
 		return DataId_max_min;
 	}
-	public int createUser(String name, String password) {
-		Statement statement = null;
-		ResultSet serch_id = null;
-		String searchNewMinId_aql = "SELECT id From user ORDER BY id";
-		String createFiles_sql = "CREATE TABLE FILEOF_" + name + "("
-				+ "fileId INT PRIMARY KEY AUTO_INCREMENT,"
-				+ "fileName varchar(20)"
-				+ ");";
 
-		int newId = 1;
-
-		try {
-			if (!isNameAvailable(name)) {
-				return 0;
-			}
-			connectDB();
-
-			statement = connection.createStatement();
-			serch_id = statement.executeQuery(searchNewMinId_aql);
-
-			Set<Integer> userIds = new HashSet<>();
-			//userIdsにすべてのIDを入れる
-			while (serch_id.next()) {
-				userIds.add(serch_id.getInt("id"));
-			}
-			//新しい最小のIDを探す
-			while (userIds.contains(newId)) {
-				newId++;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		//新しいIDをセットしたSQL文
-		String insert_sql = "INSERT INTO user VALUES (" + newId + ", '" + name + "', '" + password + "')";
-
-		int createFile_int = executeUpdateSql(createFiles_sql);
-
-		return executeUpdateSql(insert_sql);
-	}
 
 	public boolean isLogin(String name, String pass) {
 		Statement statement = null;
