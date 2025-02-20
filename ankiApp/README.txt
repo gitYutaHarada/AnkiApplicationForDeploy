@@ -1,21 +1,25 @@
-anki-app 
 
-JAWSDB_URL: mysql://d6uoc91fueyqgpyr:ht52jrafaw0f8qlh@nba02whlntki5w2p.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/yngwlvduglko28ms
+プロジェクトの概要
+本アプリは、ユーザーが単語やフレーズを暗記しやすくするための学習支援ツール
 
-mysql	プロトコル（MySQLを指定）
-d6uoc91fueyqgpyr	ユーザー名（username）
-ht52jrafaw0f8qlh	パスワード（password）
-nba02whlntki5w2p.cbetxkdyhwsb.us-east-1.rds.amazonaws.com	ホスト名（host）
-3306	ポート番号（port）（MySQLのデフォルトは3306）
-yngwlvduglko28ms	データベース名（database）
+技術スタック
+使用言語　Java,mysql,JSP,CSS,JavaScript
 
-heroku config:add CLEARDB_DATABASE_URL="mysql://d6uoc91fueyqgpyr:ht52jrafaw0f8qlh@nba02whlntki5w2p.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/yngwlvduglko28ms?reconnect=true^^^&useSSL=false^^^&useUnicode=ture^^^&characterEncoding=utf8^^^&characterSetResults=utf8" --app anki-app
-mysql -h nba02whlntki5w2p.cbetxkdyhwsb.us-east-1.rds.amazonaws.com -u d6uoc91fueyqgpyr -p yngwlvduglko28ms -P 3306
+今できてること
+管理ユーザ登録機能
+管理ユーザログイン機能
+暗記データの一覧表示
+暗記データの追加、削除、編集機能
+カテゴリー別学習：単語やフレーズをカテゴリー別に整理できる機能（例：旅行、ビジネス、日常会話など）
 
+今後すること
+画像ファイルのアップロード機能
+DBデーブルノリレーション管理
+DBトランザクションの制御機能
+ページネーション機能
+単体テスト
+統合テスト機能
 
-
-create table user(
-	id int primary key,
-	name varchar(50),
-	password varchar(255)
-	);
+クイズモード
+単語やフレーズをランダムで出題し、ユーザーが答える形式で学習する機能。
+問題形式を選べる（選択肢、穴埋め、記述式など）と、ユーザーの理解度に合わせた学習が可能です。
