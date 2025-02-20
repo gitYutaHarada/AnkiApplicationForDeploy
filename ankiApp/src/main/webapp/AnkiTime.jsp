@@ -28,7 +28,7 @@
 	%>
 			<h3><%=fileofdata.getAnswerById(id) %></h3>
 	<%
-		}else if("last".equels(question_answer)){
+		}else if("last".equals(question_answer)){
 	%>
 			<h3>最後まで頑張りました！</h3>
 	<%
