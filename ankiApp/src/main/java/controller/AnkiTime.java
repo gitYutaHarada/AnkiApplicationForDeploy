@@ -56,7 +56,10 @@ public class AnkiTime extends HttpServlet {
 		fileofdata.setMaxId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "max"));
 		String action = request.getParameter("action");
 		
-		if("back".equals(action)) {
+		
+		if(id == fileofdata.getMaxId() && "next".equals(action)) {
+			question_answer = "last";
+		}else if("back".equals(action)) {
 			id = utils.backOrNextId(fileofdata, "back", id);
 			question_answer = "question";
 		}else if("convert_question".equals(action)) {
@@ -65,6 +68,9 @@ public class AnkiTime extends HttpServlet {
 			question_answer = "answer";
 		}else if("next".equals(action)) {
 			id = utils.backOrNextId(fileofdata, "next", id);
+			question_answer = "question";
+		}else if("convert_first".equals(action)) {
+			id = fileofdata.getMaxId();
 			question_answer = "question";
 		}
 		

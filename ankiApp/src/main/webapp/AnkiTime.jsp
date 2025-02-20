@@ -28,6 +28,10 @@
 	%>
 			<h3><%=fileofdata.getAnswerById(id) %></h3>
 	<%
+		}else if("last".equels(question_answer)){
+	%>
+			<h3>最後まで頑張りました！</h3>
+	<%
 		}
 	%>
 	<form action="/AnkiTime" method="post">
@@ -42,9 +46,17 @@
 				<button type="submit" name="action" value="convert_answer">答えへ</button>
 		<%
 			}
+			
+			if("last".equals(question_answer)){
 		%>
-		<button type="submit" name="action" value="next">次へ</button>
-		
+				<button type="submit" name="action" value="convert_firat">最初から</button>
+		<%
+			}else{
+		%>
+				<button type="submit" name="action" value="next">次へ</button>
+		<%
+			}
+		%>
 		<input type="hidden" name="question_answer" value=<%=question_answer %>>
 		<input type="hidden" name="id" value=<%=id %>>
 	</form>
