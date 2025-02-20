@@ -72,7 +72,7 @@ public class AnkiTime extends HttpServlet {
 			question_answer = "question";
 		}else if("convert_first".equals(action)) {
 			System.out.println("question_answer"+question_answer);
-			id = fileofdata.getMaxId();
+			id = fileofdata.getMinId();
 			question_answer = "question";
 			
 		}
