@@ -49,7 +49,7 @@
 			
 			if("last".equals(question_answer)){
 		%>
-				<button type="submit" name="action" value="convert_firat">最初から</button>
+				<button type="submit" name="action" value="convert_first">最初から</button>
 		<%
 			}else{
 		%>
