@@ -134,6 +134,7 @@ input {
 
 #back{
 	all: unset; /* すべてのスタイルをリセット */
+	float: left;
 
 }
 
