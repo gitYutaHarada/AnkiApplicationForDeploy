@@ -28,7 +28,7 @@ if("miss".equals(miss_str)){
         <input type="submit" value="送信">
     </form>
     <br/><br/>
-	<form action="/ankiApp/CreateUserController" method="post">
+	<form action="https://anki-app-a437e2d7cac2.herokuapp.com/LoginController" method="post">
 		<p>名前とパスワードをお持ちでない方</p>
 		<input type="submit" value="新規登録">
 	</form>
