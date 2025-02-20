@@ -14,21 +14,20 @@ import jakarta.servlet.http.HttpSession;
 import bean.UserBean;
 import data_access_object.CreateUserDAO;
 
-
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-    public LoginController() {
-        super();
-       
-    }
+	public LoginController() {
+		super();
+
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
@@ -38,31 +37,36 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String name = request.getParameter("name");
-		String pass = request.getParameter("pass");
-		
+		String action = request.getParameter("action");
 		
         CreateUserDAO create_dao = new CreateUserDAO();
         
-        if(create_dao.isLogin(name, pass)) {
-        	request.setAttribute("name", name);
-        	request.setAttribute("pass", pass);
-        	
-        	HttpSession session = request.getSession(true);
-        	
-        	UserBean userbean = new UserBean();
-    		CreateUserDAO createuser_dao = new CreateUserDAO();
-    		List <String> fileNamesList = createuser_dao.getAllFileName(name);
-    		
-    		userbean.setName(name);
-    		userbean.setPassword(pass);
-    		userbean.setFileNamesList(fileNamesList);
-    		
-    		session.setAttribute("userbean", userbean);
-    		
-    		RequestDispatcher requestdispatcher = request.getRequestDispatcher("myPage.jsp");
+        if("login".equals(action)) {
+	    	String name = request.getParameter("name");
+	    	String pass = request.getParameter("pass");
+	    	if(create_dao.isLogin(name, pass)) {
+	        	request.setAttribute("name", name);
+	        	request.setAttribute("pass", pass);
+	        	
+	        	HttpSession session = request.getSession(true);
+	        	
+	        	UserBean userbean = new UserBean();
+	    		CreateUserDAO createuser_dao = new CreateUserDAO();
+	    		List <String> fileNamesList = createuser_dao.getAllFileName(name);
+	    		
+	    		userbean.setName(name);
+	    		userbean.setPassword(pass);
+	    		userbean.setFileNamesList(fileNamesList);
+	    		
+	    		session.setAttribute("userbean", userbean);
+	    		
+	    		RequestDispatcher requestdispatcher = request.getRequestDispatcher("myPage.jsp");
+	    		requestdispatcher.forward(request, response);
+    		}
+        }else if("logout".equals(action)){
+        	RequestDispatcher requestdispatcher = request.getRequestDispatcher("index.jsp");
     		requestdispatcher.forward(request, response);
-        }else {
+        } else{
         	String miss = "miss";
         	request.setAttribute("miss", miss);
 
