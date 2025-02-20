@@ -61,6 +61,7 @@ public class AnkiTime extends HttpServlet {
 			question_answer = "last";
 			System.out.println("id="+id);
 		}else if("back".equals(action)) {
+			System.out.println("back");
 			id = utils.backOrNextId(fileofdata, "back", id);
 			question_answer = "question";
 		}else if("convert_question".equals(action)) {
