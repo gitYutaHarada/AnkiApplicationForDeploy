@@ -138,6 +138,5 @@ input {
 	all: unset; /* すべてのスタイルをリセット */
 	position: absolute;
 	left: 0; /* 親要素 (p) の左端に配置 */
-	transform: translateY(-50%); /* 縦方向の中央調整 */
 }
 
