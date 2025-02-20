@@ -132,3 +132,11 @@ input {
 	width: 40%;
 }
 
+#back{
+	display: inline-block;         /* フォーム自体を中央に配置 */
+	border: 2px solid #0073e6;
+	border-radius: 8px;
+	padding: 20px;
+	background-color: #ffffff;
+}
+

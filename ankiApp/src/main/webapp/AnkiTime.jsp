@@ -12,7 +12,7 @@
 	<title>Insert title here</title>
 </head>
 <body>
-	<form action="/FileEditerController" method="post">
+	<form id="back" action="/FileEditerController" method="post">
 		<button type="submit" name="action" value="back">ファイル編集画面に戻る</button>
 	</form>
 	<p><%=userbean.getName() %>の<%=fileofdata.getFileName() %></p>

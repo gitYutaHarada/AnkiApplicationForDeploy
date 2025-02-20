@@ -18,7 +18,7 @@ if (request.getAttribute("select_id") != null)
 	<title><%=userbean.getName()%>の<%=fileofdata.getFileName()%></title>
 </head>
 <body>
-	<form action="/MyPageController" method="post">
+	<form id="back" action="/MyPageController" method="post">
 		<button type="submit" name="action" value="back">マイページに戻る</button>
 	</form>
 	<p><strong><%=userbean.getName()%></strong>の<strong><%=fileofdata.getFileName()%></strong>という名前のファイルの編集画面</p>
