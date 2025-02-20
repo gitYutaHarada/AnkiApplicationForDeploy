@@ -353,7 +353,7 @@ public class CreateUserDAO {
 	}
 
 	public void deleteFileOfData(FileOfData fileofdata, int id, String name) {
-		String deleteFileOfData_sql = "delete from dataof_" + fileofdata.getFileName() + "_" + name + " where dataId = '" + id + "'";
+		String deleteFileOfData_sql = "delete from DATAOF_" + fileofdata.getFileName() + "_" + name + " where dataId = '" + id + "'";
 		int deleteFileOfData_int = executeUpdateSql(deleteFileOfData_sql);
 		
 		fileofdata.removeElementById(id);
