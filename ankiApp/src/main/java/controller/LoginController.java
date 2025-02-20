@@ -15,7 +15,7 @@ import bean.UserBean;
 import data_access_object.CreateUserDAO;
 
 
-@WebServlet("/LoginController")
+@WebServlet("/ankiApp/LoginController")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
