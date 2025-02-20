@@ -140,4 +140,9 @@ input {
 	position: absolute;
 	left: 0; /* 親要素 (p) の左端に配置 */
 }
+#back_createUser{
+	all: unset; /* すべてのスタイルをリセット */
+	margin: auto;
+	position: absolute;
+}
 
