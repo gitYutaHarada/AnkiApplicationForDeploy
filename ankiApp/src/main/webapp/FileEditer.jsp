@@ -100,6 +100,9 @@ if (request.getAttribute("select_id") != null)
 		}
 	%>
 	<div id="create_anki">
+		<form action="/MyPageController" method="post">
+			<button type="submit" name="action" value="back">マイページに戻る</button>
+		</form>
 		<form action="/FileEditerController" method="post">
 			<input type="text" name="create_question" placeholder="質問を入力">
 			<input type="text" name="create_answer" placeholder="答えを入力"><br/>
@@ -111,9 +114,8 @@ if (request.getAttribute("select_id") != null)
 			<input type="hidden" name="id" value="0">
 			<input type="hidden" name="question_answer" value="question">		
 		</form>
+
 	</div>
-	<form action="/MyPageController" method="post">
-		<button type="submit" name="action" value="back">マイページに戻る</button>
-	</form>
+
 </body>
 </html>
