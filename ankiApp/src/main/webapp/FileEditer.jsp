@@ -18,7 +18,7 @@ if (request.getAttribute("select_id") != null)
 	<title><%=userbean.getName()%>の<%=fileofdata.getFileName()%></title>
 </head>
 <body>
-	<p><%=userbean.getName()%>の<%=fileofdata.getFileName()%>という名前のファイル</p>
+	<p><strong><%=userbean.getName()%></strong>の<strong><%=fileofdata.getFileName()%></strong>という名前のファイルの編集画面</p>
 	<%
 		int i = 0;
 		if (fileofdata.getMaxId() == 0) {
@@ -112,5 +112,8 @@ if (request.getAttribute("select_id") != null)
 			<input type="hidden" name="question_answer" value="question">		
 		</form>
 	</div>
+	<form action="/MyPageController" method="post">
+		<button type="submit" name="action" value="back">マイページに戻る</button>
+	</form>
 </body>
 </html>
