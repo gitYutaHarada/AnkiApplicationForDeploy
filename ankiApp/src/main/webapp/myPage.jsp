@@ -23,6 +23,9 @@ if (request.getAttribute("deleteFile_count") != null)
 	<title>ログイン成功！</title>
 </head>
 <body>
+	<form action="/LoginController" method="post">
+		<button type="submit" name="action" value="back">ログイン画面に戻る</button>
+	</form>
 	<p>ログイン成功！</p>
 	<p>こんにちは <strong><%=userbean.getName()%> </strong>さん!</p>
 	<br />
