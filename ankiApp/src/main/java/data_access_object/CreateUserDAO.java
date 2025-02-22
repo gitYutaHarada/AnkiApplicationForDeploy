@@ -223,6 +223,7 @@ public class CreateUserDAO {
 		Boolean isLogin = false;
 
 		try {
+			System.out.println(Hashpass);
 			connectDB();
 			statement = connection.createStatement();
 			result_set = statement.executeQuery(isLogin_sql);
@@ -230,6 +231,7 @@ public class CreateUserDAO {
 			int count = 0;
 			result_set.next();
 			count = result_set.getInt(1);
+			System.out.println(count);
 
 			if (count == 1) {
 				isLogin = true;
