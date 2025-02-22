@@ -64,10 +64,15 @@ public class CreateUserDAO {
 
 	}
 	
-	public int createUser(String name, String password) {
-		Statement statement = null;
-		ResultSet serch_id = null;
+	public int createUser(String name, String hash_pass) {
+		PreparedStatement preparedstatement_serchMin = null;
+		PreparedStatement preparedstatement_insert = null;
+
+		ResultSet serch_id_resultSet = null;
+		int insert_int = 0;
 		String searchNewMinId_aql = "SELECT id From user ORDER BY id";
+		String insert_sql = "INSERT INTO user VALUES (?, ?, ?)";
+
 
 		int newId = 1;
 
@@ -77,24 +82,37 @@ public class CreateUserDAO {
 			}
 			connectDB();
 
-			statement = connection.createStatement();
-			serch_id = statement.executeQuery(searchNewMinId_aql);
+			preparedstatement_serchMin = connection.prepareStatement(searchNewMinId_aql);
+			serch_id_resultSet = preparedstatement_serchMin.executeQuery();
 
 			Set<Integer> userIds = new HashSet<>();
 			//userIdsにすべてのIDを入れる
-			while (serch_id.next()) {
-				userIds.add(serch_id.getInt("id"));
+			while (serch_id_resultSet.next()) {
+				userIds.add(serch_id_resultSet.getInt("id"));
 			}
 			//新しい最小のIDを探す
 			while (userIds.contains(newId)) {
 				newId++;
 			}
+			preparedstatement_insert = connection.prepareStatement(insert_sql);
+			preparedstatement_insert.setInt(1, newId);
+			preparedstatement_insert.setString(2, name);
+			preparedstatement_insert.setString(3, hash_pass);
+			insert_int = preparedstatement_insert.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				if(serch_id_resultSet != null) serch_id_resultSet.close();
+				if(preparedstatement_insert != null) preparedstatement_insert.close();
+				if(preparedstatement_serchMin != null) preparedstatement_serchMin.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
+		disconnect();
 		//新しいIDをセットしたSQL文
-		String insert_sql = "INSERT INTO user VALUES (" + newId + ", '" + name + "', '" + password + "')";
-		return executeUpdateSql(insert_sql);
+		return insert_int;
 	}
 	
 	public String getHashPassByName(String name) {
@@ -124,17 +142,18 @@ public class CreateUserDAO {
 		return hashPass;
 	}
 	public List<String> getAllFileName(String name) {
-		Statement statement = null;
+		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
 		List<String> fileNamesList = new ArrayList<>();
 		String getAllFileName_sql = "SELECT TABLE_NAME "
 		        + "FROM INFORMATION_SCHEMA.TABLES "
-		        + "WHERE TABLE_NAME LIKE 'DATAOF\\_%\\_" + name + "';";
+		        + "WHERE TABLE_NAME LIKE 'DATAOF\\_%\\_?';";
 		
 		try {
 			connectDB();
-			statement = connection.createStatement();
-			result_set = statement.executeQuery(getAllFileName_sql);
+			preparedstatement = connection.prepareStatement(getAllFileName_sql);
+			preparedstatement.setString(1,  name);
+			result_set = preparedstatement.executeQuery();
 			
 			while(result_set.next()) {
 			    String dataof_filename_user = result_set.getString("TABLE_NAME");
@@ -147,7 +166,7 @@ public class CreateUserDAO {
 		}finally {
 			try {
 				if(result_set != null)result_set.close();
-				if(statement != null)statement.close();
+				if(preparedstatement != null)preparedstatement.close();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -157,13 +176,15 @@ public class CreateUserDAO {
 	}
 	
 	public void setDataOfFile(FileOfData fileofdata, String fileName, String name){
-		Statement statement = null;
+		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		String getDataOfFile_sql = "SELECT * FROM DATAOF_" + fileName + "_" + name;	
+		String getDataOfFile_sql = "SELECT * FROM DATAOF_?_?";	
 		try {
 			connectDB();
-			statement = connection.createStatement();
-			result_set = statement.executeQuery(getDataOfFile_sql);
+			preparedstatement = connection.prepareStatement(getDataOfFile_sql);
+			preparedstatement.setString(1, fileName);
+			preparedstatement.setString(2, name);
+			result_set = preparedstatement.executeQuery();
 			
 			while(result_set.next()) {
 				fileofdata.setElement(result_set.getInt("dataId"), result_set.getString("question"), result_set.getString("answer"));
@@ -174,7 +195,7 @@ public class CreateUserDAO {
 		}finally {
 			try {
 				if(result_set != null) result_set.close();
-				if(statement != null) statement.close();
+				if(preparedstatement != null) preparedstatement.close();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -184,20 +205,22 @@ public class CreateUserDAO {
 	}
 	
 	public int getDataOfFile_max_min(String fileName, String name, String max_min) {
-		Statement statement = null;
+		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
 		int DataId_max_min = 0;
 		String getDataOfFile_sql;
 		if("max".equals(max_min)) {
-			getDataOfFile_sql = "SELECT MAX(dataId) AS maxDataId FROM DATAOF_" + fileName + "_" + name;
+			getDataOfFile_sql = "SELECT MAX(dataId) AS maxDataId FROM DATAOF_?_?";
 		}else {
-			getDataOfFile_sql = "SELECT MIN(dataId) AS maxDataId FROM DATAOF_" + fileName + "_" + name;
+			getDataOfFile_sql = "SELECT MIN(dataId) AS maxDataId FROM DATAOF_?_?";
 		}
 	
 		try {
 			connectDB();
-			statement = connection.createStatement();
-			result_set = statement.executeQuery(getDataOfFile_sql);
+			preparedstatement = connection.prepareStatement(getDataOfFile_sql);
+			preparedstatement.setString(1,  fileName);
+			preparedstatement.setString(2, name);
+			result_set = preparedstatement.executeQuery(getDataOfFile_sql);
 			if(result_set.next()) {
 				DataId_max_min = result_set.getInt("maxDataId");
 			}
@@ -206,7 +229,7 @@ public class CreateUserDAO {
 		}finally {
 			try {
 				if(result_set != null) result_set.close();
-				if(statement != null) statement.close();
+				if(preparedstatement != null) preparedstatement.close();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -218,18 +241,20 @@ public class CreateUserDAO {
 
 
 	public boolean isLogin(String name, String pass) {
-		Statement statement = null;
+		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
 		Utils utils = new Utils();
 		String inputHashPass = utils.hashPass(pass);
-		String isLogin_sql = "SELECT COUNT(*) FROM user WHERE name = '" + name + "' AND password = '" + inputHashPass + "'";
+		String isLogin_sql = "SELECT COUNT(*) FROM user WHERE name = '?' AND password = '?'";
 		Boolean isLogin = false;
 
 		try {
 			System.out.println(inputHashPass);
 			connectDB();
-			statement = connection.createStatement();
-			result_set = statement.executeQuery(isLogin_sql);
+			preparedstatement = connection.prepareStatement(isLogin_sql);
+			preparedstatement.setString(1, name);
+			preparedstatement.setString(2, inputHashPass);
+			result_set = preparedstatement.executeQuery();
 
 			int count = 0;
 			result_set.next();
@@ -247,8 +272,8 @@ public class CreateUserDAO {
 			try {
 				if (result_set != null)
 					result_set.close();
-				if (statement != null)
-					statement.close();
+				if (preparedstatement != null)
+					preparedstatement.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -258,14 +283,15 @@ public class CreateUserDAO {
 	}
 
 	public boolean isNameAvailable(String name) {
-		Statement statement = null;
+		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		String isNameAvailable_sql = "SELECT COUNT(*) FROM user WHERE name = '" + name + "'";
+		String isNameAvailable_sql = "SELECT COUNT(*) FROM user WHERE name = '?'";
 		Boolean isNameAvailable = false;
 		try {
 			connectDB();
-			statement = connection.createStatement();
-			result_set = statement.executeQuery(isNameAvailable_sql);
+			preparedstatement = connection.prepareStatement(isNameAvailable_sql);
+			preparedstatement.setString(1, name);
+			result_set = preparedstatement.executeQuery();
 			result_set.next();
 
 			if (result_set.getInt(1) == 0) {
@@ -279,8 +305,8 @@ public class CreateUserDAO {
 			try {
 				if (result_set != null)
 					result_set.close();
-				if (statement != null)
-					statement.close();
+				if (preparedstatement != null)
+					preparedstatement.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -290,33 +316,68 @@ public class CreateUserDAO {
 	}
 
 	public void addFileName(String name, String fileName) {
-		String addFileData_sql = "CREATE TABLE DATAOF_" + fileName + "_" + name + "("
+		PreparedStatement preparedstatement = null;
+		int addFileData_int = 0;
+		String addFileData_sql = "CREATE TABLE DATAOF_?_?("
 				+ "dataId INT PRIMARY KEY AUTO_INCREMENT,"
 				+ "question varchar(100),"
 				+ "answer varchar(100)"
 				+ ");";
-		int addFileData_int = executeUpdateSql(addFileData_sql);
+		try {
+			connectDB();
+			preparedstatement = connection.prepareStatement(addFileData_sql);
+			preparedstatement.setString(1, fileName);
+			preparedstatement.setString(2, name);
+			addFileData_int = preparedstatement.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedstatement != null) preparedstatement.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void addData(FileOfData fileofdata, String name, String fileName, String question, String answer) {
-		String addData_sql = "INSERT INTO DATAOF_" + fileName + "_" + name + " (question, answer) VALUES('"
-				+ question + "', '" + answer + "');";
-		int addData_int = executeUpdateSql(addData_sql);
-		
+		PreparedStatement preparedstatement = null;
+		String addData_sql = "INSERT INTO DATAOF_?_? (question, answer) VALUES('?', '?')";
+		try {
+			connectDB();
+			preparedstatement = connection.prepareStatement(addData_sql);
+			preparedstatement.setString(1, fileName);
+			preparedstatement.setString(2, name);
+			preparedstatement.setString(3, question);
+			preparedstatement.setString(4, answer);
+			int addData_aql = preparedstatement.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedstatement != null) preparedstatement.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		disconnect();
 		int id = serchidByQuestion(name, fileName, question, answer);
 		fileofdata.setElement(id, question, answer);
 	}
 	
 	public int serchidByQuestion(String name, String fileName, String question, String answer) {
-		Statement statement = null;
+		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		String serchId_sql = "SELECT dataId FROM DATAOF_" + fileName + "_" + name + " WHERE question = '" + question + "'";
+		String serchId_sql = "SELECT dataId FROM DATAOF_?_? WHERE question = '?'";
 		int id = 0;
 		
 		try {
 			connectDB();
-			statement = connection.createStatement();
-			result_set = statement.executeQuery(serchId_sql);
+			preparedstatement = connection.prepareStatement(serchId_sql);
+			preparedstatement.setString(1, fileName);
+			preparedstatement.setString(2, name);
+			preparedstatement.setString(3,  question);
+			result_set = preparedstatement.executeQuery();
 			if(result_set.next()) {
 				id = result_set.getInt("dataId");
 			}
@@ -326,8 +387,8 @@ public class CreateUserDAO {
 			try {
 				if (result_set != null)
 					result_set.close();
-				if (statement != null)
-					statement.close();
+				if (preparedstatement != null)
+					preparedstatement.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -338,14 +399,16 @@ public class CreateUserDAO {
 	}
 	
 	public boolean isData(String fileName, String name) {
-		Statement statement = null;
+		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		String isData_sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DATAOF_" + fileName + "_" + name + "';";
+		String isData_sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DATAOF_?_?'";
 		Boolean isData = false;
 		try {
 			connectDB();
-			statement = connection.createStatement();
-			result_set = statement.executeQuery(isData_sql);
+			preparedstatement = connection.prepareStatement(isData_sql);
+			preparedstatement.setString(1, fileName);
+			preparedstatement.setString(2, name);
+			result_set = preparedstatement.executeQuery();
 			result_set.next();
 
 			if (result_set.getInt(1) == 1) {
@@ -359,8 +422,8 @@ public class CreateUserDAO {
 			try {
 				if (result_set != null)
 					result_set.close();
-				if (statement != null)
-					statement.close();
+				if (preparedstatement != null)
+					preparedstatement.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -369,52 +432,77 @@ public class CreateUserDAO {
 		return isData;
 	}
 	public int deleteData(String name, String fileName) {
-		String deleteData_sql = "DROP TABLE DATAOF_" + fileName + "_" + name;
+		PreparedStatement preparedstatement = null;
+		String deleteData_sql = "DROP TABLE DATAOF_?_?";
 		int deleteData_int = 0;
-
-		if(isData(fileName, name) == true) deleteData_int = executeUpdateSql(deleteData_sql);
+		try {
+			connectDB();
+			preparedstatement = connection.prepareStatement(deleteData_sql);
+			preparedstatement.setString(1, fileName);
+			preparedstatement.setString(2, name);
+			if(isData(fileName, name) == true) deleteData_int = preparedstatement.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedstatement != null) preparedstatement.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return deleteData_int;
 	}
 
 	public void deleteFileOfData(FileOfData fileofdata, int id, String name) {
-		String deleteFileOfData_sql = "delete from DATAOF_" + fileofdata.getFileName() + "_" + name + " where dataId = '" + id + "'";
-		int deleteFileOfData_int = executeUpdateSql(deleteFileOfData_sql);
-		
-		fileofdata.removeElementById(id);
-	}
-	
-	public void editFileOfData(FileOfData fileofdata, int select_id, String name, String edit_question, String edit_answer) {
-		String editFileOfData_sql = "UPDATE DATAOF_" + fileofdata.getFileName() + "_" + name
-				 + " SET question = '" + edit_question + "',"
-				 + "answer = '" + edit_answer + "' "
-				 + "WHERE dataId = " + select_id;
-		int editFileOfData_int = executeUpdateSql(editFileOfData_sql);
-		fileofdata.editElement(select_id, edit_question, edit_answer);
-	}
-	public int executeUpdateSql(String sql) {
-		Statement statement = null;
-		int result = 1;
-
+		PreparedStatement preparedstatement = null;
+		String deleteFileOfData_sql = "delete from DATAOF_?_? where dataId = '?'";
+		int deleteFileOfData_int = 0;
 		try {
 			connectDB();
-			statement = connection.createStatement();
-			result = statement.executeUpdate(sql);
-
-		} catch (Exception e) {
+			preparedstatement = connection.prepareStatement(deleteFileOfData_sql);
+			preparedstatement.setString(1, fileofdata.getFileName());
+			preparedstatement.setString(2, name);
+			preparedstatement.setInt(3, id);
+			deleteFileOfData_int = preparedstatement.executeUpdate();
+		}catch(Exception e) {
 			e.printStackTrace();
-		} finally {
+		}finally {
 			try {
-				if (statement != null)
-					statement.close();
-			} catch (SQLException e) {
+				if(preparedstatement != null) preparedstatement.close();
+			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 		disconnect();
-		return result;
-
+		fileofdata.removeElementById(id);
 	}
-
+	
+	public void editFileOfData(FileOfData fileofdata, int select_id, String name, String edit_question, String edit_answer) {
+		PreparedStatement preparedstatement = null;
+		String editFileOfData_sql = "UPDATE DATAOF_?_? SET question = '?',answer = '?' WHERE dataId = ?";
+		int editFileOfData_int = 0;
+		try {
+			connectDB();
+			preparedstatement = connection.prepareStatement(editFileOfData_sql);
+			preparedstatement.setString(1, fileofdata.getFileName());
+			preparedstatement.setString(2, name);
+			preparedstatement.setString(3, edit_question);
+			preparedstatement.setString(4, edit_answer);
+			preparedstatement.setInt(5, select_id);
+			editFileOfData_int = preparedstatement.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedstatement != null) preparedstatement.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		disconnect();
+		fileofdata.editElement(select_id, edit_question, edit_answer);
+	}
+	
 	public void disconnect() {
 		try {
 			if (connection != null)
