@@ -2,6 +2,7 @@ package data_access_object;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -95,6 +96,32 @@ public class CreateUserDAO {
 		return executeUpdateSql(insert_sql);
 	}
 	
+	public String getHashPassByName(String name) {
+		String hashPass = null;
+		PreparedStatement preparedstatement = null;
+		ResultSet result_set = null;
+		String getHashPassByName_sql = "SELECT pass FROM user WHERE name = ?";
+		
+		try {
+			connectDB();
+			preparedstatement = connection.prepareStatement(getHashPassByName_sql);
+			preparedstatement.setString(1,name);
+			result_set = preparedstatement.executeQuery();
+			if(result_set.next()) {
+				hashPass = result_set.getString("pass");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(result_set != null) result_set.close();
+				if(preparedstatement != null) preparedstatement.close();	
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return hashPass;
+	}
 	public List<String> getAllFileName(String name) {
 		Statement statement = null;
 		ResultSet result_set = null;
@@ -189,10 +216,10 @@ public class CreateUserDAO {
 	}
 
 
-	public boolean isLogin(String name, String pass) {
+	public boolean isLogin(String name, String Hashpass) {
 		Statement statement = null;
 		ResultSet result_set = null;
-		String isLogin_sql = "SELECT COUNT(*) FROM user WHERE name = '" + name + "' AND password = '" + pass + "'";
+		String isLogin_sql = "SELECT COUNT(*) FROM user WHERE name = '" + name + "' AND password = '" + Hashpass + "'";
 		Boolean isLogin = false;
 
 		try {

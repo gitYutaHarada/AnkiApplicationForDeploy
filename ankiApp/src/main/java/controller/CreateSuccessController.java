@@ -48,11 +48,12 @@ public class CreateSuccessController extends HttpServlet {
 		int isValidString_name = (utils.isValidString(name)) ? 1 : 0;
 		int isValidString_pass = (utils.isValidString(pass)) ? 1 : 0;
 		
-		System.out.println(isValidString_name + isValidString_pass);		
 		//名前とパスワードが英数字のみなら１を代入して新しいテーブルを作成
         if(isValidString_name == 1 && isValidString_pass == 1) {
     		CreateUserDAO create_dao = new CreateUserDAO();
-            int isSuccessInsert = create_dao.createUser(name, pass);
+    		//ここでパスワードハッシュ化
+    		String hash_pass = utils.hashPass(pass);
+            int isSuccessInsert = create_dao.createUser(name, hash_pass);
             UserInformationBean userInfo_dto = create_dao.select();
             request.setAttribute("userInfo_dto", userInfo_dto);
             
