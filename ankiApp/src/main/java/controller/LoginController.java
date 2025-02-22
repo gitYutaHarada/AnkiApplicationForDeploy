@@ -45,9 +45,8 @@ public class LoginController extends HttpServlet {
 	    	String name = request.getParameter("name");
 	    	String pass = request.getParameter("pass");
 	    	//nameとおなじ行のpassを探す
-	    	String HashPass = create_dao.getHashPassByName(pass);
 	    	//そのpassとinputPassがtrueの場合ログインできるようにする
-	    	if(create_dao.isLogin(name, HashPass)) {
+	    	if(create_dao.isLogin(name, pass)) {
 	        	request.setAttribute("name", name);
 	        	request.setAttribute("pass", pass);
 	        	
