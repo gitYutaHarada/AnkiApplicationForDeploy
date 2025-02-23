@@ -36,7 +36,7 @@ if (request.getAttribute("select_id") != null)
 				</thead>
 			</table>
 	<%
-		} else if(msg != null){
+		} else if((String)request.getAttribute("msg") != null){
 			String msg = (String)request.getAttribute("msg");
 	%>	
 			<p><%=msg %></p>
