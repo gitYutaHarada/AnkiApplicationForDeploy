@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,15 +27,15 @@ public class CreateUserDAO {
 	}
 
 	public UserInformationBean select() {
-		Statement statement = null;
+		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
 		UserInformationBean user_info_dto = new UserInformationBean();
 		String sql = "SELECT * FROM user";
 
 		try {
 			connectDB();
-			statement = connection.createStatement();
-			result_set = statement.executeQuery(sql);
+			preparedstatement = connection.prepareStatement(sql);
+			result_set = preparedstatement.executeQuery();
 
 			while (result_set.next()) {
 				UserBean user_bean = new UserBean();
@@ -50,16 +49,9 @@ public class CreateUserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (result_set != null)
-					result_set.close();
-				if (statement != null)
-					statement.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement, result_set);
+			disconnect();
 		}
-		disconnect();
 		return user_info_dto;
 
 	}
@@ -106,11 +98,11 @@ public class CreateUserDAO {
 				if(serch_id_resultSet != null) serch_id_resultSet.close();
 				if(preparedstatement_insert != null) preparedstatement_insert.close();
 				if(preparedstatement_serchMin != null) preparedstatement_serchMin.close();
+				disconnect();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		disconnect();
 		//新しいIDをセットしたSQL文
 		return insert_int;
 	}
@@ -119,7 +111,7 @@ public class CreateUserDAO {
 		String hashPass = null;
 		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		String getHashPassByName_sql = "SELECT pass FROM user WHERE name = ?";
+		String getHashPassByName_sql = "SELECT password FROM user WHERE name = ?";
 		
 		try {
 			connectDB();
@@ -127,17 +119,13 @@ public class CreateUserDAO {
 			preparedstatement.setString(1,name);
 			result_set = preparedstatement.executeQuery();
 			if(result_set.next()) {
-				hashPass = result_set.getString("pass");
+				hashPass = result_set.getString("password");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				if(result_set != null) result_set.close();
-				if(preparedstatement != null) preparedstatement.close();	
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement, result_set);
+			disconnect();
 		}
 		return hashPass;
 	}
@@ -147,12 +135,12 @@ public class CreateUserDAO {
 		List<String> fileNamesList = new ArrayList<>();
 		String getAllFileName_sql = "SELECT TABLE_NAME "
 		        + "FROM INFORMATION_SCHEMA.TABLES "
-		        + "WHERE TABLE_NAME LIKE 'DATAOF\\_%\\_?';";
+		        + "WHERE TABLE_NAME LIKE ?";
 		
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(getAllFileName_sql);
-			preparedstatement.setString(1,  name);
+			preparedstatement.setString(1,  "DATAOF\\_%\\_" + name);
 			result_set = preparedstatement.executeQuery();
 			
 			while(result_set.next()) {
@@ -164,26 +152,20 @@ public class CreateUserDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				if(result_set != null)result_set.close();
-				if(preparedstatement != null)preparedstatement.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement, result_set);
+			disconnect();
 		}
-		disconnect();
 		return fileNamesList;
 	}
 	
 	public void setDataOfFile(FileOfData fileofdata, String fileName, String name){
 		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		String getDataOfFile_sql = "SELECT * FROM DATAOF_?_?";	
+		String tableName = "DATAOF_" + fileName + "_" + name;
+		String getDataOfFile_sql = "SELECT * FROM " + tableName;	
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(getDataOfFile_sql);
-			preparedstatement.setString(1, fileName);
-			preparedstatement.setString(2, name);
 			result_set = preparedstatement.executeQuery();
 			
 			while(result_set.next()) {
@@ -193,15 +175,9 @@ public class CreateUserDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				if(result_set != null) result_set.close();
-				if(preparedstatement != null) preparedstatement.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement, result_set);
+			disconnect();
 		}
-		
-		disconnect();
 	}
 	
 	public int getDataOfFile_max_min(String fileName, String name, String max_min) {
@@ -209,33 +185,26 @@ public class CreateUserDAO {
 		ResultSet result_set = null;
 		int DataId_max_min = 0;
 		String getDataOfFile_sql;
+		String tableName = "DATAOF_" + fileName + "_" + name;
 		if("max".equals(max_min)) {
-			getDataOfFile_sql = "SELECT MAX(dataId) AS maxDataId FROM DATAOF_?_?";
+			getDataOfFile_sql = "SELECT MAX(dataId) AS maxDataId FROM " + tableName;
 		}else {
-			getDataOfFile_sql = "SELECT MIN(dataId) AS maxDataId FROM DATAOF_?_?";
+			getDataOfFile_sql = "SELECT MIN(dataId) AS maxDataId FROM " + tableName;
 		}
 	
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(getDataOfFile_sql);
-			preparedstatement.setString(1,  fileName);
-			preparedstatement.setString(2, name);
-			result_set = preparedstatement.executeQuery(getDataOfFile_sql);
+			result_set = preparedstatement.executeQuery();
 			if(result_set.next()) {
 				DataId_max_min = result_set.getInt("maxDataId");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				if(result_set != null) result_set.close();
-				if(preparedstatement != null) preparedstatement.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		disconnect();
+			resourcesClose(preparedstatement, result_set);
+			disconnect();
+		}		
 		return DataId_max_min;
 	}
 
@@ -245,7 +214,7 @@ public class CreateUserDAO {
 		ResultSet result_set = null;
 		Utils utils = new Utils();
 		String inputHashPass = utils.hashPass(pass);
-		String isLogin_sql = "SELECT COUNT(*) FROM user WHERE name = '?' AND password = '?'";
+		String isLogin_sql = "SELECT COUNT(*) FROM user WHERE name = ? AND password = ?";
 		Boolean isLogin = false;
 
 		try {
@@ -269,23 +238,16 @@ public class CreateUserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (result_set != null)
-					result_set.close();
-				if (preparedstatement != null)
-					preparedstatement.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement, result_set);
+			disconnect();
 		}
-		disconnect();
 		return isLogin;
 	}
 
 	public boolean isNameAvailable(String name) {
 		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		String isNameAvailable_sql = "SELECT COUNT(*) FROM user WHERE name = '?'";
+		String isNameAvailable_sql = "SELECT COUNT(*) FROM user WHERE name = ?";
 		Boolean isNameAvailable = false;
 		try {
 			connectDB();
@@ -302,23 +264,17 @@ public class CreateUserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (result_set != null)
-					result_set.close();
-				if (preparedstatement != null)
-					preparedstatement.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement, result_set);
+			disconnect();
 		}
-		disconnect();
 		return isNameAvailable;
 	}
 
 	public void addFileName(String name, String fileName) {
 		PreparedStatement preparedstatement = null;
 		int addFileData_int = 0;
-		String addFileData_sql = "CREATE TABLE DATAOF_?_?("
+		String tableName = "DATAOF_" + fileName + "_" + name;
+		String addFileData_sql = "CREATE TABLE " + tableName + "("
 				+ "dataId INT PRIMARY KEY AUTO_INCREMENT,"
 				+ "question varchar(100),"
 				+ "answer varchar(100)"
@@ -326,41 +282,31 @@ public class CreateUserDAO {
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(addFileData_sql);
-			preparedstatement.setString(1, fileName);
-			preparedstatement.setString(2, name);
 			addFileData_int = preparedstatement.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				if(preparedstatement != null) preparedstatement.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement);
+			disconnect();
 		}
 	}
 	
 	public void addData(FileOfData fileofdata, String name, String fileName, String question, String answer) {
 		PreparedStatement preparedstatement = null;
-		String addData_sql = "INSERT INTO DATAOF_?_? (question, answer) VALUES('?', '?')";
+		String tableName = "DATAOF_" + fileofdata.getFileName() + "_" + name;
+		String addData_sql = "INSERT INTO " + tableName + " (question, answer) VALUES(?, ?)";
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(addData_sql);
-			preparedstatement.setString(1, fileName);
-			preparedstatement.setString(2, name);
-			preparedstatement.setString(3, question);
-			preparedstatement.setString(4, answer);
+			preparedstatement.setString(1, question);
+			preparedstatement.setString(2, answer);
 			int addData_aql = preparedstatement.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				if(preparedstatement != null) preparedstatement.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement);
+			disconnect();
 		}
-		disconnect();
 		int id = serchidByQuestion(name, fileName, question, answer);
 		fileofdata.setElement(id, question, answer);
 	}
@@ -368,15 +314,14 @@ public class CreateUserDAO {
 	public int serchidByQuestion(String name, String fileName, String question, String answer) {
 		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		String serchId_sql = "SELECT dataId FROM DATAOF_?_? WHERE question = '?'";
+		String tableName = "DATAOF_" + fileName + "_" + name;
+		String serchId_sql = "SELECT dataId FROM " + tableName + " WHERE question = ?";
 		int id = 0;
 		
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(serchId_sql);
-			preparedstatement.setString(1, fileName);
-			preparedstatement.setString(2, name);
-			preparedstatement.setString(3,  question);
+			preparedstatement.setString(1,  question);
 			result_set = preparedstatement.executeQuery();
 			if(result_set.next()) {
 				id = result_set.getInt("dataId");
@@ -384,16 +329,9 @@ public class CreateUserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (result_set != null)
-					result_set.close();
-				if (preparedstatement != null)
-					preparedstatement.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement, result_set);
+			disconnect();
 		}
-		disconnect();
 		return id;
 
 	}
@@ -401,13 +339,12 @@ public class CreateUserDAO {
 	public boolean isData(String fileName, String name) {
 		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		String isData_sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DATAOF_?_?'";
+		String isData_sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ?";
 		Boolean isData = false;
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(isData_sql);
-			preparedstatement.setString(1, fileName);
-			preparedstatement.setString(2, name);
+			preparedstatement.setString(1, "DATAOF_" + fileName + "_" + name);
 			result_set = preparedstatement.executeQuery();
 			result_set.next();
 
@@ -419,88 +356,85 @@ public class CreateUserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (result_set != null)
-					result_set.close();
-				if (preparedstatement != null)
-					preparedstatement.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement, result_set);
+			disconnect();
 		}
-		disconnect();
 		return isData;
 	}
 	public int deleteData(String name, String fileName) {
 		PreparedStatement preparedstatement = null;
-		String deleteData_sql = "DROP TABLE DATAOF_?_?";
+		String tableName = "DATAOF_" + fileName + "_" + name;
+		String deleteData_sql = "DROP TABLE " + tableName;
 		int deleteData_int = 0;
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(deleteData_sql);
-			preparedstatement.setString(1, fileName);
-			preparedstatement.setString(2, name);
-			if(isData(fileName, name) == true) deleteData_int = preparedstatement.executeUpdate();
+			if(isData(fileName, name) == true) {
+				deleteData_int = preparedstatement.executeUpdate();
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				if(preparedstatement != null) preparedstatement.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement);
+			disconnect();
 		}
 		return deleteData_int;
 	}
 
 	public void deleteFileOfData(FileOfData fileofdata, int id, String name) {
 		PreparedStatement preparedstatement = null;
-		String deleteFileOfData_sql = "delete from DATAOF_?_? where dataId = '?'";
+		String tableName = "DATAOF_" + fileofdata.getFileName() + "_" + name;
+		String deleteFileOfData_sql = "delete from " + tableName + " where dataId = ?";
 		int deleteFileOfData_int = 0;
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(deleteFileOfData_sql);
-			preparedstatement.setString(1, fileofdata.getFileName());
-			preparedstatement.setString(2, name);
-			preparedstatement.setInt(3, id);
+			preparedstatement.setInt(1, id);
 			deleteFileOfData_int = preparedstatement.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				if(preparedstatement != null) preparedstatement.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement);
+			disconnect();
 		}
-		disconnect();
 		fileofdata.removeElementById(id);
 	}
 	
 	public void editFileOfData(FileOfData fileofdata, int select_id, String name, String edit_question, String edit_answer) {
 		PreparedStatement preparedstatement = null;
-		String editFileOfData_sql = "UPDATE DATAOF_?_? SET question = '?',answer = '?' WHERE dataId = ?";
-		int editFileOfData_int = 0;
+		String tableName = "DATAOF_" + fileofdata.getFileName() + "_" + name;
+		String editFileOfData_sql = "UPDATE " + tableName + " SET question = ?,answer = ? WHERE dataId = ?";
 		try {
 			connectDB();
 			preparedstatement = connection.prepareStatement(editFileOfData_sql);
-			preparedstatement.setString(1, fileofdata.getFileName());
-			preparedstatement.setString(2, name);
-			preparedstatement.setString(3, edit_question);
-			preparedstatement.setString(4, edit_answer);
-			preparedstatement.setInt(5, select_id);
-			editFileOfData_int = preparedstatement.executeUpdate();
+			preparedstatement.setString(1, edit_question);
+			preparedstatement.setString(2, edit_answer);
+			preparedstatement.setInt(3, select_id);
+			int editFileOfData_int = preparedstatement.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				if(preparedstatement != null) preparedstatement.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			resourcesClose(preparedstatement);
+			disconnect();
 		}
-		disconnect();
 		fileofdata.editElement(select_id, edit_question, edit_answer);
+	}
+	
+	public void resourcesClose(PreparedStatement preparedstatement) {
+		try {
+			if(preparedstatement != null) preparedstatement.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void resourcesClose(PreparedStatement preparedstatement, ResultSet result_set) {
+		try {
+			if(result_set != null) result_set.close();
+			if(preparedstatement != null) preparedstatement.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void disconnect() {
