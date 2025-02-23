@@ -63,8 +63,8 @@ public class FileEditerController extends HttpServlet {
 		}else if("delete".equals(action)) {
 			String select_question = request.getParameter("select_question");
 			String select_answer = request.getParameter("select_answer");
+		    int select_id = Integer.parseInt((String)request.getParameter("select_id"));
 			
-			int select_id = fileofdata.getIdByQuestion(select_question);
 			createuser_dao.deleteFileOfData(fileofdata, select_id, userbean.getName());
 			fileofdata.setMaxId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "max"));
 		}else if("edit".equals(action)) {
