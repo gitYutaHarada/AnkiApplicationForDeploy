@@ -11,7 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import bean.UserInformationBean;
 import data_access_object.CreateUserDAO;
-import utils.Utils; 
+import utils.PasswordUtils;
+import utils.StringUtils;
 
 /**
  * Servlet implementation class CreateSuccessController
@@ -44,15 +45,16 @@ public class CreateSuccessController extends HttpServlet {
 		String name = request.getParameter("name");
 		String pass = request.getParameter("pass");
 		
-        Utils utils = new Utils();
-		int isValidString_name = (utils.isValidString(name)) ? 1 : 0;
-		int isValidString_pass = (utils.isValidString(pass)) ? 1 : 0;
+		PasswordUtils passwordutils = new PasswordUtils();
+        StringUtils stringutils = new StringUtils();
+		int isValidString_name = (stringutils.isValidString(name)) ? 1 : 0;
+		int isValidString_pass = (stringutils.isValidString(pass)) ? 1 : 0;
 		
 		//名前とパスワードが英数字のみなら１を代入して新しいテーブルを作成
         if(isValidString_name == 1 && isValidString_pass == 1) {
     		CreateUserDAO create_dao = new CreateUserDAO();
     		//ここでパスワードハッシュ化
-    		String hash_pass = utils.hashPass(pass);
+    		String hash_pass = passwordutils.hashPass(pass);
             int isSuccessInsert = create_dao.createUser(name, hash_pass);
             UserInformationBean userInfo_dto = create_dao.select();
             request.setAttribute("userInfo_dto", userInfo_dto);

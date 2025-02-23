@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import bean.FileOfData;
 import bean.UserBean;
 import data_access_object.CreateUserDAO;
-import utils.Utils;
+import utils.StringUtils;
 /**
  * Servlet implementation class AnkiTime
  */
@@ -50,7 +50,7 @@ public class AnkiTime extends HttpServlet {
 		UserBean userbean = (UserBean) session.getAttribute("userbean");
 		FileOfData fileofdata = (FileOfData) session.getAttribute("fileofdata");
 		CreateUserDAO createuser_dao = new CreateUserDAO();
-		Utils utils = new Utils();
+		StringUtils stringutils = new StringUtils();
 		
 		fileofdata.setMinId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "min"));
 		fileofdata.setMaxId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "max"));
@@ -62,14 +62,14 @@ public class AnkiTime extends HttpServlet {
 			id++;
 		}else if("back".equals(action)) {
 			System.out.println("back");
-			id = utils.backOrNextId(fileofdata, "back", id);
+			id = stringutils.backOrNextId(fileofdata, "back", id);
 			question_answer = "question";
 		}else if("convert_question".equals(action)) {
 			question_answer = "question";
 		}else if("convert_answer".equals(action)) {
 			question_answer = "answer";
 		}else if("next".equals(action)) {
-			id = utils.backOrNextId(fileofdata, "next", id);
+			id = stringutils.backOrNextId(fileofdata, "next", id);
 			question_answer = "question";
 		}else if("convert_first".equals(action)) {
 			id = fileofdata.getMinId();

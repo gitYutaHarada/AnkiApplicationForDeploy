@@ -21,10 +21,6 @@ int isSuccessInsert = (isSuccessInsert_Integer != null) ? isSuccessInsert_Intege
 int isName_int = (isName != null) ? isName : 2;
 int isPass_int = (isPass != null) ? isPass : 2;
 
-System.out.println(isSuccessInsert);
-System.out.println(isName_int);
-System.out.println(isPass_int);
-
 if (isSuccessInsert == 1 && isName_int == 1 && isPass_int == 1) { %>
 	<p>おめでとうございます！新規登録成功です！戻るボタンを押してもう一度ログインしましょう！</p>
 

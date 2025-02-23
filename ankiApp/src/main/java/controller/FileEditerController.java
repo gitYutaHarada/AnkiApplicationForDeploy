@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import bean.FileOfData;
 import bean.UserBean;
 import data_access_object.CreateUserDAO;
+import utils.StringUtils;
 
 /**
  * Servlet implementation class FileEditerController
@@ -51,12 +52,14 @@ public class FileEditerController extends HttpServlet {
 		UserBean userbean = (UserBean) session.getAttribute("userbean");
 		FileOfData fileofdata = (FileOfData) session.getAttribute("fileofdata");
 		CreateUserDAO createuser_dao = new CreateUserDAO();
+		StringUtils stringutils = new StringUtils();
+		String create_question = request.getParameter("create_question");
+		String create_answer = request.getParameter("create_answer");
 
-
-		if ("create".equals(action)) {
-			String create_question = request.getParameter("create_question");
-			String create_answer = request.getParameter("create_answer");
-
+		if(stringutils.isEmptyOrSpace(create_question) || stringutils.isEmptyOrSpace(create_answer)) {
+			String msg = "質問や解答へ空白を入れることはできません";
+			request.setAttribute("msg", msg);
+		}else if ("create".equals(action)) {
 			createuser_dao.addData(fileofdata, userbean.getName(), fileofdata.getFileName(), create_question,
 					create_answer);
 			fileofdata.setMaxId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "max"));

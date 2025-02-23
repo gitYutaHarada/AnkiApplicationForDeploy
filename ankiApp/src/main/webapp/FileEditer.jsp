@@ -22,11 +22,24 @@ if (request.getAttribute("select_id") != null)
 		<button type="submit" name="action" value="back">マイページに戻る</button>
 	</form>
 	<p><strong><%=userbean.getName()%></strong>の<strong><%=fileofdata.getFileName()%></strong>という名前のファイルの編集画面</p>
-	<%
+	<% 
 		int i = 0;
 		if (fileofdata.getMaxId() == 0) {
 	%>
 			<p>Ankiカードがありません</p>
+			<table id="file_content">
+				<thead>
+					<tr id="question_answer">
+						<th>質問</th>
+						<th>解答</th>
+					</tr>
+				</thead>
+			</table>
+	<%
+		} else if(msg != null){
+			String msg = (String)request.getAttribute("msg");
+	%>	
+			<p><%=msg %></p>
 			<table id="file_content">
 				<thead>
 					<tr id="question_answer">
