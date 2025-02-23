@@ -9,6 +9,9 @@ request.setCharacterEncoding("utf-8");
 int select_id = 0;
 if (request.getAttribute("select_id") != null)
 	select_id = (Integer) request.getAttribute("select_id");
+String msg = "";
+if (request.getAttribute("msg") != null)
+	select_id = (String) request.getAttribute("msg");
 %>
 <!DOCTYPE html>
 <html>
@@ -23,6 +26,7 @@ if (request.getAttribute("select_id") != null)
 	</form>
 	<p><strong><%=userbean.getName()%></strong>の<strong><%=fileofdata.getFileName()%></strong>という名前のファイルの編集画面</p>
 	<% 
+		
 		int i = 0;
 		if (fileofdata.getMaxId() == 0) {
 	%>
@@ -36,8 +40,7 @@ if (request.getAttribute("select_id") != null)
 				</thead>
 			</table>
 	<%
-		} else if((String)request.getAttribute("msg") != null){
-			String msg = (String)request.getAttribute("msg");
+		} else if(msg != ""){
 	%>	
 			<p><%=msg %></p>
 			<table id="file_content">
