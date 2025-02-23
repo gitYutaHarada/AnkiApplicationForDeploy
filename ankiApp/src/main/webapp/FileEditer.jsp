@@ -11,7 +11,7 @@ if (request.getAttribute("select_id") != null)
 	select_id = (Integer) request.getAttribute("select_id");
 String msg = "";
 if (request.getAttribute("msg") != null)
-	select_id = (String) request.getAttribute("msg");
+	msg = (String) request.getAttribute("msg");
 %>
 <!DOCTYPE html>
 <html>
