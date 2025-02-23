@@ -323,7 +323,7 @@ public class CreateUserDAO {
 			preparedstatement = connection.prepareStatement(serchId_sql);
 			preparedstatement.setString(1,  question);
 			result_set = preparedstatement.executeQuery();
-			if(result_set.next()) {
+			while(result_set.next()) {
 				id = result_set.getInt("dataId");
 			}
 		} catch (Exception e) {
