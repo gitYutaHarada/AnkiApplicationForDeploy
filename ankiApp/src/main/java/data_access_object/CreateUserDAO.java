@@ -13,7 +13,7 @@ import java.util.Set;
 import bean.FileOfData;
 import bean.UserBean;
 import bean.UserInformationBean;
-import utils.Utils;
+import utils.PasswordUtils;
 
 public class CreateUserDAO {
 	private final String URL = "jdbc:mysql://d6uoc91fueyqgpyr:ht52jrafaw0f8qlh@nba02whlntki5w2p.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/yngwlvduglko28ms";
@@ -212,8 +212,8 @@ public class CreateUserDAO {
 	public boolean isLogin(String name, String pass) {
 		PreparedStatement preparedstatement = null;
 		ResultSet result_set = null;
-		Utils utils = new Utils();
-		String inputHashPass = utils.hashPass(pass);
+		PasswordUtils passwordutils = new PasswordUtils();
+		String inputHashPass = passwordutils.hashPass(pass);
 		String isLogin_sql = "SELECT COUNT(*) FROM user WHERE name = ? AND password = ?";
 		Boolean isLogin = false;
 
