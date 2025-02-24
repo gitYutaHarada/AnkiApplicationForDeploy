@@ -11,8 +11,14 @@ import bean.UserInformationBean;
 import utils.PasswordUtils;
 
 public class UserDAO {
-	DAO dao = new DAO();
-	Connection connection = dao.getConnection();
+	DAO dao;
+	Connection connection;
+	
+	public UserDAO() {
+		this.dao = new DAO();
+		this.connection = dao.getConnection();
+	}
+
 
 	public UserInformationBean select() {
 		PreparedStatement preparedstatement = null;
@@ -127,7 +133,6 @@ public class UserDAO {
 		Boolean isLogin = false;
 
 		try {
-			System.out.println(inputHashPass);
 			dao.connectDB();
 			preparedstatement = connection.prepareStatement(isLogin_sql);
 			preparedstatement.setString(1, name);
