@@ -59,7 +59,7 @@ if (request.getAttribute("deleteFile_count") != null)
 					</tr>
 		<%			
 				}
-				Systm.out.println(i);
+				System.out.println(i);
 			}
 		%>
 
