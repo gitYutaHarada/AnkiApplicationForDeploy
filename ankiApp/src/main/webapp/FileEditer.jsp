@@ -40,7 +40,7 @@ if (request.getAttribute("msg") != null)
 			</table>
 	<%
 		} else {
-			if("".equals(msg))){
+			if("".equals(msg)){
 	%>
 				<p><%= msg %></p>
 	<%			
