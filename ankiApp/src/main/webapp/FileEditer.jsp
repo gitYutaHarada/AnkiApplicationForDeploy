@@ -26,7 +26,6 @@ if (request.getAttribute("msg") != null)
 	</form>
 	<p><strong><%=userbean.getName()%></strong>の<strong><%=fileofdata.getFileName()%></strong>という名前のファイルの編集画面</p>
 	<% 
-		
 		int i = 0;
 		if (fileofdata.getMaxId() == 0) {
 	%>
@@ -41,7 +40,7 @@ if (request.getAttribute("msg") != null)
 			</table>
 	<%
 		} else {
-			if(msg != null){
+			if("".equals(msg))){
 	%>
 				<p><%= msg %></p>
 	<%			
