@@ -9,9 +9,7 @@ request.setCharacterEncoding("utf-8");
 int select_id = 0;
 if (request.getAttribute("select_id") != null)
 	select_id = (Integer) request.getAttribute("select_id");
-String msg = "";
-if (request.getAttribute("msg") != null)
-	msg = (String) request.getAttribute("msg");
+String msg = Objects.toString(request.getAttribute("msg"), "");
 %>
 <!DOCTYPE html>
 <html>
