@@ -39,7 +39,7 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 			</table>
 	<%
 		} else {
-			if("".equals(msg)){
+			if(!"".equals(msg)){
 	%>
 				<p><%= msg %></p>
 	<%			
