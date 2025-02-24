@@ -10,9 +10,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import bean.FileOfData;
+import bean.DataOfFile;
 import bean.UserBean;
-import data_access_object.CreateUserDAO;
+import data_access_object.DataOfFileDAO;
 import utils.StringUtils;
 /**
  * Servlet implementation class AnkiTime
@@ -48,31 +48,31 @@ public class AnkiTime extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		UserBean userbean = (UserBean) session.getAttribute("userbean");
-		FileOfData fileofdata = (FileOfData) session.getAttribute("fileofdata");
-		CreateUserDAO createuser_dao = new CreateUserDAO();
+		DataOfFile dataoffile = (DataOfFile) session.getAttribute("dataoffile");
+		DataOfFileDAO dataoffile_dao = new DataOfFileDAO();
 		StringUtils stringutils = new StringUtils();
 		
-		fileofdata.setMinId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "min"));
-		fileofdata.setMaxId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "max"));
+		dataoffile.setMinId(dataoffile_dao.getDataOfFile_max_min(dataoffile.getFileName(), userbean.getName(), "min"));
+		dataoffile.setMaxId(dataoffile_dao.getDataOfFile_max_min(dataoffile.getFileName(), userbean.getName(), "max"));
 		String action = request.getParameter("action");
 		
 		
-		if(id == fileofdata.getMaxId() && "next".equals(action)) {
+		if(id == dataoffile.getMaxId() && "next".equals(action)) {
 			question_answer = "last";
 			id++;
 		}else if("back".equals(action)) {
 			System.out.println("back");
-			id = stringutils.backOrNextId(fileofdata, "back", id);
+			id = stringutils.backOrNextId(dataoffile, "back", id);
 			question_answer = "question";
 		}else if("convert_question".equals(action)) {
 			question_answer = "question";
 		}else if("convert_answer".equals(action)) {
 			question_answer = "answer";
 		}else if("next".equals(action)) {
-			id = stringutils.backOrNextId(fileofdata, "next", id);
+			id = stringutils.backOrNextId(dataoffile, "next", id);
 			question_answer = "question";
 		}else if("convert_first".equals(action)) {
-			id = fileofdata.getMinId();
+			id = dataoffile.getMinId();
 			question_answer = "question";	
 		}
 		
@@ -86,7 +86,7 @@ public class AnkiTime extends HttpServlet {
 		request.setAttribute("question_answer", question_answer);
 
 		session.setAttribute("userbean", userbean);
-		session.setAttribute("fileofdata", fileofdata);
+		session.setAttribute("dataoffile", dataoffile);
 		RequestDispatcher requestdipatcher = request.getRequestDispatcher("AnkiTime.jsp");
 		requestdipatcher.forward(request, response);
 		

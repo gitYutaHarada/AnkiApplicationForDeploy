@@ -12,8 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import bean.UserBean;
-import data_access_object.CreateUserDAO;
-
+import data_access_object.FileDAO;
 /**
  * Servlet implementation class MyPageController
  */
@@ -50,22 +49,22 @@ public class MyPageController extends HttpServlet {
 		UserBean userbean = (UserBean) session.getAttribute("userbean");
 		String userName = userbean.getName();
 
-		CreateUserDAO createuser_dao = new CreateUserDAO();
+		FileDAO file_dao = new FileDAO();
 
 		String action = request.getParameter("action");
 
 		if ("create".equals(action)) {
 			String create_fileName = request.getParameter("create_fileName");
 			userbean.addFile(create_fileName);
-			createuser_dao.addFileName(userbean.getName(), create_fileName);
+			file_dao.addFileName(userbean.getName(), create_fileName);
 
 		} else if ("remove".equals(action)) {
 			String remove_fileName = request.getParameter("remove_fileName");
-			int deleteFile_count = createuser_dao.deleteData(userName, remove_fileName);
+			int deleteFile_count = file_dao.deleteFile(userName, remove_fileName);
 			request.setAttribute("deleteFile_count", deleteFile_count);
 		}
 
-		List<String> fileNamesList = createuser_dao.getAllFileName(userName);
+		List<String> fileNamesList = file_dao.getAllFileName(userName);
 		userbean.setFileNamesList(fileNamesList);
 		session.setAttribute("userbean", userbean);
 

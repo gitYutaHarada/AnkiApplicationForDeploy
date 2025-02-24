@@ -2,7 +2,7 @@
 <%@page import="java.util.*, javax.servlet.*, javax.servlet.http.*"%>
 
 <jsp:useBean id="userbean" scope="session" class="bean.UserBean" />
-<jsp:useBean id="fileofdata" scope="session" class="bean.FileOfData" />
+<jsp:useBean id="dataoffile" scope="session" class="bean.DataOfFile" />
 
 <%
 request.setCharacterEncoding("utf-8");
@@ -16,17 +16,16 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="/css/style.css">
-	<title><%=userbean.getName()%>の<%=fileofdata.getFileName()%></title>
+	<title><%=userbean.getName()%>の<%=dataoffile.getFileName()%></title>
 </head>
 <body>
 	<form id="back" action="/MyPageController" method="post">
 		<button type="submit" name="action" value="back">マイページに戻る</button>
 	</form>
-	<p><strong><%=userbean.getName()%></strong>の<strong><%=fileofdata.getFileName()%></strong>という名前のファイルの編集画面</p>
+	<p><strong><%=userbean.getName()%></strong>の<strong><%=dataoffile.getFileName()%></strong>という名前のファイルの編集画面</p>
 	<% 
-		System.out.println(msg);
 		int i = 0;
-		if (fileofdata.getMaxId() == 0) {
+		if (dataoffile.getMaxId() == 0) {
 	%>
 			<p>Ankiカードがありません</p>
 			<table id="file_content">
@@ -53,14 +52,14 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 					</tr>
 				</thead>
 		<%
-			while (i != (fileofdata.getMaxId() + 1)) {
-				if (fileofdata.isElement(i)) {
+			while (i != (dataoffile.getMaxId() + 1)) {
+				if (dataoffile.isElement(i)) {
 		%>
 				<tbody>
 					<tr>
 						<form action="/FileEditerController" method="post">
 							<td>
-								<%=fileofdata.getQuestionById(i)%>
+								<%=dataoffile.getQuestionById(i)%>
 								<%
 									if (select_id == i) { 
 								%>
@@ -70,7 +69,7 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 								%>
 							</td>
 							<td>
-								<%=fileofdata.getAnswerById(i)%> 
+								<%=dataoffile.getAnswerById(i)%> 
 								<%
 									if (select_id == i) { 
 								%> 
@@ -79,8 +78,8 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 									}
 								%>
 							</td> 
-								<input type="hidden" name="select_question" value="<%=fileofdata.getQuestionById(i)%>">
-								<input type="hidden" name="select_answer" value="<%=fileofdata.getAnswerById(i)%>"> 
+								<input type="hidden" name="select_question" value="<%=dataoffile.getQuestionById(i)%>">
+								<input type="hidden" name="select_answer" value="<%=dataoffile.getAnswerById(i)%>"> 
 								<input type="hidden" name="select_id" value="<%=i%>">
 							<td>
 								<%

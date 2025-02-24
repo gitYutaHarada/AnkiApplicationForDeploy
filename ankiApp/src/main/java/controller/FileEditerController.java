@@ -10,9 +10,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import bean.FileOfData;
+import bean.DataOfFile;
 import bean.UserBean;
-import data_access_object.CreateUserDAO;
+import data_access_object.DataOfFileDAO;
 import utils.StringUtils;
 
 /**
@@ -50,8 +50,8 @@ public class FileEditerController extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		UserBean userbean = (UserBean) session.getAttribute("userbean");
-		FileOfData fileofdata = (FileOfData) session.getAttribute("fileofdata");
-		CreateUserDAO createuser_dao = new CreateUserDAO();
+		DataOfFile dataoffile = (DataOfFile) session.getAttribute("dataoffile");
+		DataOfFileDAO dataoffile_dao = new DataOfFileDAO();
 		StringUtils stringutils = new StringUtils();
 		String create_question = request.getParameter("create_question");
 		String create_answer = request.getParameter("create_answer");
@@ -62,20 +62,18 @@ public class FileEditerController extends HttpServlet {
 			String msg = "質問や解答へ空白を入れることはできません";
 			request.setAttribute("msg", msg);
 		}else if ("create".equals(action)) {
-			createuser_dao.addData(fileofdata, userbean.getName(), fileofdata.getFileName(), create_question,
+			dataoffile_dao.addData(dataoffile, userbean.getName(), dataoffile.getFileName(), create_question,
 					create_answer);
-			fileofdata.setMaxId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "max"));
+			dataoffile.setMaxId(dataoffile_dao.getDataOfFile_max_min(dataoffile.getFileName(), userbean.getName(), "max"));
 		}else if("delete".equals(action)) {
 			String select_question = request.getParameter("select_question");
 			String select_answer = request.getParameter("select_answer");
 		    int select_id = Integer.parseInt((String)request.getParameter("select_id"));
-			System.out.println("aaa");
-			createuser_dao.deleteFileOfData(fileofdata, select_id, userbean.getName());
-			fileofdata.setMaxId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "max"));
+			dataoffile_dao.deleteFileOfData(dataoffile, select_id, userbean.getName());
+			dataoffile.setMaxId(dataoffile_dao.getDataOfFile_max_min(dataoffile.getFileName(), userbean.getName(), "max"));
 		    request.setAttribute("select_id", select_id);
 		}else if("edit".equals(action)) {
 		    int select_id = Integer.parseInt((String)request.getParameter("select_id"));
-		    System.out.println("bbb");
 		    request.setAttribute("select_id", select_id);
 		}else if("complete_edit".equals(action)) {
 			String select_question = request.getParameter("select_question");
@@ -86,12 +84,12 @@ public class FileEditerController extends HttpServlet {
 			if(edit_answer == "") edit_answer = select_answer;
 		    int select_id = Integer.parseInt((String)request.getParameter("select_id"));
 
-		    createuser_dao.editFileOfData(fileofdata, select_id, userbean.getName(), edit_question, edit_answer);
+		    dataoffile_dao.editFileOfData(dataoffile, select_id, userbean.getName(), edit_question, edit_answer);
 
 		}
 		
 		session.setAttribute("userbean", userbean);
-		session.setAttribute("fileofdata", fileofdata);
+		session.setAttribute("dataoffile", dataoffile);
 		
 		RequestDispatcher requestdispatcher = request.getRequestDispatcher("FileEditer.jsp");
 		requestdispatcher.forward(request, response);

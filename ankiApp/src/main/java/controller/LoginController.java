@@ -12,7 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import bean.UserBean;
-import data_access_object.CreateUserDAO;
+import data_access_object.FileDAO;
+import data_access_object.UserDAO;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
@@ -39,22 +40,22 @@ public class LoginController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
 		
-        CreateUserDAO create_dao = new CreateUserDAO();
+        UserDAO user_dao = new UserDAO();
         
         if("login".equals(action)) {
 	    	String name = request.getParameter("name");
 	    	String pass = request.getParameter("pass");
 	    	//nameとおなじ行のpassを探す
 	    	//そのpassとinputPassがtrueの場合ログインできるようにする
-	    	if(create_dao.isLogin(name, pass)) {
+	    	if(user_dao.isLogin(name, pass)) {
 	        	request.setAttribute("name", name);
 	        	request.setAttribute("pass", pass);
 	        	
 	        	HttpSession session = request.getSession(true);
 	        	
 	        	UserBean userbean = new UserBean();
-	    		CreateUserDAO createuser_dao = new CreateUserDAO();
-	    		List <String> fileNamesList = createuser_dao.getAllFileName(name);
+	    		FileDAO file_dao = new FileDAO();
+	    		List <String> fileNamesList = file_dao.getAllFileName(name);
 	    		
 	    		userbean.setName(name);
 	    		userbean.setPassword(pass);

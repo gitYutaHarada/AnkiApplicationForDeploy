@@ -10,9 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import bean.FileOfData;
 import bean.UserBean;
-import data_access_object.CreateUserDAO;
+import data_access_object.DataOfFileDAO;
 
 /**
  * Servlet implementation class FileEditierController
@@ -49,15 +48,15 @@ public class FileEditerJspController extends HttpServlet {
 		//今までのセッションの引継ぎ
 		HttpSession session = request.getSession();
 		//選択されたファイルの内容をデータベースから取ってきてBeanクラスに保存してセッション管理する。
-		CreateUserDAO createuser_dao = new CreateUserDAO();
+		DataOfFileDAO dataoffile_dao = new DataOfFileDAO();
 		
 	    UserBean userbean = (UserBean) session.getAttribute("userbean");
-		FileOfData fileofdata = new FileOfData();
-		createuser_dao.setDataOfFile(fileofdata, fileName, userName);
-		fileofdata.setMaxId(createuser_dao.getDataOfFile_max_min(fileName, userName, "max"));
-		fileofdata.setFileName(fileName);
+		DataOfFIle dataoffile = new DataOfFIle();
+		dataoffile_dao.setDataOfFile(dataoffile, fileName, userName);
+		dataoffile.setMaxId(dataoffile_dao.getDataOfFile_max_min(fileName, userName, "max"));
+		dataoffile.setFileName(fileName);
 		
-		session.setAttribute("fileofdata", fileofdata);
+		session.setAttribute("dataoffile", dataoffile);
 		
 		RequestDispatcher requestdispatcher = request.getRequestDispatcher("FileEditer.jsp");
 		requestdispatcher.forward(request, response);

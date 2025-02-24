@@ -2,7 +2,7 @@
 <%@ page import="java.util.*, javax.servlet.*, javax.servlet.http.*"%>
 
  <jsp:useBean id="userbean" scope="session" class="bean.UserBean"/>
- <jsp:useBean id="fileofdata" scope="session" class="bean.FileOfData"/>
+ <jsp:useBean id="dataoffile" scope="session" class="bean.DataOfFile"/>
  
 <!DOCTYPE html>
 <html>
@@ -15,18 +15,18 @@
 	<form id="back" action="/FileEditerController" method="post">
 		<button type="submit" name="action" value="back">ファイル編集画面に戻る</button>
 	</form>
-	<p><%=userbean.getName() %>の<%=fileofdata.getFileName() %></p>
+	<p><%=userbean.getName() %>の<%=dataoffile.getFileName() %></p>
 	<% 
 		String question_answer = (String)request.getAttribute("question_answer");
-		int id = ((int)request.getAttribute("id") != 0) ? (int)request.getAttribute("id") : fileofdata.getMinId();
-		if(fileofdata.isElement(id) && "question".equals(question_answer)){
+		int id = ((int)request.getAttribute("id") != 0) ? (int)request.getAttribute("id") : dataoffile.getMinId();
+		if(dataoffile.isElement(id) && "question".equals(question_answer)){
 	%>
-			<h3><%=fileofdata.getQuestionById(id) %></h3>
+			<h3><%=dataoffile.getQuestionById(id) %></h3>
 
 	<%
-		}else if(fileofdata.isElement(id) && "answer".equals(question_answer)){
+		}else if(dataoffile.isElement(id) && "answer".equals(question_answer)){
 	%>
-			<h3><%=fileofdata.getAnswerById(id) %></h3>
+			<h3><%=dataoffile.getAnswerById(id) %></h3>
 	<%
 		}else if("last".equals(question_answer)){
 	%>
@@ -36,7 +36,7 @@
 	%>
 	<form action="/AnkiTime" method="post">
 		<%
-			if(id != fileofdata.getMinId()){	
+			if(id != dataoffile.getMinId()){	
 		%>
 				<button type="submit" name="action" value="back">戻る</button>		
 		<%

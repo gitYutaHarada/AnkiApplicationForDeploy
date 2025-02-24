@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileOfData implements Serializable{
+public class DataOfFile implements Serializable{
 	public String fileName;
 	public int maxId = 0;
 	public int minId = 0;
@@ -12,7 +12,7 @@ public class FileOfData implements Serializable{
 	public HashMap<Integer, String> answer = new HashMap<>();
 
 	
-	public FileOfData() {
+	public DataOfFile() {
 	}
 
 	public String getFileName() {
