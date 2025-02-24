@@ -69,12 +69,13 @@ public class FileEditerController extends HttpServlet {
 			String select_question = request.getParameter("select_question");
 			String select_answer = request.getParameter("select_answer");
 		    int select_id = Integer.parseInt((String)request.getParameter("select_id"));
-			
+			System.out.println("aaa");
 			createuser_dao.deleteFileOfData(fileofdata, select_id, userbean.getName());
 			fileofdata.setMaxId(createuser_dao.getDataOfFile_max_min(fileofdata.getFileName(), userbean.getName(), "max"));
+		    request.setAttribute("select_id", select_id);
 		}else if("edit".equals(action)) {
 		    int select_id = Integer.parseInt((String)request.getParameter("select_id"));
-		    
+		    System.out.println("bbb");
 		    request.setAttribute("select_id", select_id);
 		}else if("complete_edit".equals(action)) {
 			String select_question = request.getParameter("select_question");
