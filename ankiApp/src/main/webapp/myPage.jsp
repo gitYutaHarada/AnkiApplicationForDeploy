@@ -33,27 +33,32 @@ if (request.getAttribute("deleteFile_count") != null)
 		<%
 			for (int i = 0; i < userbean.getFileNamesSize(); i++) {
 		%>
-		<th>
-			<form action="/FileEditerJspController" method="post">
-				<figcaption><%=userbean.getFileName(i)%></figcaption>
-				<button type="submit">
-					<img src="/images/file.jpg" alt="Image <%=i + 1%>" name="" width="100" height="100">
-				</button>
-		
-				<input type="hidden" name="fileName" value="<%=userbean.getFileName(i)%>"> 
-				<input type="hidden" name="userName" value="<%=userbean.getName()%>">
-		
-			</form>
-			<br/>
-			<form action="/MyPageController" method="post" onsubmit="return confirmDelete()">
-				<button type="submit" name="action" value="remove">ファイルの削除</button>
-		
-				<input type="hidden" name="remove_fileName" value="<%=userbean.getFileName(i)%>">
-			</form>
+				<th>
+					<form action="/FileEditerJspController" method="post">
+						<figcaption><%=userbean.getFileName(i)%></figcaption>
+						<button type="submit">
+							<img src="/images/file.jpg" alt="Image <%=i + 1%>" name="" width="100" height="100">
+						</button>
+				
+						<input type="hidden" name="fileName" value="<%=userbean.getFileName(i)%>"> 
+						<input type="hidden" name="userName" value="<%=userbean.getName()%>">
+				
+					</form>
+					<br/>
+					<form action="/MyPageController" method="post" onsubmit="return confirmDelete()">
+						<button type="submit" name="action" value="remove">ファイルの削除</button>
+				
+						<input type="hidden" name="remove_fileName" value="<%=userbean.getFileName(i)%>">
+					</form>
 		<%
+				if(i % 4 == 0 ){
+		%>
+					<br>
+		<%			
+				}
 			}
 		%>
-		</th>
+				</th>
 	</table>
 	<br/>
 	<form action="/MyPageController" method="post">

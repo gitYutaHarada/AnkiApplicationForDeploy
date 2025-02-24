@@ -56,7 +56,6 @@ public class MyPageController extends HttpServlet {
 
 		if ("create".equals(action)) {
 			String create_fileName = request.getParameter("create_fileName");
-			System.out.println(create_fileName);
 			userbean.addFile(create_fileName);
 			createuser_dao.addFileName(userbean.getName(), create_fileName);
 
