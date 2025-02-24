@@ -37,12 +37,12 @@ if (request.getAttribute("deleteFile_count") != null)
 				
 						<th>
 							<form action="/FileEditerJspController" method="post">
-								<figcaption><%=userbean.getFileName(i)%></figcaption>
+								<figcaption><%=userbean.getFileName(i-1)%></figcaption>
 								<button type="submit">
-									<img src="/images/file.jpg" alt="Image <%=i + 1%>" name="" width="100" height="100">
+									<img src="/images/file.jpg" alt="Image <%=i - 1%>" name="" width="100" height="100">
 								</button>
 						
-								<input type="hidden" name="fileName" value="<%=userbean.getFileName(i)%>"> 
+								<input type="hidden" name="fileName" value="<%=userbean.getFileName(i-1)%>"> 
 								<input type="hidden" name="userName" value="<%=userbean.getName()%>">
 						
 							</form>
@@ -50,7 +50,7 @@ if (request.getAttribute("deleteFile_count") != null)
 							<form action="/MyPageController" method="post" onsubmit="return confirmDelete()">
 								<button type="submit" name="action" value="remove">ファイルの削除</button>
 						
-								<input type="hidden" name="remove_fileName" value="<%=userbean.getFileName(i)%>">
+								<input type="hidden" name="remove_fileName" value="<%=userbean.getFileName(i-1)%>">
 							</form>
 						</th>
 		<%
