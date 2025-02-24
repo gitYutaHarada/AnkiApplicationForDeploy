@@ -40,19 +40,12 @@ if (request.getAttribute("msg") != null)
 				</thead>
 			</table>
 	<%
-		} else if(msg != ""){
-	%>	
-			<p><%=msg %></p>
-			<table id="file_content">
-				<thead>
-					<tr id="question_answer">
-						<th>質問</th>
-						<th>解答</th>
-					</tr>
-				</thead>
-			</table>
-	<%
 		} else {
+			if(msg != null){
+	%>
+				<p><%= msg %></p>
+	<%			
+			}
 	%>
 			<table id="file_content">
 				<thead>
