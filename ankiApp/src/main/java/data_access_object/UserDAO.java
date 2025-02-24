@@ -1,6 +1,5 @@
 package data_access_object;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashSet;
@@ -12,11 +11,9 @@ import utils.PasswordUtils;
 
 public class UserDAO {
 	DAO dao;
-	Connection connection;
 	
 	public UserDAO() {
 		this.dao = new DAO();
-		this.connection = dao.getConnection();
 	}
 
 
@@ -28,7 +25,7 @@ public class UserDAO {
 
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(sql);
+			preparedstatement = dao.getConnection().prepareStatement(sql);
 			result_set = preparedstatement.executeQuery();
 
 			while (result_set.next()) {
@@ -68,7 +65,7 @@ public class UserDAO {
 			}
 			dao.connectDB();
 
-			preparedstatement_serchMin = connection.prepareStatement(searchNewMinId_aql);
+			preparedstatement_serchMin = dao.getConnection().prepareStatement(searchNewMinId_aql);
 			serch_id_resultSet = preparedstatement_serchMin.executeQuery();
 
 			Set<Integer> userIds = new HashSet<>();
@@ -80,7 +77,7 @@ public class UserDAO {
 			while (userIds.contains(newId)) {
 				newId++;
 			}
-			preparedstatement_insert = connection.prepareStatement(insert_sql);
+			preparedstatement_insert = dao.getConnection().prepareStatement(insert_sql);
 			preparedstatement_insert.setInt(1, newId);
 			preparedstatement_insert.setString(2, name);
 			preparedstatement_insert.setString(3, hash_pass);
@@ -109,7 +106,7 @@ public class UserDAO {
 		
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(getHashPassByName_sql);
+			preparedstatement = dao.getConnection().prepareStatement(getHashPassByName_sql);
 			preparedstatement.setString(1,name);
 			result_set = preparedstatement.executeQuery();
 			if(result_set.next()) {
@@ -134,7 +131,7 @@ public class UserDAO {
 
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(isLogin_sql);
+			preparedstatement = dao.getConnection().prepareStatement(isLogin_sql);
 			preparedstatement.setString(1, name);
 			preparedstatement.setString(2, inputHashPass);
 			result_set = preparedstatement.executeQuery();
@@ -165,7 +162,7 @@ public class UserDAO {
 		Boolean isNameAvailable = false;
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(isNameAvailable_sql);
+			preparedstatement = dao.getConnection().prepareStatement(isNameAvailable_sql);
 			preparedstatement.setString(1, name);
 			result_set = preparedstatement.executeQuery();
 			result_set.next();

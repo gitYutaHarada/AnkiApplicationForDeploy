@@ -17,8 +17,10 @@ public class DAO {
 	}
 	
 	public void connectDB() throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		connection = DriverManager.getConnection(URL, USER, PASS);
+		if(connection == null || connection.isClosed()) {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection(URL, USER, PASS);
+		}
 	}
 	
 	
