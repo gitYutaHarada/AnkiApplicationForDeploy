@@ -54,7 +54,7 @@ if (request.getAttribute("deleteFile_count") != null)
 							</form>
 						</th>
 		<%
-				if( (i != 0) || (i % 4 == 0) || (i == userbean.getFileNamesSize() - 1) ){
+				if( (i != 0) &&  ( (i % 4 == 0) || (i == userbean.getFileNamesSize() - 1) ) ){
 		%>
 					</tr>
 		<%			
