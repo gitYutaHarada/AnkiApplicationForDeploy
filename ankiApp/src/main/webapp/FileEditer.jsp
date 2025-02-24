@@ -113,7 +113,7 @@ if (request.getAttribute("msg") != null)
 	<div id="create_anki">
 		<form action="/FileEditerController" method="post">
 			<input type="text" name="create_question" placeholder="質問を入力">
-			<input type="text" name="create_answer" placeholder="答えを入力"><br/>
+			<input type="text" name="create_answer" placeholder="解答を入力"><br/>
 	
 			<button type="submit" name="action" value="create">Ankiカードの作成</button>
 		</form><br/><br/>
