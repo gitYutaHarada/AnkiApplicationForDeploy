@@ -32,7 +32,7 @@ if (request.getAttribute("deleteFile_count") != null)
 	<table id="file_editer">
 					<tr>
 		<%
-			for (int i = 0; i < userbean.getFileNamesSize(); i++) {
+			for (int i = 1; i <= userbean.getFileNamesSize(); i++) {
 		%>
 				
 						<th>
@@ -54,11 +54,12 @@ if (request.getAttribute("deleteFile_count") != null)
 							</form>
 						</th>
 		<%
-				if( (i != 0) &&  ( (i % 4 == 0) || (i == userbean.getFileNamesSize() - 1) ) ){
+				if( (i != 1) &&  ( (i % 4 == 0) || (i == userbean.getFileNamesSize()) ) ){
 		%>
 					</tr>
 		<%			
 				}
+				Systm.out.println(i);
 			}
 		%>
 
