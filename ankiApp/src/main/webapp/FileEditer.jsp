@@ -26,6 +26,7 @@ if (request.getAttribute("msg") != null)
 	</form>
 	<p><strong><%=userbean.getName()%></strong>の<strong><%=fileofdata.getFileName()%></strong>という名前のファイルの編集画面</p>
 	<% 
+		System.out.println(msg);
 		int i = 0;
 		if (fileofdata.getMaxId() == 0) {
 	%>
