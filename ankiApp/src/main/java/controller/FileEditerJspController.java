@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import bean.DataOfFile;
 import bean.UserBean;
 import data_access_object.DataOfFileDAO;
 
@@ -51,7 +52,7 @@ public class FileEditerJspController extends HttpServlet {
 		DataOfFileDAO dataoffile_dao = new DataOfFileDAO();
 		
 	    UserBean userbean = (UserBean) session.getAttribute("userbean");
-		DataOfFIle dataoffile = new DataOfFIle();
+		DataOfFile dataoffile = new DataOfFile();
 		dataoffile_dao.setDataOfFile(dataoffile, fileName, userName);
 		dataoffile.setMaxId(dataoffile_dao.getDataOfFile_max_min(fileName, userName, "max"));
 		dataoffile.setFileName(fileName);

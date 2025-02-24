@@ -1,6 +1,6 @@
 package utils;
 
-import bean.FileOfData;
+import bean.DataOfFile;
 
 public class StringUtils {
 	
@@ -10,27 +10,24 @@ public class StringUtils {
 		return str.matches("[a-zA-Z0-9]+");
 	}
 	
-	public boolean isFileOfData(FileOfData fileofdata, int id) {
+	public boolean isDataOfFile(DataOfFile dataoffile, int id) {
 		boolean isfileofdata = false;
-		if(fileofdata.getQuestionMap().containsKey(id)) isfileofdata = true;
+		if(dataoffile.getQuestionMap().containsKey(id)) isfileofdata = true;
 		return isfileofdata;
 	}
 	
-	public int backOrNextId(FileOfData fileofdata, String backOrNext, int id) {
+	public int backOrNextId(DataOfFile dataoffile, String backOrNext, int id) {
 		if("back".equals(backOrNext)) {
-			System.out.println(id +"::" + fileofdata.getMaxId());
+			System.out.println(id +"::" + dataoffile.getMaxId());
 			//idが最小ではなくそのidが存在するときwhile文を抜ける
 			id--;
-			System.out.println(isFileOfData(fileofdata, id));
-
-			while(!isFileOfData(fileofdata, id) && id != fileofdata.getMinId()) {
+			while(!isDataOfFile(dataoffile, id) && id != dataoffile.getMinId()) {
 				id--;
 			}
-			System.out.println(id);
 			return id;
 		}else {
 			id++;
-			while(isFileOfData(fileofdata, id) && id != fileofdata.getMaxId()) {
+			while(isDataOfFile(dataoffile, id) && id != dataoffile.getMaxId()) {
 				id++;
 			}
 			return id;
