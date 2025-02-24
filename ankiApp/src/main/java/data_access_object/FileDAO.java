@@ -1,6 +1,5 @@
 package data_access_object;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.List;
 
 public class FileDAO {
 	DAO dao = new DAO();
-	Connection connection = dao.getConnection();
 	
 	public List<String> getAllFileName(String name) {
 		PreparedStatement preparedstatement = null;
@@ -20,7 +18,7 @@ public class FileDAO {
 		
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(getAllFileName_sql);
+			preparedstatement = dao.getConnection().prepareStatement(getAllFileName_sql);
 			preparedstatement.setString(1,  "DATAOF\\_%\\_" + name);
 			result_set = preparedstatement.executeQuery();
 			
@@ -50,7 +48,7 @@ public class FileDAO {
 				+ ");";
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(addFileData_sql);
+			preparedstatement = dao.getConnection().prepareStatement(addFileData_sql);
 			addFileData_int = preparedstatement.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -67,7 +65,7 @@ public class FileDAO {
 		int deleteData_int = 0;
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(deleteData_sql);
+			preparedstatement = dao.getConnection().prepareStatement(deleteData_sql);
 			if(isFile(fileName, name)) {
 				deleteData_int = preparedstatement.executeUpdate();
 			}
@@ -88,7 +86,7 @@ public class FileDAO {
 		Boolean isData = false;
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(isData_sql);
+			preparedstatement = dao.getConnection().prepareStatement(isData_sql);
 			preparedstatement.setString(1, "DATAOF_" + fileName + "_" + name);
 			result_set = preparedstatement.executeQuery();
 			result_set.next();

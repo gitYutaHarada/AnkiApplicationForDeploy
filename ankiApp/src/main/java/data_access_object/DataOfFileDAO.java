@@ -1,6 +1,5 @@
 package data_access_object;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -8,7 +7,6 @@ import bean.DataOfFile;
 
 public class DataOfFileDAO {
 	DAO dao = new DAO();
-	Connection connection = dao.getConnection();
 	
 	public void setDataOfFile(DataOfFile dataoffile, String fileName, String name){
 		PreparedStatement preparedstatement = null;
@@ -17,7 +15,7 @@ public class DataOfFileDAO {
 		String getDataOfFile_sql = "SELECT * FROM " + tableName;	
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(getDataOfFile_sql);
+			preparedstatement = dao.getConnection().prepareStatement(getDataOfFile_sql);
 			result_set = preparedstatement.executeQuery();
 			
 			while(result_set.next()) {
@@ -46,7 +44,7 @@ public class DataOfFileDAO {
 	
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(getDataOfFile_sql);
+			preparedstatement = dao.getConnection().prepareStatement(getDataOfFile_sql);
 			result_set = preparedstatement.executeQuery();
 			if(result_set.next()) {
 				DataId_max_min = result_set.getInt("maxDataId");
@@ -67,7 +65,7 @@ public class DataOfFileDAO {
 		String addData_sql = "INSERT INTO " + tableName + " (question, answer) VALUES(?, ?)";
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(addData_sql);
+			preparedstatement = dao.getConnection().prepareStatement(addData_sql);
 			preparedstatement.setString(1, question);
 			preparedstatement.setString(2, answer);
 			int addData_aql = preparedstatement.executeUpdate();
@@ -90,7 +88,7 @@ public class DataOfFileDAO {
 		
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(serchId_sql);
+			preparedstatement = dao.getConnection().prepareStatement(serchId_sql);
 			preparedstatement.setString(1,  question);
 			result_set = preparedstatement.executeQuery();
 			while(result_set.next()) {
@@ -113,7 +111,7 @@ public class DataOfFileDAO {
 		int deleteFileOfData_int = 0;
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(deleteFileOfData_sql);
+			preparedstatement = dao.getConnection().prepareStatement(deleteFileOfData_sql);
 			preparedstatement.setInt(1, id);
 			deleteFileOfData_int = preparedstatement.executeUpdate();
 		}catch(Exception e) {
@@ -131,7 +129,7 @@ public class DataOfFileDAO {
 		String editFileOfData_sql = "UPDATE " + tableName + " SET question = ?,answer = ? WHERE dataId = ?";
 		try {
 			dao.connectDB();
-			preparedstatement = connection.prepareStatement(editFileOfData_sql);
+			preparedstatement = dao.getConnection().prepareStatement(editFileOfData_sql);
 			preparedstatement.setString(1, edit_question);
 			preparedstatement.setString(2, edit_answer);
 			preparedstatement.setInt(3, select_id);
