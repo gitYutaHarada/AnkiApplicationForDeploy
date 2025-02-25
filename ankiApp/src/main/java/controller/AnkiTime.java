@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 import bean.DataOfFile;
 import bean.UserBean;
-import data_access_object.DataOfFileDAO;
+import dataAccessObject.DataOfFileDAO;
 import utils.StringUtils;
 /**
  * Servlet implementation class AnkiTime
@@ -44,49 +44,49 @@ public class AnkiTime extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		int id = Integer.parseInt(request.getParameter("id"));
-		String question_answer = (String)request.getParameter("question_answer");
+		String questionAnswer = (String)request.getParameter("questionAnswer");
 		
 		HttpSession session = request.getSession();
-		UserBean userbean = (UserBean) session.getAttribute("userbean");
-		DataOfFile dataoffile = (DataOfFile) session.getAttribute("dataoffile");
-		DataOfFileDAO dataoffile_dao = new DataOfFileDAO();
-		StringUtils stringutils = new StringUtils();
+		UserBean userBean = (UserBean) session.getAttribute("userBean");
+		DataOfFile dataOfFile = (DataOfFile) session.getAttribute("dataOfFile");
+		DataOfFileDAO dataOfFileDao = new DataOfFileDAO();
+		StringUtils stringUtils = new StringUtils();
 		
-		dataoffile.setMinId(dataoffile_dao.getDataOfFile_max_min(dataoffile.getFileName(), userbean.getName(), "min"));
-		dataoffile.setMaxId(dataoffile_dao.getDataOfFile_max_min(dataoffile.getFileName(), userbean.getName(), "max"));
+		dataOfFile.setMinId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileName(), userBean.getName(), "min"));
+		dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileName(), userBean.getName(), "max"));
 		String action = request.getParameter("action");
 		
 		
-		if(id == dataoffile.getMaxId() && "next".equals(action)) {
-			question_answer = "last";
+		if(id == dataOfFile.getMaxId() && "next".equals(action)) {
+			questionAnswer = "last";
 			id++;
 		}else if("back".equals(action)) {
 			System.out.println("back");
-			id = stringutils.backOrNextId(dataoffile, "back", id);
-			question_answer = "question";
-		}else if("convert_question".equals(action)) {
-			question_answer = "question";
-		}else if("convert_answer".equals(action)) {
-			question_answer = "answer";
+			id = stringUtils.backOrNextId(dataOfFile, "back", id);
+			questionAnswer = "question";
+		}else if("convertQuestion".equals(action)) {
+			questionAnswer = "question";
+		}else if("convertAnswer".equals(action)) {
+			questionAnswer = "answer";
 		}else if("next".equals(action)) {
-			id = stringutils.backOrNextId(dataoffile, "next", id);
-			question_answer = "question";
-		}else if("convert_first".equals(action)) {
-			id = dataoffile.getMinId();
-			question_answer = "question";	
+			id = stringUtils.backOrNextId(dataOfFile, "next", id);
+			questionAnswer = "question";
+		}else if("convertFirst".equals(action)) {
+			id = dataOfFile.getMinId();
+			questionAnswer = "question";	
 		}
 		
 		//formで戻るボタンが押されたら
-		//id--かつquestion_answer＝"question"
+		//id--かつquestionAnswer＝"question"
 		//formで次へボタンが押されたら
-		//id++かつquestion_answer＝"answer"
+		//id++かつquestionAnswer＝"answer"
 		//formで答えへか質問へを押されたら
-		//question_answerの番号を変更
+		//questionAnswerの番号を変更
 		request.setAttribute("id", id);
-		request.setAttribute("question_answer", question_answer);
+		request.setAttribute("questionAnswer", questionAnswer);
 
-		session.setAttribute("userbean", userbean);
-		session.setAttribute("dataoffile", dataoffile);
+		session.setAttribute("userBean", userBean);
+		session.setAttribute("dataOfFile", dataOfFile);
 		RequestDispatcher requestdipatcher = request.getRequestDispatcher("AnkiTime.jsp");
 		requestdipatcher.forward(request, response);
 		

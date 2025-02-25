@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"
 %>
 <%
-request.setCharacterEncoding("utf-8");
+	request.setCharacterEncoding("utf-8");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -13,9 +13,9 @@ request.setCharacterEncoding("utf-8");
 </head>
 <body>
 <%
-Object miss_obj = request.getAttribute("miss");
-String miss_str = (miss_obj instanceof String) ? (String)miss_obj : "notMiss";
-if("miss".equals(miss_str)){
+Object missObj = request.getAttribute("miss");
+String missStr = (missObj instanceof String) ? (String)missObj : "notMiss";
+if("miss".equals(missStr)){
 %>
 <p>名前もしくはパスワードに間違いがあります</p>
 <%
@@ -28,7 +28,6 @@ if("miss".equals(miss_str)){
         <button type="submit" name="action" value="login">ログイン</button>
     </form>
     <br/><br/>
-<!--    https://anki-app-a437e2d7cac2.herokuapp.com-->
 	<form action="/CreateUserController" method="post">
 		<p>名前とパスワードをお持ちでない方</p>
 		<input type="submit" value="新規登録">

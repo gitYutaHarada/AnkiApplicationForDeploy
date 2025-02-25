@@ -13,24 +13,24 @@
 <body>
 
 	<%
-Integer isSuccessInsert_Integer = (Integer)request.getAttribute("isSuccessInsert");
-Integer isName = (Integer) request.getAttribute("isValidString_name");
-Integer isPass = (Integer) request.getAttribute("isValidString_pass");
+Integer isSuccessInsertInteger = (Integer)request.getAttribute("isSuccessInsert");
+Integer isName = (Integer) request.getAttribute("isValidStringName");
+Integer isPass = (Integer) request.getAttribute("isValidStringPass");
 //nullだったら2を代入それ以外ならisSuccessInsert_Integer.intValue()を代入
-int isSuccessInsert = (isSuccessInsert_Integer != null) ? isSuccessInsert_Integer.intValue() : 2;
-int isName_int = (isName != null) ? isName : 2;
-int isPass_int = (isPass != null) ? isPass : 2;
+int isSuccessInsert = (isSuccessInsertInteger != null) ? isSuccessInsertInteger.intValue() : 2;
+int isNameInt = (isName != null) ? isName : 2;
+int isPassInt = (isPass != null) ? isPass : 2;
 
-if (isSuccessInsert == 1 && isName_int == 1 && isPass_int == 1) { %>
+if (isSuccessInsert == 1 && isNameInt == 1 && isPassInt == 1) { %>
 	<p>おめでとうございます！新規登録成功です！戻るボタンを押してもう一度ログインしましょう！</p>
 
-	<% } else if (isName_int == 0 || isPass_int == 0) { %>
+	<% } else if (isNameInt == 0 || isPassInt == 0) { %>
 	<p>新しい名前もしくはパスワードに英数字以外が含まれています</p>
 
-	<% } else if (isName_int == 2 || isPass_int == 2){ %>
+	<% } else if (isNameInt == 2 || isPassInt == 2){ %>
 	<p>新しい名前とパスワードを<Strong>英数字のみ</Strong>で記入してください</p>
 
-	<% } else if (isSuccessInsert == 0 && isName_int == 1 && isPass_int == 1) { %>
+	<% } else if (isSuccessInsert == 0 && isNameInt == 1 && isPassInt == 1) { %>
 	<p>既に名前が使われています。ほかの名前で登録してください</p>
 	<% } %>
 
@@ -40,7 +40,7 @@ if (isSuccessInsert == 1 && isName_int == 1 && isPass_int == 1) { %>
 		新しい名前：<input type="text" name="name"><br /> 新しいパスワード<input type="password" name="pass"><br />
 		<button type="submit">新規登録</button>
 	</form><br/><br/>
-	<form id="back_createUser" action="/LoginBackController" method="post">
+	<form id="back-createUser" action="/LoginBackController" method="post">
 		<button type="submit">ログイン画面に戻る</button>
 	</form>
 </body>

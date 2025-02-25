@@ -1,14 +1,14 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@page import="java.util.*, javax.servlet.*, javax.servlet.http.*"%>
 
-<jsp:useBean id="userbean" scope="session" class="bean.UserBean" />
-<jsp:useBean id="dataoffile" scope="session" class="bean.DataOfFile" />
+<jsp:useBean id="userBean" scope="session" class="bean.UserBean" />
+<jsp:useBean id="dataOfFile" scope="session" class="bean.DataOfFile" />
 
 <%
 request.setCharacterEncoding("utf-8");
-int select_id = 0;
-if (request.getAttribute("select_id") != null)
-	select_id = (Integer) request.getAttribute("select_id");
+int selectId = 0;
+if (request.getAttribute("selectId") != null)
+	selectId = (Integer) request.getAttribute("selectId");
 String msg = Objects.toString(request.getAttribute("msg"), "");
 %>
 <!DOCTYPE html>
@@ -16,21 +16,21 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="/css/style.css">
-	<title><%=userbean.getName()%>の<%=dataoffile.getFileName()%></title>
+	<title><%=userBean.getName()%>の<%=dataOfFile.getFileName()%></title>
 </head>
 <body>
 	<form id="back" action="/MyPageController" method="post">
 		<button type="submit" name="action" value="back">マイページに戻る</button>
 	</form>
-	<p><strong><%=userbean.getName()%></strong>の<strong><%=dataoffile.getFileName()%></strong>という名前のファイルの編集画面</p>
+	<p><strong><%=userBean.getName()%></strong>の<strong><%=dataOfFile.getFileName()%></strong>という名前のファイルの編集画面</p>
 	<% 
 		int i = 0;
-		if (dataoffile.getMaxId() == 0) {
+		if (dataOfFile.getMaxId() == 0) {
 	%>
 			<p>Ankiカードがありません</p>
-			<table id="file_content">
+			<table id="file-content">
 				<thead>
-					<tr id="question_answer">
+					<tr id="question-answer">
 						<th>質問</th>
 						<th>解答</th>
 					</tr>
@@ -44,48 +44,48 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 	<%			
 			}
 	%>
-			<table id="file_content">
+			<table id="file-content">
 				<thead>
-					<tr id="question_answer">
+					<tr id="question-answer">
 						<th>質問</th>
 						<th>解答</th>
 					</tr>
 				</thead>
 		<%
-			while (i != (dataoffile.getMaxId() + 1)) {
-				if (dataoffile.isElement(i)) {
+			while (i != (dataOfFile.getMaxId() + 1)) {
+				if (dataOfFile.isElement(i)) {
 		%>
 				<tbody>
 					<tr>
 						<form action="/FileEditerController" method="post">
 							<td>
-								<%=dataoffile.getQuestionById(i)%>
+								<%=dataOfFile.getQuestionById(i)%>
 								<%
-									if (select_id == i) { 
+									if (selectId == i) { 
 								%>
-										<input type="text" name="edit_question"> 
+										<input type="text" name="editQuestion"> 
 								<%
 									}
 								%>
 							</td>
 							<td>
-								<%=dataoffile.getAnswerById(i)%> 
+								<%=dataOfFile.getAnswerById(i)%> 
 								<%
-									if (select_id == i) { 
+									if (selectId == i) { 
 								%> 
-										<input type="text" name="edit_answer"> 
+										<input type="text" name="editAnswer"> 
 								<%
 									}
 								%>
 							</td> 
-								<input type="hidden" name="select_question" value="<%=dataoffile.getQuestionById(i)%>">
-								<input type="hidden" name="select_answer" value="<%=dataoffile.getAnswerById(i)%>"> 
-								<input type="hidden" name="select_id" value="<%=i%>">
+								<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(i)%>">
+								<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(i)%>"> 
+								<input type="hidden" name="selectId" value="<%=i%>">
 							<td>
 								<%
-									if (select_id == i) {
+									if (selectId == i) {
 								%>
-										<button type="submit" name="action" value="complete_edit">編集完了</button>
+										<button type="submit" name="action" value="completeEdit">編集完了</button>
 								<%
 									} else {
 								%>
@@ -107,21 +107,21 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 	<%	
 		}
 	%>
-	<div id="create_anki">
+	<div id="create-anki">
 		<form action="/FileEditerController" method="post">
-			<input type="text" name="anki_search" placeholder="単語を検索してみる">
+			<input type="text" name="searchWord" placeholder="単語を検索してみる">
 			<button type="submit" name="action" value="search">検索</button>
 		</form><br/><br/>
 		<form action="/FileEditerController" method="post">
-			<input type="text" name="create_question" placeholder="質問を入力">
-			<input type="text" name="create_answer" placeholder="解答を入力"><br/>
+			<input type="text" name="createQuestion" placeholder="質問を入力">
+			<input type="text" name="createAnswer" placeholder="解答を入力"><br/>
 	
 			<button type="submit" name="action" value="create">Ankiカードの作成</button>
 		</form><br/><br/>
 		<form action="/AnkiTime" method="post">
 			<button type="submit">Anki開始！</button>
 			<input type="hidden" name="id" value="0">
-			<input type="hidden" name="question_answer" value="question">		
+			<input type="hidden" name="questionAnswer" value="question">		
 		</form>
 
 	</div>

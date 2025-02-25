@@ -1,4 +1,4 @@
-package data_access_object;
+package dataAccessObject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,18 +24,18 @@ public class DAO {
 	}
 	
 	
-	public void resourcesClose(PreparedStatement preparedstatement) {
+	public void resourcesClose(PreparedStatement preparedStatement) {
 		try {
-			if(preparedstatement != null) preparedstatement.close();
+			if(preparedStatement != null) preparedStatement.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void resourcesClose(PreparedStatement preparedstatement, ResultSet result_set) {
+	public void resourcesClose(PreparedStatement preparedStatement, ResultSet resultSet) {
 		try {
-			if(result_set != null) result_set.close();
-			if(preparedstatement != null) preparedstatement.close();
+			if(resultSet != null) resultSet.close();
+			if(preparedStatement != null) preparedStatement.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

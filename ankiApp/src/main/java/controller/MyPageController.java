@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import bean.UserBean;
-import data_access_object.FileDAO;
+import dataAccessObject.FileDAO;
 /**
  * Servlet implementation class MyPageController
  */
@@ -46,27 +46,27 @@ public class MyPageController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 
 		HttpSession session = request.getSession(true);
-		UserBean userbean = (UserBean) session.getAttribute("userbean");
-		String userName = userbean.getName();
+		UserBean userBean = (UserBean) session.getAttribute("userBean");
+		String userName = userBean.getName();
 
-		FileDAO file_dao = new FileDAO();
+		FileDAO fileDao = new FileDAO();
 
 		String action = request.getParameter("action");
 
 		if ("create".equals(action)) {
-			String create_fileName = request.getParameter("create_fileName");
-			userbean.addFile(create_fileName);
-			file_dao.addFileName(userbean.getName(), create_fileName);
+			String createFileName = request.getParameter("createFileName");
+			userBean.addFile(createFileName);
+			fileDao.addFileName(userBean.getName(), createFileName);
 
 		} else if ("remove".equals(action)) {
-			String remove_fileName = request.getParameter("remove_fileName");
-			int deleteFile_count = file_dao.deleteFile(userName, remove_fileName);
-			request.setAttribute("deleteFile_count", deleteFile_count);
+			String removeileName = request.getParameter("removeFileName");
+			int deleteFileCount = fileDao.deleteFile(userName, removeileName);
+			request.setAttribute("deleteFileCount", deleteFileCount);
 		}
 
-		List<String> fileNamesList = file_dao.getAllFileName(userName);
-		userbean.setFileNamesList(fileNamesList);
-		session.setAttribute("userbean", userbean);
+		List<String> fileNamesList = fileDao.getAllFileName(userName);
+		userBean.setFileNamesList(fileNamesList);
+		session.setAttribute("userBean", userBean);
 
 		RequestDispatcher requestdispatcher = request.getRequestDispatcher("myPage.jsp");
 		requestdispatcher.forward(request, response);

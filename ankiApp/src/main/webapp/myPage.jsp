@@ -2,17 +2,17 @@
 <%@ page import="java.util.*, javax.servlet.*, javax.servlet.http.*"%>
 <%@page import="bean.*"%>
 
-<jsp:useBean id="userbean" scope="session" class="bean.UserBean" />
+<jsp:useBean id="userBean" scope="session" class="bean.UserBean" />
 
 <%
 request.setCharacterEncoding("utf-8");
-if (userbean.getName() == null) {
+if (userBean.getName() == null) {
 	String name = (String) request.getAttribute("name");
-	userbean.setName(name != null ? name : "miss");
+	userBean.setName(name != null ? name : "miss");
 }
-int deleteFile_count = 0;
-if (request.getAttribute("deleteFile_count") != null)
-	deleteFile_count = (Integer) request.getAttribute("deleteFile_count");
+int deleteFileCount = 0;
+if (request.getAttribute("deleteFileCount") != null)
+	deleteFileCount = (Integer) request.getAttribute("deleteFileCount");
 %>
 
 <!DOCTYPE html>
@@ -27,32 +27,32 @@ if (request.getAttribute("deleteFile_count") != null)
 		<button type="submit" name="action" value="logout">ログアウト</button>
 	</form>
 	<p>ログイン成功！</p>
-	<p>こんにちは <strong><%=userbean.getName()%> </strong>さん!</p>
+	<p>こんにちは <strong><%=userBean.getName()%> </strong>さん!</p>
 	<br />
-	<table id="file_editer">
+	<table id="file-editer">
 					<tr>
 		<%
-			for (int i = 1; i <= userbean.getFileNamesSize(); i++) {
+			for (int i = 1; i <= userBean.getFileNamesSize(); i++) {
 		%>
 				
 						<th>
 							<form action="/FileEditerJspController" method="post">
-								<figcaption><%=userbean.getFileName(i-1)%></figcaption>
+								<figcaption><%=userBean.getFileName(i-1)%></figcaption>
 								<button type="submit">
 									<img src="/images/file.jpg" alt="Image <%=i - 1%>" name="" width="100" height="100">
 								</button>
 						
-								<input type="hidden" name="fileName" value="<%=userbean.getFileName(i-1)%>"> 						
+								<input type="hidden" name="fileName" value="<%=userBean.getFileName(i-1)%>"> 						
 							</form>
 							<br/>
 							<form action="/MyPageController" method="post" onsubmit="return confirmDelete()">
 								<button type="submit" name="action" value="remove">ファイルの削除</button>
 						
-								<input type="hidden" name="remove_fileName" value="<%=userbean.getFileName(i-1)%>">
+								<input type="hidden" name="removeFileName" value="<%=userBean.getFileName(i-1)%>">
 							</form>
 						</th>
 		<%
-				if( (i != 1) &&  ( (i % 4 == 0) || (i == userbean.getFileNamesSize()) ) ){
+				if( (i != 1) &&  ( (i % 4 == 0) || (i == userBean.getFileNamesSize()) ) ){
 		%>
 					</tr>
 		<%			
@@ -63,11 +63,11 @@ if (request.getAttribute("deleteFile_count") != null)
 	</table>
 	<br/>
 	<form action="/MyPageController" method="post">
-		<label for="create_imageName">作成するファイル名:</label>
-		<input type="text" id="create_imageName" name="create_fileName" placeholder="ファイル名を入力">
+		<label for="createImageName">作成するファイル名:</label>
+		<input type="text" id="createImageName" name="createFileName" placeholder="ファイル名を入力">
 		<button type="submit" name="action" value="create">新しいファイルの作成</button>
 
-		<input type="hidden" name="userName" value="<%=userbean.getName()%>">
+		<input type="hidden" name="userName" value="<%=userBean.getName()%>">
 	</form>
 
 	<script>

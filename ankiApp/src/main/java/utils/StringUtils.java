@@ -10,24 +10,23 @@ public class StringUtils {
 		return str.matches("[a-zA-Z0-9]+");
 	}
 	
-	public boolean isDataOfFile(DataOfFile dataoffile, int id) {
-		boolean isfileofdata = false;
-		if(dataoffile.getQuestionMap().containsKey(id)) isfileofdata = true;
-		return isfileofdata;
+	public boolean isDataOfFile(DataOfFile dataOfFile, int id) {
+		boolean isFileOfData = false;
+		if(dataOfFile.getQuestionMap().containsKey(id)) isFileOfData = true;
+		return isFileOfData;
 	}
 	
-	public int backOrNextId(DataOfFile dataoffile, String backOrNext, int id) {
+	public int backOrNextId(DataOfFile dataOfFile, String backOrNext, int id) {
 		if("back".equals(backOrNext)) {
-			System.out.println(id +"::" + dataoffile.getMaxId());
 			//idが最小ではなくそのidが存在するときwhile文を抜ける
 			id--;
-			while(!isDataOfFile(dataoffile, id) && id != dataoffile.getMinId()) {
+			while(!isDataOfFile(dataOfFile, id) && id != dataOfFile.getMinId()) {
 				id--;
 			}
 			return id;
 		}else {
 			id++;
-			while(isDataOfFile(dataoffile, id) && id != dataoffile.getMaxId()) {
+			while(isDataOfFile(dataOfFile, id) && id != dataOfFile.getMaxId()) {
 				id++;
 			}
 			return id;

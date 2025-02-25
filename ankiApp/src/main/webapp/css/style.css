@@ -42,7 +42,7 @@ th, td {
     padding: 12px;
 }
 
-#question_answer {
+#questio-answer {
     background-color: #4a90e2;
     color: white;
 }
@@ -117,18 +117,18 @@ input {
     border-radius: 5px;
 }
 
-#file_editer{
+#file-editer{
 	text-align: center;
 	margin: auto;
 }
 
-#file_content{
+#file-content{
 	text-align: center;
 	margin: 50px auto;
 	float: left;
 	width: 60%;
 }
-#create_anki{
+#create-anki{
 	text-align: center;
 	margin: 50px auto;
 	float: right;

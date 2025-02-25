@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import bean.UserInformationBean;
-import data_access_object.UserDAO;
+import dataAccessObject.UserDAO;
 import utils.PasswordUtils;
 import utils.StringUtils;
 
@@ -45,28 +45,28 @@ public class CreateSuccessController extends HttpServlet {
 		String name = request.getParameter("name");
 		String pass = request.getParameter("pass");
 		
-		PasswordUtils passwordutils = new PasswordUtils();
-        StringUtils stringutils = new StringUtils();
-		int isValidString_name = (stringutils.isValidString(name)) ? 1 : 0;
-		int isValidString_pass = (stringutils.isValidString(pass)) ? 1 : 0;
+		PasswordUtils passwordUtils = new PasswordUtils();
+        StringUtils stringUtils = new StringUtils();
+		int isValidStringName = (stringUtils.isValidString(name)) ? 1 : 0;
+		int isValidStringPass = (stringUtils.isValidString(pass)) ? 1 : 0;
 		
 		//名前とパスワードが英数字のみなら１を代入して新しいテーブルを作成
-        if(isValidString_name == 1 && isValidString_pass == 1) {
-    		UserDAO user_dao = new UserDAO();
+        if(isValidStringName == 1 && isValidStringPass == 1) {
+    		UserDAO userDao = new UserDAO();
     		//ここでパスワードハッシュ化
-    		String hash_pass = passwordutils.hashPass(pass);
-            int isSuccessInsert = user_dao.createUser(name, hash_pass);
-            UserInformationBean userInfo_dto = user_dao.select();
-            request.setAttribute("userInfo_dto", userInfo_dto);
+    		String hashPass = passwordUtils.hashPass(pass);
+            int isSuccessInsert = userDao.createUser(name, hashPass);
+            UserInformationBean userInfoDto = userDao.select();
+            request.setAttribute("userInfoDto", userInfoDto);
             
           	request.setAttribute("isSuccessInsert", isSuccessInsert);
-          	request.setAttribute("isValidString_name", isValidString_name);
-          	request.setAttribute("isValidString_pass", isValidString_pass);
+          	request.setAttribute("isValidStringName", isValidStringName);
+          	request.setAttribute("isValidStringPass", isValidStringPass);
             RequestDispatcher requestdispatcher = request.getRequestDispatcher("createUser.jsp");
             requestdispatcher.forward(request, response);
         }else{
-          	request.setAttribute("isValidString_name", isValidString_name);
-          	request.setAttribute("isValidString_pass", isValidString_pass);
+          	request.setAttribute("isValidStringName", isValidStringName);
+          	request.setAttribute("isValidStringPass", isValidStringPass);
             RequestDispatcher requestdispatcher = request.getRequestDispatcher("createUser.jsp");
             requestdispatcher.forward(request, response);
         }

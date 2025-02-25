@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 import bean.DataOfFile;
 import bean.UserBean;
-import data_access_object.DataOfFileDAO;
+import dataAccessObject.DataOfFileDAO;
 import utils.StringUtils;
 
 /**
@@ -49,47 +49,54 @@ public class FileEditerController extends HttpServlet {
 		String action = request.getParameter("action");
 		
 		HttpSession session = request.getSession();
-		UserBean userbean = (UserBean) session.getAttribute("userbean");
-		DataOfFile dataoffile = (DataOfFile) session.getAttribute("dataoffile");
-		DataOfFileDAO dataoffile_dao = new DataOfFileDAO();
-		StringUtils stringutils = new StringUtils();
-		String create_question = request.getParameter("create_question");
-		String create_answer = request.getParameter("create_answer");
+		UserBean userBean = (UserBean) session.getAttribute("userBean");
+		DataOfFile dataOfFile = (DataOfFile) session.getAttribute("dataOfFile");
+		DataOfFileDAO dataOfFileDao = new DataOfFileDAO();
+		StringUtils stringUtils = new StringUtils();
+		String createQuestion = request.getParameter("createQuestion");
+		String createAnswer = request.getParameter("createAnswer");
 		
 		System.out.println(action);
 
-		if("create".equals(action) && (stringutils.isEmptyOrSpace(create_question) || stringutils.isEmptyOrSpace(create_answer))) {
+		if("create".equals(action) && (stringUtils.isEmptyOrSpace(createQuestion) || stringUtils.isEmptyOrSpace(createAnswer))) {
 			String msg = "質問や解答へ空白を入れることはできません";
 			request.setAttribute("msg", msg);
 		}else if ("create".equals(action)) {
-			dataoffile_dao.addData(dataoffile, userbean.getName(), dataoffile.getFileName(), create_question,
-					create_answer);
-			dataoffile.setMaxId(dataoffile_dao.getDataOfFile_max_min(dataoffile.getFileName(), userbean.getName(), "max"));
+			dataOfFileDao.addData(dataOfFile, userBean.getName(), dataOfFile.getFileName(), createQuestion,
+					createAnswer);
+			dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileName(), userBean.getName(), "max"));
 		}else if("delete".equals(action)) {
-			String select_question = request.getParameter("select_question");
-			String select_answer = request.getParameter("select_answer");
-		    int select_id = Integer.parseInt((String)request.getParameter("select_id"));
-			dataoffile_dao.deleteFileOfData(dataoffile, select_id, userbean.getName());
-			dataoffile.setMaxId(dataoffile_dao.getDataOfFile_max_min(dataoffile.getFileName(), userbean.getName(), "max"));
-		    request.setAttribute("select_id", select_id);
+			String selectQuestion = request.getParameter("selectQuestion");
+			String selectAnswer = request.getParameter("selectAnswer");
+		    int selectId = Integer.parseInt((String)request.getParameter("selectId"));
+		    dataOfFileDao.deleteFileOfData(dataOfFile, selectId, userBean.getName());
+			dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileName(), userBean.getName(), "max"));
+		    request.setAttribute("selectId", selectId);
 		}else if("edit".equals(action)) {
-		    int select_id = Integer.parseInt((String)request.getParameter("select_id"));
-		    request.setAttribute("select_id", select_id);
-		}else if("complete_edit".equals(action)) {
-			String select_question = request.getParameter("select_question");
-			String select_answer = request.getParameter("select_answer");
-			String edit_question = request.getParameter("edit_question");
-			String edit_answer = request.getParameter("edit_answer");
-			if(edit_question == "") edit_question = select_question;
-			if(edit_answer == "") edit_answer = select_answer;
-		    int select_id = Integer.parseInt((String)request.getParameter("select_id"));
+		    int selectId = Integer.parseInt((String)request.getParameter("selectId"));
+		    request.setAttribute("selectId", selectId);
+		}else if("completeEdit".equals(action)) {
+			String selectQuestion = request.getParameter("selectQuestion");
+			String selectAnswer = request.getParameter("selectAnswer");
+			String editQuestion = request.getParameter("editQuestion");
+			String editAnswer = request.getParameter("editAnswer");
+			if(editQuestion == "") editQuestion = selectQuestion;
+			if(editAnswer == "") editAnswer = selectAnswer;
+		    int selectId = Integer.parseInt((String)request.getParameter("selectId"));
 
-		    dataoffile_dao.editFileOfData(dataoffile, select_id, userbean.getName(), edit_question, edit_answer);
+		    dataOfFileDao.editFileOfData(dataOfFile, selectId, userBean.getName(), editQuestion, editAnswer);
 
+		}else if("search".equals(action)){
+			String searchWord = request.getParameter("searchWord");
+			if(stringUtils.isEmptyOrSpace(searchWord)) {
+				String msg = "検索単語が空になっています";
+				request.setAttribute("msg", msg);
+			}else {
+			}			
 		}
 		
-		session.setAttribute("userbean", userbean);
-		session.setAttribute("dataoffile", dataoffile);
+		session.setAttribute("userBean", userBean);
+		session.setAttribute("dataOfFile", dataOfFile);
 		
 		RequestDispatcher requestdispatcher = request.getRequestDispatcher("FileEditer.jsp");
 		requestdispatcher.forward(request, response);

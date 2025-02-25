@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import bean.UserBean;
-import data_access_object.FileDAO;
-import data_access_object.UserDAO;
+import dataAccessObject.FileDAO;
+import dataAccessObject.UserDAO;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
@@ -40,28 +40,28 @@ public class LoginController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
 		
-        UserDAO user_dao = new UserDAO();
+        UserDAO userDao = new UserDAO();
         
         if("login".equals(action)) {
 	    	String name = request.getParameter("name");
 	    	String pass = request.getParameter("pass");
 	    	//nameとおなじ行のpassを探す
 	    	//そのpassとinputPassがtrueの場合ログインできるようにする
-	    	if(user_dao.isLogin(name, pass)) {
+	    	if(userDao.isLogin(name, pass)) {
 	        	request.setAttribute("name", name);
 	        	request.setAttribute("pass", pass);
 	        	
 	        	HttpSession session = request.getSession(true);
 	        	
-	        	UserBean userbean = new UserBean();
-	    		FileDAO file_dao = new FileDAO();
-	    		List <String> fileNamesList = file_dao.getAllFileName(name);
+	        	UserBean userBean = new UserBean();
+	    		FileDAO fileDao = new FileDAO();
+	    		List <String> fileNamesList = fileDao.getAllFileName(name);
 	    		
-	    		userbean.setName(name);
-	    		userbean.setPassword(pass);
-	    		userbean.setFileNamesList(fileNamesList);
+	    		userBean.setName(name);
+	    		userBean.setPassword(pass);
+	    		userBean.setFileNamesList(fileNamesList);
 	    		
-	    		session.setAttribute("userbean", userbean);
+	    		session.setAttribute("userBean", userBean);
 	    		
 	    		RequestDispatcher requestdispatcher = request.getRequestDispatcher("myPage.jsp");
 	    		requestdispatcher.forward(request, response);

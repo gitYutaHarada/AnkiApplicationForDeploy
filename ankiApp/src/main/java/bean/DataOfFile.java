@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataOfFile implements Serializable{
-	public String fileName;
-	public int maxId = 0;
-	public int minId = 0;
-	public HashMap<Integer, String> question = new HashMap<>();
-	public HashMap<Integer, String> answer = new HashMap<>();
+	private String fileName;
+	private int maxId = 0;
+	private int minId = 0;
+	private HashMap<Integer, String> question = new HashMap<>();
+	private HashMap<Integer, String> answer = new HashMap<>();
 
 	
 	public DataOfFile() {
@@ -115,8 +115,8 @@ public class DataOfFile implements Serializable{
 		this.answer.remove(id);
 	}
 	
-	public void editElement(int id, String edit_question, String edit_answer) {
-		this.question.put(id, edit_question);
-		this.answer.put(id, edit_answer);
+	public void editElement(int id, String editQuestion, String editAnswer) {
+		this.question.put(id, editQuestion);
+		this.answer.put(id, editAnswer);
 	}
 }
