@@ -108,7 +108,7 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 		}
 	%>
 	<div id="create_anki">
-		<form action="/FileEdoterController" method="post">
+		<form action="/FileEditerController" method="post">
 			<input type="text" name="anki_search" placeholder="単語を検索してみる">
 		</form>
 		<form action="/FileEditerController" method="post">
