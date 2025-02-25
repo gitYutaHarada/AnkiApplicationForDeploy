@@ -110,7 +110,8 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 	<div id="create_anki">
 		<form action="/FileEditerController" method="post">
 			<input type="text" name="anki_search" placeholder="単語を検索してみる">
-		</form>
+			<button type="submit" name="action" value="search">検索</button>
+		</form><br/><br/>
 		<form action="/FileEditerController" method="post">
 			<input type="text" name="create_question" placeholder="質問を入力">
 			<input type="text" name="create_answer" placeholder="解答を入力"><br/>
