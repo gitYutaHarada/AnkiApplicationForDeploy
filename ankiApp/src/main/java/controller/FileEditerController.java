@@ -56,8 +56,6 @@ public class FileEditerController extends HttpServlet {
 		String createQuestion = request.getParameter("createQuestion");
 		String createAnswer = request.getParameter("createAnswer");
 		
-		System.out.println(action);
-
 		if("create".equals(action) && (stringUtils.isEmptyOrSpace(createQuestion) || stringUtils.isEmptyOrSpace(createAnswer))) {
 			String msg = "質問や解答へ空白を入れることはできません";
 			request.setAttribute("msg", msg);
