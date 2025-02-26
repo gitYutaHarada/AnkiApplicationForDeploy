@@ -60,7 +60,9 @@ public class MyPageController extends HttpServlet {
 
 		} else if ("remove".equals(action)) {
 			String removeFileName = request.getParameter("removeFileName");
+			System.out.println("removeFileName=" + removeFileName);
 			int deleteFileCount = fileDao.deleteFile(userName, removeFileName);
+			System.out.println(deleteFileCount);
 			request.setAttribute("deleteFileCount", deleteFileCount);
 		}
 
