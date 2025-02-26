@@ -89,6 +89,7 @@ public class FileEditerController extends HttpServlet {
 
 		}else if("search".equals(action)){
 			String searchWord = request.getParameter("searchWord");
+			System.out.println(searchWord);
 			if(stringUtils.isEmptyOrSpace(searchWord)) {
 				String msg = "検索単語が空になっています";
 				request.setAttribute("msg", msg);
