@@ -47,7 +47,6 @@ public class MyPageController extends HttpServlet {
 
 		HttpSession session = request.getSession(true);
 		UserBean userBean = (UserBean) session.getAttribute("userBean");
-		String userName = userBean.getName();
 
 		FileDAO fileDao = new FileDAO();
 
@@ -61,12 +60,12 @@ public class MyPageController extends HttpServlet {
 		} else if ("remove".equals(action)) {
 			String removeFileName = request.getParameter("removeFileName");
 			System.out.println("removeFileName=" + removeFileName);
-			int deleteFileCount = fileDao.deleteFile(userName, removeFileName);
+			int deleteFileCount = fileDao.deleteFile(userBean.getName(), removeFileName);
 			System.out.println(deleteFileCount);
 			request.setAttribute("deleteFileCount", deleteFileCount);
 		}
 
-		List<String> fileNamesList = fileDao.getAllFileName(userName);
+		List<String> fileNamesList = fileDao.getAllFileName(userBean.getName());
 		userBean.setFileNamesList(fileNamesList);
 		session.setAttribute("userBean", userBean);
 
