@@ -122,17 +122,24 @@ input {
     color: white;
 }
 
+#divide-thirds{
+	display: flex;
+}
+
 #file-content{
 	text-align: center;
 	margin: 50px auto;
-	float: left;
-	width: 60%;
+	width: 50%;
+}
+
+#search-word{
+	width: 30%;
 }
 #create-anki{
 	text-align: center;
 	margin: 50px auto;
 	float: right;
-	width: 40%;
+	width: 20%;
 }
 
 #back{

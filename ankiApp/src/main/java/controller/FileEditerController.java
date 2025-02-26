@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import bean.DataOfFile;
 import bean.UserBean;
 import dataAccessObject.DataOfFileDAO;
+import utils.SearchUtils;
 import utils.StringUtils;
 
 /**
@@ -53,6 +55,7 @@ public class FileEditerController extends HttpServlet {
 		DataOfFile dataOfFile = (DataOfFile) session.getAttribute("dataOfFile");
 		DataOfFileDAO dataOfFileDao = new DataOfFileDAO();
 		StringUtils stringUtils = new StringUtils();
+		SearchUtils searchUtils = new SearchUtils();
 		String createQuestion = request.getParameter("createQuestion");
 		String createAnswer = request.getParameter("createAnswer");
 		
@@ -90,6 +93,8 @@ public class FileEditerController extends HttpServlet {
 				String msg = "検索単語が空になっています";
 				request.setAttribute("msg", msg);
 			}else {
+				List <String> searchWords = searchUtils.searchWord(dataOfFile, searchWord);
+				request.setAttribute("searchWords", searchWords);
 			}			
 		}
 		
