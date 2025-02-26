@@ -40,6 +40,7 @@ public class DataOfFile implements Serializable{
 	public void setElement(int id, String question, String answer) {
 		this.question.put(id, question);
 		this.answer.put(id, answer);
+		setMaxId(id);
 	}
 	
 	public String getAnswerByQuestion(String question) {
