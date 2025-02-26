@@ -102,6 +102,7 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 						</tbody>
 			<%		
 					}
+			%>	</table><%	
 				}else{
 					while (i != (dataOfFile.getMaxId() + 1)) {
 						if (dataOfFile.isElement(i)) {
