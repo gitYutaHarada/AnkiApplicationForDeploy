@@ -43,16 +43,15 @@ public class FileEditerJspController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		String userName = request.getParameter("userName");
-		String fileName = request.getParameter("fileName");
-		
 		//今までのセッションの引継ぎ
 		HttpSession session = request.getSession();
 		//選択されたファイルの内容をデータベースから取ってきてBeanクラスに保存してセッション管理する。
 		DataOfFileDAO dataOfFileDao = new DataOfFileDAO();
-		
 	    UserBean userBean = (UserBean) session.getAttribute("userBean");
-		DataOfFile dataOfFile = new DataOfFile();
+	    String userName = userBean.getName();
+	    String fileName = request.getParameter("fileName");
+	    
+	    DataOfFile dataOfFile = new DataOfFile();
 		dataOfFileDao.setDataOfFile(dataOfFile, fileName, userName);
 		dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(fileName, userName, "max"));
 		dataOfFile.setFileName(fileName);
