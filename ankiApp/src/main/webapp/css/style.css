@@ -42,11 +42,6 @@ th, td {
     padding: 12px;
 }
 
-#question-answer {
-    background-color: #4a90e2;
-    color: white;
-}
-
 /* 段落の余白 */
 p {
 	position: relative;
@@ -120,6 +115,11 @@ input {
 #file-editer{
 	text-align: center;
 	margin: auto;
+}
+
+#question-answer {
+    background-color: #4a90e2;
+    color: white;
 }
 
 #file-content{
