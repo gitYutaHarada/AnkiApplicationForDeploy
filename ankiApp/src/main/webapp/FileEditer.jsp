@@ -114,17 +114,19 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 				<input type="text" name="searchWord" placeholder="単語を検索してみる">
 				<button type="submit" name="action" value="search">検索</button>
 				<%
-					if((searchWords.size() > 0) && (request.getAttribute("searchWords") != null)){
+					if(request.getAttribute("searchWords") != null){
 						List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
-						for(int id : searchWords){
+						if((request.getAttribute("searchWords")){
+							for(int id : searchWords){
 				%>
-						<table>
-							<tr>
-								<td><%=dataOfFile.getQuestionById %></td>
-								<td><%=dataOfFile.getAnswerById %></td>
-							</tr>
-						</table>
+							<table>
+								<tr>
+									<td><%=dataOfFile.getQuestionById(id) %></td>
+									<td><%=dataOfFile.getAnswerById(id) %></td>
+								</tr>
+							</table>
 				<%
+							}
 						}
 					}
 				%>
