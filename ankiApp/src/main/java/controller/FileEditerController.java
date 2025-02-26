@@ -93,7 +93,7 @@ public class FileEditerController extends HttpServlet {
 				String msg = "検索単語が空になっています";
 				request.setAttribute("msg", msg);
 			}else {
-				List <String> searchWords = searchUtils.searchWord(dataOfFile, searchWord);
+				List <Integer> searchWords = searchUtils.searchWord(dataOfFile, searchWord);
 				request.setAttribute("searchWords", searchWords);
 			}			
 		}
