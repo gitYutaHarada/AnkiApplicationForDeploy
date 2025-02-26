@@ -40,7 +40,7 @@ if (isSuccessInsert == 1 && isNameInt == 1 && isPassInt == 1) { %>
 		新しい名前：<input type="text" name="name"><br /> 新しいパスワード<input type="password" name="pass"><br />
 		<button type="submit">新規登録</button>
 	</form><br/><br/>
-	<form id="back-createUser" action="/LoginBackController" method="post">
+	<form id="back-create-user" action="/LoginBackController" method="post">
 		<button type="submit">ログイン画面に戻る</button>
 	</form>
 </body>
