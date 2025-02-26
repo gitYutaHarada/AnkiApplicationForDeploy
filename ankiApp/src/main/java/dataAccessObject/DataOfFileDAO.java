@@ -92,7 +92,7 @@ public class DataOfFileDAO {
 			preparedStatement.setString(1,  question);
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()) {
-				id = resultSet.getInt("dat_id");
+				id = resultSet.getInt("data_id");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
