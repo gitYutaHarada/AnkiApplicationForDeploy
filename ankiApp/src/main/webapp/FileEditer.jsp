@@ -28,7 +28,7 @@ List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
 			int i = 0;
 			if (dataOfFile.getMaxId() == 0) {
 		%>
-				<p　id="edit-action-msg">Ankiカードがありません</p>
+				<p id="edit-action-msg">Ankiカードがありません</p>
 	<div id="divide-thirds">
 				<table id="file-content">
 					<thead>
@@ -48,7 +48,7 @@ List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
 		%>
 					<p id="edit-action-msg">検索結果</p>
 		<%
-					if(searchWords.size() > 0){
+					if(searchWords.size() < 1){
 		%>			
 						<p id="edit-action-msg">検索した結果その内容は見つかりませんでした</p>					
 		<%			
