@@ -54,7 +54,7 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 					</thead>
 			<%
 				List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
-				if(searchWords != null && searchWords.size > 0){
+				if(searchWords != null && searchWords.size() > 0){
 					for(int id : searchWords){
 			%>
 						<tbody>
@@ -73,16 +73,16 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 									<td>
 										<%=dataOfFile.getAnswerById(id)%> 
 										<%
-											if (selectId == i) { 
+											if (selectId == id) { 
 										%> 
 												<input type="text" name="editAnswer"> 
 										<%
 											}
 										%>
 									</td> 
-										<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(i)%>">
-										<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(i)%>"> 
-										<input type="hidden" name="selectId" value="<%=i%>">
+										<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(id)%>">
+										<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(id)%>"> 
+										<input type="hidden" name="selectId" value="<%=id%>">
 									<td>
 										<%
 											if (selectId == id) {
@@ -100,9 +100,7 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 								</form>
 							</tr>
 						</tbody>
-			<%
-							
-						}
+			<%		
 					}
 				}else{
 					while (i != (dataOfFile.getMaxId() + 1)) {
@@ -112,9 +110,6 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 							<tr>
 								<form action="/FileEditerController" method="post">
 									<td>
-										<%
-											if()
-										%>
 										<%=dataOfFile.getQuestionById(i)%>
 										<%
 											if (selectId == i) { 
