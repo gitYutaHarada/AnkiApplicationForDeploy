@@ -66,7 +66,6 @@ public class FileDAO {
 		try {
 			dao.connectDB();
 			preparedStatement = dao.getConnection().prepareStatement(deleteDataSql);
-			System.out.println("isFile=" + isFile(fileName, name));
 			if(isFile(fileName, name)) {
 				deleteDataInt = preparedStatement.executeUpdate();
 			}
@@ -101,7 +100,6 @@ public class FileDAO {
 			e.printStackTrace();
 		} finally {
 			dao.resourcesClose(preparedStatement, resultSet);
-			dao.disconnect();
 		}
 		return isData;
 	}
