@@ -97,6 +97,8 @@ public class FileEditerController extends HttpServlet {
 				List <Integer> searchWords = searchUtils.searchWord(dataOfFile, searchWord);
 				request.setAttribute("searchWords", searchWords);
 			}			
+		}else if("complateSearch".equals(action)) {
+			
 		}
 		
 		session.setAttribute("userBean", userBean);
