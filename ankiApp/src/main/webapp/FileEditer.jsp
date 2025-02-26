@@ -10,6 +10,7 @@ int selectId = 0;
 if (request.getAttribute("selectId") != null)
 	selectId = (Integer) request.getAttribute("selectId");
 String msg = Objects.toString(request.getAttribute("msg"), "");
+List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
 %>
 <!DOCTYPE html>
 <html>
@@ -43,6 +44,15 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 		%>
 					<p><%= msg %></p>
 		<%			
+				}else if(searchWords != null){
+		%>
+					<p>検索結果</p>
+		<%
+					if(searchWords.size() > 0){
+		%>			
+						<p>検索した結果その内容は見つかりませんでした</p>					
+		<%			
+					}
 				}
 		%>
 				<table id="file-content">
@@ -53,8 +63,7 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 						</tr>
 					</thead>
 			<%
-				List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
-				if(searchWords != null && searchWords.size() > 0){
+				if(searchWords != null){
 					for(int id : searchWords){
 			%>
 						<tbody>
