@@ -53,59 +53,115 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 						</tr>
 					</thead>
 			<%
-				while (i != (dataOfFile.getMaxId() + 1)) {
-					if (dataOfFile.isElement(i)) {
+				List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
+				if(searchWords != null && searchWords.size > 0){
+					for(int id : searchWords){
 			%>
-					<tbody>
-						<tr>
-							<form action="/FileEditerController" method="post">
-								<td>
-									<%=dataOfFile.getQuestionById(i)%>
-									<%
-										if (selectId == i) { 
-									%>
-											<input type="text" name="editQuestion"> 
-									<%
-										}
-									%>
-								</td>
-								<td>
-									<%=dataOfFile.getAnswerById(i)%> 
-									<%
-										if (selectId == i) { 
-									%> 
-											<input type="text" name="editAnswer"> 
-									<%
-										}
-									%>
-								</td> 
-									<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(i)%>">
-									<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(i)%>"> 
-									<input type="hidden" name="selectId" value="<%=i%>">
-								<td>
-									<%
-										if (selectId == i) {
-									%>
-											<button type="submit" name="action" value="completeEdit">編集完了</button>
-									<%
-										} else {
-									%>
-											<button type="submit" name="action" value="edit">編集</button> 
-									<%
-										}
-									%>
-									<button type="submit" name="action" value="delete">削除</button>
-								</td>
-							</form>
-						</tr>
-					</tbody>
+						<tbody>
+							<tr>
+								<form action="/FileEditerController" method="post">
+									<td>
+										<%=dataOfFile.getQuestionById(id)%>
+										<%
+											if (selectId == id) { 
+										%>
+												<input type="text" name="editQuestion"> 
+										<%
+											}
+										%>
+									</td>
+									<td>
+										<%=dataOfFile.getAnswerById(id)%> 
+										<%
+											if (selectId == i) { 
+										%> 
+												<input type="text" name="editAnswer"> 
+										<%
+											}
+										%>
+									</td> 
+										<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(i)%>">
+										<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(i)%>"> 
+										<input type="hidden" name="selectId" value="<%=i%>">
+									<td>
+										<%
+											if (selectId == id) {
+										%>
+												<button type="submit" name="action" value="completeEdit">編集完了</button>
+										<%
+											} else {
+										%>
+												<button type="submit" name="action" value="edit">編集</button> 
+										<%
+											}
+										%>
+										<button type="submit" name="action" value="delete">削除</button>
+									</td>
+								</form>
+							</tr>
+						</tbody>
 			<%
+							
+						}
 					}
-					i++;
-				}
+				}else{
+					while (i != (dataOfFile.getMaxId() + 1)) {
+						if (dataOfFile.isElement(i)) {
+			%>
+						<tbody>
+							<tr>
+								<form action="/FileEditerController" method="post">
+									<td>
+										<%
+											if()
+										%>
+										<%=dataOfFile.getQuestionById(i)%>
+										<%
+											if (selectId == i) { 
+										%>
+												<input type="text" name="editQuestion"> 
+										<%
+											}
+										%>
+									</td>
+									<td>
+										<%=dataOfFile.getAnswerById(i)%> 
+										<%
+											if (selectId == i) { 
+										%> 
+												<input type="text" name="editAnswer"> 
+										<%
+											}
+										%>
+									</td> 
+										<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(i)%>">
+										<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(i)%>"> 
+										<input type="hidden" name="selectId" value="<%=i%>">
+									<td>
+										<%
+											if (selectId == i) {
+										%>
+												<button type="submit" name="action" value="completeEdit">編集完了</button>
+										<%
+											} else {
+										%>
+												<button type="submit" name="action" value="edit">編集</button> 
+										<%
+											}
+										%>
+										<button type="submit" name="action" value="delete">削除</button>
+									</td>
+								</form>
+							</tr>
+						</tbody>
+			<%
+						}
+						i++;
+					}
 			%>
 				</table>	
 		<%	
+				}
 			}
 		%>
 		
@@ -113,22 +169,6 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 			<form action="/FileEditerController" method="post">
 				<input type="text" name="searchWord" placeholder="単語を検索してみる">
 				<button type="submit" name="action" value="search">検索</button>
-				<%
-					List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
-					if(searchWords != null && searchWords.size() > 0){
-						for(int id : searchWords){
-				%>
-						<table>
-							<tr>
-								<td><%=dataOfFile.getQuestionById(id) %></td>
-								<td><%=dataOfFile.getAnswerById(id) %></td>
-							</tr>
-						</table>
-				<%
-							
-						}
-					}
-				%>
 			</form><br/><br/>
 		</div>
 		
