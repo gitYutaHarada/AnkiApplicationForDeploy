@@ -100,6 +100,7 @@ String msg = Objects.toString(request.getAttribute("msg"), "");
 				</tbody>
 		<%
 				}
+				System.out.println("selectId = " + selectId + "i" + i);
 				i++;
 			}
 		%>
