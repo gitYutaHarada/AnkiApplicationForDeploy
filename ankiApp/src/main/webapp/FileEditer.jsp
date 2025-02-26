@@ -29,6 +29,14 @@ List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
 			if (dataOfFile.getMaxId() == 0) {
 		%>
 				<p　id="edit-action-msg">Ankiカードがありません</p>
+				<table id="file-content">
+					<thead>
+						<tr id="question-answer">
+							<th>質問</th>
+							<th>解答</th>
+						</tr>
+					</thead>
+				</table>
 		<%
 			} else {
 				if(!"".equals(msg)){
