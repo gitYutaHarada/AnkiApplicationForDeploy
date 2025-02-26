@@ -133,6 +133,7 @@ input {
 }
 
 #search-word{
+	margin: 50px auto;
 	width: 30%;
 }
 #create-anki{
