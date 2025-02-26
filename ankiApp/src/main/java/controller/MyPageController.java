@@ -59,8 +59,8 @@ public class MyPageController extends HttpServlet {
 			fileDao.addFileName(userBean.getName(), createFileName);
 
 		} else if ("remove".equals(action)) {
-			String removeileName = request.getParameter("removeFileName");
-			int deleteFileCount = fileDao.deleteFile(userName, removeileName);
+			String removeFileName = request.getParameter("removeFileName");
+			int deleteFileCount = fileDao.deleteFile(userName, removeFileName);
 			request.setAttribute("deleteFileCount", deleteFileCount);
 		}
 
