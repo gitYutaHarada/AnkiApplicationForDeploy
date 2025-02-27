@@ -182,7 +182,7 @@ int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fie
 			<form action="/FileEditerController" method="post">
 				<input type="text" name="searchWord" placeholder="単語を検索してみる">
 				<button type="submit" name="action" value="search">検索</button>
-				<button type="submit" name="action" value="complateSearch">検索完了</button>
+				<button type="submit" name="action" value="complateSearch">検索終了</button>
 			</form><br/><br/>
 		</div>
 		
