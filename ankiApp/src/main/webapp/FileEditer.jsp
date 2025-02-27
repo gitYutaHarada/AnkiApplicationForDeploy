@@ -56,8 +56,7 @@ int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fie
 				}
 		%>
 	<div id="divide-thirds">
-	<div id="file-content">
-		<table>
+		<table id="file-content">
 			<thead>
 				<tr id="question-answer">
 					<th>質問</th>
@@ -178,7 +177,6 @@ int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fie
 			
 		}
 		%>
-		</div>
 		<div id="search-word">
 			<form action="/FileEditerController" method="post">
 				<input type="text" name="searchWord" placeholder="単語を検索してみる">
