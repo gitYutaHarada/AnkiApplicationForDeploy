@@ -11,7 +11,7 @@ if (request.getAttribute("selectId") != null)
 	selectId = (Integer) request.getAttribute("selectId");
 String msg = Objects.toString(request.getAttribute("msg"), "");
 List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
-int elementId = Integer.parseInt(Objects.toString(request.getAttribute("elementId"), "0");
+int elementId = Integer.parseInt(Objects.toString(request.getAttribute("elementId"), "0"));
 %>
 <!DOCTYPE html>
 <html>

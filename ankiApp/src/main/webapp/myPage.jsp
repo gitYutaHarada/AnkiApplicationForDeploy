@@ -41,7 +41,6 @@ if (request.getAttribute("deleteFileCount") != null)
 								<button type="submit">
 									<img src="/images/file.jpg" alt="Image <%=i - 1%>" name="" width="100" height="100">
 								</button>
-						
 								<input type="hidden" name="fileName" value="<%=userBean.getFileName(i-1)%>"> 
 							</form>
 							<br/>
