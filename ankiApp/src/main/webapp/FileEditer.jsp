@@ -11,6 +11,7 @@ if (request.getAttribute("selectId") != null)
 	selectId = (Integer) request.getAttribute("selectId");
 String msg = Objects.toString(request.getAttribute("msg"), "");
 List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
+int elementId = Integer.parseInt(Objects.toString(request.getAttribute("elementId"), "0");
 %>
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,6 @@ List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
 	</form>
 	<p><strong><%=userBean.getName()%></strong>の<strong><%=dataOfFile.getFileName()%></strong>という名前のファイルの編集画面</p>
 		<% 
-			int i = 0;
 			if (dataOfFile.getMaxId() == 0) {
 		%>
 				<p id="edit-action-msg">Ankiカードがありません</p>
@@ -114,16 +114,18 @@ List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
 				}
 		%>	</table><%	
 			}else{
-				while (i != (dataOfFile.getMaxId() + 1)) {
-					if (dataOfFile.isElement(i)) {
+				int isElementNum = 0;
+				while (elementId != (dataOfFile.getMaxId() + 1)) {
+					if (dataOfFile.isElement(i) && isElementNum < 5) {
+						isElementNum++;
 		%>
 					<tbody>
 						<tr>
 							<form action="/FileEditerController" method="post">
 								<td>
-									<%=dataOfFile.getQuestionById(i)%>
+									<%=dataOfFile.getQuestionById(elementId)%>
 									<%
-										if (selectId == i) { 
+										if (selectId == elementId) { 
 									%>
 											<input type="text" name="editQuestion"> 
 									<%
@@ -131,21 +133,21 @@ List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
 									%>
 								</td>
 								<td>
-									<%=dataOfFile.getAnswerById(i)%> 
+									<%=dataOfFile.getAnswerById(elementId)%> 
 									<%
-										if (selectId == i) { 
+										if (selectId == elementId) { 
 									%> 
 											<input type="text" name="editAnswer"> 
 									<%
 										}
 									%>
 								</td> 
-									<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(i)%>">
-									<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(i)%>"> 
-									<input type="hidden" name="selectId" value="<%=i%>">
+									<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(elementId)%>">
+									<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(elementId)%>"> 
+									<input type="hidden" name="selectId" value="<%=elementId%>">
 								<td>
 									<%
-										if (selectId == i) {
+										if (selectId == elementId) {
 									%>
 											<button type="submit" name="action" value="completeEdit">編集完了</button>
 									<%
