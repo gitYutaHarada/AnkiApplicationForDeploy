@@ -11,7 +11,7 @@ if (request.getAttribute("selectId") != null)
 	selectId = (Integer) request.getAttribute("selectId");
 String msg = Objects.toString(request.getAttribute("msg"), "");
 List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
-int elementId = Integer.parseInt(Objects.toString(request.getAttribute("elementId"), "0"));
+int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fiestElementId"), "0"));
 %>
 <!DOCTYPE html>
 <html>
@@ -56,7 +56,8 @@ int elementId = Integer.parseInt(Objects.toString(request.getAttribute("elementI
 				}
 		%>
 	<div id="divide-thirds">
-		<table id="file-content">
+	<div id="file-content">
+		<table>
 			<thead>
 				<tr id="question-answer">
 					<th>質問</th>
@@ -115,6 +116,7 @@ int elementId = Integer.parseInt(Objects.toString(request.getAttribute("elementI
 		%>	</table><%	
 			}else{
 				int isElementNum = 0;
+				int elementId = fiestElementId;
 				while (elementId != (dataOfFile.getMaxId() + 1)) {
 					if (dataOfFile.isElement(i) && isElementNum < 5) {
 						isElementNum++;
@@ -164,15 +166,18 @@ int elementId = Integer.parseInt(Objects.toString(request.getAttribute("elementI
 					</tbody>
 		<%
 					}
-					i++;
+					elementId++;
 				}
 		%>
 			</table>	
 		<%	
 			}
 		}
+		for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize()); pageNum++){
+			
+		}
 		%>
-		
+		</div>
 		<div id="search-word">
 			<form action="/FileEditerController" method="post">
 				<input type="text" name="searchWord" placeholder="単語を検索してみる">
