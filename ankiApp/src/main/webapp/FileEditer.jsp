@@ -117,7 +117,8 @@ int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fie
 				int isElementNum = 0;
 				int elementId = fiestElementId;
 				while (elementId != (dataOfFile.getMaxId() + 1)) {
-					if (dataOfFile.isElement(elementId) && isElementNum < 5) {
+					//if (dataOfFile.isElement(elementId) && isElementNum < 5) {
+					if(dataOfFile.isElement(elementId)){
 						isElementNum++;
 		%>
 					<tbody>
