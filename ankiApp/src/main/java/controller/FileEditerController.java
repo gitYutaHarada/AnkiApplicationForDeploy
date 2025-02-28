@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import bean.DataOfFile;
 import bean.UserBean;
 import dataAccessObject.DataOfFileDAO;
+import utils.PageUtils;
 import utils.SearchUtils;
 import utils.StringUtils;
 
@@ -56,6 +57,7 @@ public class FileEditerController extends HttpServlet {
 		DataOfFileDAO dataOfFileDao = new DataOfFileDAO();
 		StringUtils stringUtils = new StringUtils();
 		SearchUtils searchUtils = new SearchUtils();
+		PageUtils pageUtils = new PageUtils();
 		String createQuestion = request.getParameter("createQuestion");
 		String createAnswer = request.getParameter("createAnswer");
 		
@@ -89,7 +91,6 @@ public class FileEditerController extends HttpServlet {
 
 		}else if("search".equals(action)){
 			String searchWord = request.getParameter("searchWord");
-			System.out.println(searchWord);
 			if(stringUtils.isEmptyOrSpace(searchWord)) {
 				String msg = "検索単語が空になっています";
 				request.setAttribute("msg", msg);
@@ -98,9 +99,11 @@ public class FileEditerController extends HttpServlet {
 				request.setAttribute("searchWords", searchWords);
 			}			
 		}else if("complateSearch".equals(action)) {
-			
+		}else if("pageTransition".equals(action)){
+			int firstElementId = Integer.parseInt(request.getParameter("firstElementId"));
+			List<Integer> pageElementIds = pageUtils.getPageElementIds(dataOfFile, firstElementId);
+			request.setAttribute("pageElementIds", pageElementIds);
 		}
-		
 		session.setAttribute("userBean", userBean);
 		session.setAttribute("dataOfFile", dataOfFile);
 		

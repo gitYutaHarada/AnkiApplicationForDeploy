@@ -11,7 +11,7 @@ if (request.getAttribute("selectId") != null)
 	selectId = (Integer) request.getAttribute("selectId");
 String msg = Objects.toString(request.getAttribute("msg"), "");
 List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
-int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fiestElementId"), "0"));
+List<Integer> pageElementIds = (List<Integer>)request.getAttribute("pageElementIds");
 %>
 <!DOCTYPE html>
 <html>
@@ -117,20 +117,15 @@ int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fie
 				}
 		%>	</table><%	
 			}else{
-				int isElementNum = 0;
-				int elementId = fiestElementId;
-				while (elementId != (dataOfFile.getMaxId() + 1)) {
-					//if (dataOfFile.isElement(elementId) && isElementNum < 5) {
-					if(dataOfFile.isElement(elementId)){
-						isElementNum++;
+				for(int elementNum = 0; elementNum < pageElementIds.size(); elementNum++) {
 		%>
 					<tbody>
 						<tr>
 							<form action="/FileEditerController" method="post">
 								<td>
-									<%=dataOfFile.getQuestionById(elementId)%>
+									<%=dataOfFile.getQuestionById(pageElementIds.get(elementNum))%>
 									<%
-										if (selectId == elementId) { 
+										if (selectId == pageElementIds.get(elementNum)) { 
 									%>
 											<input type="text" name="editQuestion"> 
 									<%
@@ -138,21 +133,21 @@ int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fie
 									%>
 								</td>
 								<td>
-									<%=dataOfFile.getAnswerById(elementId)%> 
+									<%=dataOfFile.getAnswerById(pageElementIds.get(elementNum))%> 
 									<%
-										if (selectId == elementId) { 
+										if (selectId == pageElementIds.get(elementNum)) { 
 									%> 
 											<input type="text" name="editAnswer"> 
 									<%
 										}
 									%>
 								</td> 
-									<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(elementId)%>">
-									<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(elementId)%>"> 
-									<input type="hidden" name="selectId" value="<%=elementId%>">
+									<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(pageElementIds.get(elementNum))%>">
+									<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(pageElementIds.get(elementNum))%>"> 
+									<input type="hidden" name="selectId" value="<%=pageElementIds.get(elementNum)%>">
 								<td>
 									<%
-										if (selectId == elementId) {
+										if (selectId == pageElementIds.get(elementNum)) {
 									%>
 											<button type="submit" name="action" value="completeEdit">編集完了</button>
 									<%
@@ -169,7 +164,6 @@ int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fie
 					</tbody>
 		<%
 					}
-					elementId++;
 				}
 		%>
 			</table>	
@@ -177,10 +171,12 @@ int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fie
 		//firstElementId を返す。
 				for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5); pageNum++){
 		%>
-					<a href="./FileEditer.jsp?fiestElementId=<%=pageNum %>"</a>
+					<form action="/FileEditerController" method="post">
+						<input type="hidden" name="firstElementId" value="<%=pageElementIds.get(4) %>">
+						<button type="submit" name="action" value="pageTransition"><%=pageNum %></button>
+					</form>
 		<%
 				}
-			}
 		}
 		%>
 		</div>
