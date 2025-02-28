@@ -1,5 +1,6 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@page import="java.util.*, javax.servlet.*, javax.servlet.http.*"%>
+<%@page import="utils.PageUtils" %>
 
 <jsp:useBean id="userBean" scope="session" class="bean.UserBean" />
 <jsp:useBean id="dataOfFile" scope="session" class="bean.DataOfFile" />
