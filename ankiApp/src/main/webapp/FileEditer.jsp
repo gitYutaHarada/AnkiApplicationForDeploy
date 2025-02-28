@@ -176,14 +176,15 @@ if(pageElementIds == null) {
 		//firstElementId を返す。
 		System.out.println(dataOfFile.getDataOfFileSize());
 		System.out.println(pageElementIds.get(4));
-				for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5); pageNum++){
+				for(int pageNum = 1; pageNum < ((dataOfFile.getDataOfFileSize() / 5) + 1); pageNum++){
 		%>
 					<form action="/FileEditerController" method="post">
 						<input type="hidden" name="firstElementId" value="<%=pageElementIds.get(4) %>">
 						<button type="submit" name="action" value="pageTransition"><%=pageNum %></button>
-						System.out.println(pageNum);
 					</form>
 		<%
+		System.out.println(pageNum);
+
 				}
 		}
 		%>
