@@ -178,7 +178,7 @@ if(pageElementIds == null) {
 				for(int pageNum = 1; pageNum < ((dataOfFile.getDataOfFileSize() / 5) + 1); pageNum++){
 		%>
 					<form action="/FileEditerController" method="post">
-						<input type="hidden" name="firstElementId" value="<%=pageNum %>">
+						<input type="hidden" name="pageNum" value="<%=pageNum %>">
 						<button type="submit" name="action" value="pageTransition"><%=pageNum %></button>
 					</form>
 		<%

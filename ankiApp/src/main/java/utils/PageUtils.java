@@ -15,7 +15,7 @@ public class PageUtils {
 		//elementId++で要素番号を探す。
 		//あったらpageElementIdsに追加pageElementIdsが五個以下もしくはelementIdが最後の要素まで行ってしまったら終了
 		//
-		while(elementId < (dataOfFile.getMaxId() + 1) && pageElementIds.size() < 5 && elementId < firstElementNum) {
+		while(elementId < (dataOfFile.getMaxId() + 1) && pageElementIds.size() < 5 && firstElementNum < elementId) {
 			if(dataOfFile.isElement(elementId)) {
 				isElementNum++;
 				if(firstElementNum < isElementNum) {
