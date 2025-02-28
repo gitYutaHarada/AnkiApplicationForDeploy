@@ -174,8 +174,10 @@ int fiestElementId = Integer.parseInt(Objects.toString(request.getAttribute("fie
 			}
 		}
 		//firstElementId を返す。
-		for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize()); pageNum++){
-			
+		for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5); pageNum++){
+		%>
+			<a href="./FileEditer.jsp?<%=pageNum %>"</a>
+		<%
 		}
 		%>
 		<div id="search-word">
