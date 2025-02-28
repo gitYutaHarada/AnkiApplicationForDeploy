@@ -174,7 +174,7 @@ if(pageElementIds == null) {
 			</table>	
 		<%	
 		//firstElementId を返す。
-		System.out.println(dataOfFile.getDataOfFileSize);
+		System.out.println(dataOfFile.getDataOfFileSize());
 				for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5); pageNum++){
 		%>
 					<form action="/FileEditerController" method="post">
