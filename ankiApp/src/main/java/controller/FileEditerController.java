@@ -58,6 +58,7 @@ public class FileEditerController extends HttpServlet {
 		StringUtils stringUtils = new StringUtils();
 		SearchUtils searchUtils = new SearchUtils();
 		PageUtils pageUtils = new PageUtils();
+		
 		String createQuestion = request.getParameter("createQuestion");
 		String createAnswer = request.getParameter("createAnswer");
 		
