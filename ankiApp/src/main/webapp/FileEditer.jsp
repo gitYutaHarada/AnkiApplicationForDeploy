@@ -175,7 +175,7 @@ if(pageElementIds == null) {
 		<%	
 		//firstElementId を返す。
 		System.out.println(dataOfFile.getDataOfFileSize());
-				for(int pageNum = 1; pageNum < ((dataOfFile.getDataOfFileSize() / 5) + 1); pageNum++){
+				for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 2; pageNum++){
 		%>
 					<form action="/FileEditerController" method="post">
 						<input type="hidden" name="pageNum" value="<%=pageNum %>">
