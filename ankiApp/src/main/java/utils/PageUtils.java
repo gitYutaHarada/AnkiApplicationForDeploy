@@ -9,7 +9,7 @@ public class PageUtils {
 	public List<Integer> getPageElementIdsByPageNum(DataOfFile dataOfFile, int pageNum){
 		List<Integer> pageElementIds = new ArrayList<>();
 		//最初の番号firstElementNum=１の時firstElementNum＝0
-		int firstElementNum = (pageNum - 1) * 5 - 1;
+		int firstElementNum = (pageNum - 1) * 5;
 		int elementId = 0;
 		int isElementNum = 0;
 		//elementId++で要素番号を探す。
