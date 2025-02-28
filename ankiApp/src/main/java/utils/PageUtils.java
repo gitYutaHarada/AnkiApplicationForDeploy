@@ -6,7 +6,7 @@ import java.util.List;
 import bean.DataOfFile;
 
 public class PageUtils {
-	public List<Integer> getPageElementIds(DataOfFile dataOfFile, int pageNum){
+	public List<Integer> getPageElementIdsByPageNum(DataOfFile dataOfFile, int pageNum){
 		List<Integer> pageElementIds = new ArrayList<>();
 		//最初の番号firstElementNum=１の時firstElementNum＝0
 		int firstElementNum = (pageNum - 1) * 5 - 1;
@@ -26,5 +26,19 @@ public class PageUtils {
 		}
 		return pageElementIds;
 		
+	}
+	
+	public List<Integer> getPageElementIdsBySelectId(DataOfFile dataOfFile, int selectId){
+		List<Integer> pageElementIds = new ArrayList<>();
+		
+		//pageElementIdsを作るその中にselectIdが含まれていたらreturn　pageElementIds
+		//含まれていなかったら初期化してまた新しいpageElementIdsを作ってselectIdがあるかどうか確認
+		for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 2; pageNum++) {
+			pageElementIds = getPageElementIdsByPageNum(dataOfFile, pageNum);
+			if(pageElementIds.contains(selectId)) {
+				return pageElementIds;
+			}
+		}
+		return new ArrayList<>();
 	}
 }

@@ -75,9 +75,14 @@ public class FileEditerController extends HttpServlet {
 		    int selectId = Integer.parseInt((String)request.getParameter("selectId"));
 		    dataOfFileDao.deleteFileOfData(dataOfFile, selectId, userBean.getName());
 			dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileName(), userBean.getName(), "max"));
+			
+			List<Integer> pageElementIds = pageUtils.getPageElementIdsBySelectId(dataOfFile, selectId);
+			request.setAttribute("pageElementIds", pageElementIds);
 		    request.setAttribute("selectId", selectId);
 		}else if("edit".equals(action)) {
 		    int selectId = Integer.parseInt((String)request.getParameter("selectId"));
+			List<Integer> pageElementIds = pageUtils.getPageElementIdsBySelectId(dataOfFile, selectId);
+			request.setAttribute("pageElementIds", pageElementIds);
 		    request.setAttribute("selectId", selectId);
 		}else if("completeEdit".equals(action)) {
 			String selectQuestion = request.getParameter("selectQuestion");
@@ -102,7 +107,7 @@ public class FileEditerController extends HttpServlet {
 		}else if("complateSearch".equals(action)) {
 		}else if("pageTransition".equals(action)){
 			int pageNum = Integer.parseInt(request.getParameter("pageNum"));
-			List<Integer> pageElementIds = pageUtils.getPageElementIds(dataOfFile, pageNum);
+			List<Integer> pageElementIds = pageUtils.getPageElementIdsByPageNum(dataOfFile, pageNum);
 			request.setAttribute("pageElementIds", pageElementIds);
 		}
 		session.setAttribute("userBean", userBean);
