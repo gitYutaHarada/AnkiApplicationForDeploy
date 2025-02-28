@@ -36,7 +36,7 @@ if(pageElementIds == null) {
 				<p id="edit-action-msg">Ankiカードがありません</p>
 	<div id="divide-thirds">
 		<div id="file-content">
-			<table id="file-content">
+			<table>
 				<thead>
 					<tr id="question-answer">
 						<th>質問</th>
@@ -174,7 +174,6 @@ if(pageElementIds == null) {
 			</table>	
 		<%	
 		//firstElementId を返す。
-		System.out.println(dataOfFile.getDataOfFileSize());
 				for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 1; pageNum++){
 		%>
 					<form action="/FileEditerController" method="post">
@@ -182,8 +181,6 @@ if(pageElementIds == null) {
 						<button type="submit" name="action" value="pageTransition"><%=pageNum %></button>
 					</form>
 		<%
-		System.out.println(pageNum);
-
 				}
 		}
 		%>
