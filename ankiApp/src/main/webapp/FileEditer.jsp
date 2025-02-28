@@ -15,7 +15,7 @@ List<Integer> searchWords = (List<Integer>)request.getAttribute("searchWords");
 List<Integer> pageElementIds = (List<Integer>)request.getAttribute("pageElementIds");
 if(pageElementIds == null) {
 	PageUtils pageUtils = new PageUtils();
-	pageElementIds = pageUtils.getPageElementIds(dataOfFile, 0);
+	pageElementIds = pageUtils.getPageElementIds(dataOfFile, 1);
 }
 %>
 <!DOCTYPE html>
