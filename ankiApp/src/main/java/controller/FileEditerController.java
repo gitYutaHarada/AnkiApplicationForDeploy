@@ -101,8 +101,8 @@ public class FileEditerController extends HttpServlet {
 			}			
 		}else if("complateSearch".equals(action)) {
 		}else if("pageTransition".equals(action)){
-			int firstElementId = Integer.parseInt(request.getParameter("firstElementId"));
-			List<Integer> pageElementIds = pageUtils.getPageElementIds(dataOfFile, firstElementId);
+			int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+			List<Integer> pageElementIds = pageUtils.getPageElementIds(dataOfFile, pageNum);
 			request.setAttribute("pageElementIds", pageElementIds);
 		}
 		session.setAttribute("userBean", userBean);
