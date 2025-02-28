@@ -101,7 +101,7 @@ if(pageElementIds == null) {
 									<input type="hidden" name="selectQuestion" value="<%=dataOfFile.getQuestionById(id)%>">
 									<input type="hidden" name="selectAnswer" value="<%=dataOfFile.getAnswerById(id)%>"> 
 									<input type="hidden" name="selectId" value="<%=id%>">
-								<td>
+								<td id="edit-button">
 									<%
 										if (selectId == id) {
 									%>

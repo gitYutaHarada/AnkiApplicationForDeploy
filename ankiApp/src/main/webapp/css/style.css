@@ -156,3 +156,7 @@ input {
 	text-align: center;
 }
 
+#edit-button{
+	white-space: nowrap;
+}
+
