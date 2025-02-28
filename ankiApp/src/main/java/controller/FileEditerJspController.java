@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -58,8 +57,7 @@ public class FileEditerJspController extends HttpServlet {
 		dataOfFileDao.setDataOfFile(dataOfFile, fileName, userName);
 		dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(fileName, userName, "max"));
 		dataOfFile.setFileName(fileName);
-		List<Integer> pageElementIds = pageUtils.getPageElementIds(dataOfFile, 0);
-		request.setAttribute("pageElementIds", pageElementIds);
+
 		session.setAttribute("dataOfFile", dataOfFile);
 		
 		RequestDispatcher requestdispatcher = request.getRequestDispatcher("FileEditer.jsp");
