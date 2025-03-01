@@ -192,9 +192,11 @@ if(pageElementIds == null) {
 		<%
 				}
 			}
-		}
 		%>
 		</div>
+		<%
+		}
+		%>
 		<div id="search-word">
 			<form action="/FileEditerController" method="post">
 				<input type="text" name="searchWord" placeholder="単語を検索してみる">
