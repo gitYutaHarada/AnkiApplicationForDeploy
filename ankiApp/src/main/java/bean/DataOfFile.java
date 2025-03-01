@@ -38,6 +38,7 @@ public class DataOfFile implements Serializable{
 	}
 	
 	public void setElement(int id, String question, String answer) {
+		if(this.question.isEmpty() && this.answer.isEmpty()) setMinId(id);
 		this.question.put(id, question);
 		this.answer.put(id, answer);
 		setMaxId(id);
@@ -76,8 +77,8 @@ public class DataOfFile implements Serializable{
 		return this.question.size();
 	}
 
-	public void setMaxId(int dataOfFileMax) {
-		this.maxId = dataOfFileMax;
+	public void setMaxId(int maxId) {
+		this.maxId = maxId;
 	}
 	
 	public int getMaxId() {

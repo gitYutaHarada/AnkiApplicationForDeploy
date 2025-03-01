@@ -7,17 +7,20 @@ public class StringUtils {
 	public StringUtils(){
 	}
 	public boolean isValidString(String str) {
-		return str.matches("[a-zA-Z0-9]+");
+		return str != null && str.matches("[a-zA-Z0-9]+");
 	}
 	
 	public boolean isDataOfFile(DataOfFile dataOfFile, int id) {
 		boolean isFileOfData = false;
+		if(dataOfFile == null || dataOfFile.getQuestionMap() == null) return false;
 		if(dataOfFile.getQuestionMap().containsKey(id)) isFileOfData = true;
 		return isFileOfData;
 	}
 	
-	public int backOrNextId(DataOfFile dataOfFile, String backOrNext, int id) {
-		if("back".equals(backOrNext)) {
+	public int backOrNextId(DataOfFile dataOfFile, String backOrNext, int id) { 
+		if(("back".equals(backOrNext) && id == dataOfFile.getMinId()) || ("next".equals(backOrNext) && id == dataOfFile.getMaxId())) {
+			return id;
+		}else if("back".equals(backOrNext)) {
 			//idが最小ではなくそのidが存在するときwhile文を抜ける
 			id--;
 			while(!isDataOfFile(dataOfFile, id) && id != dataOfFile.getMinId()) {
@@ -26,7 +29,7 @@ public class StringUtils {
 			return id;
 		}else {
 			id++;
-			while(isDataOfFile(dataOfFile, id) && id != dataOfFile.getMaxId()) {
+			while(!isDataOfFile(dataOfFile, id) && id != dataOfFile.getMaxId()) {
 				id++;
 			}
 			return id;
