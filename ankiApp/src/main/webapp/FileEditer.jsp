@@ -62,7 +62,6 @@ if(pageElementIds == null) {
 					}
 				}
 		%>
-	<div id="divide-thirds">
 		<div id="file-content">
 		<%
 			if(searchWords != null){
