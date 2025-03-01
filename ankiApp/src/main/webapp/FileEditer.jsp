@@ -49,6 +49,7 @@ if(pageElementIds == null) {
 			} else {
 				if(!"".equals(msg)){
 		%>
+		<div id="file-content">
 					<p id="edit-action-msg"><%= msg %></p>
 		<%			
 				}else if(searchWords != null){
@@ -62,7 +63,6 @@ if(pageElementIds == null) {
 					}
 				}
 		%>
-		<div id="file-content">
 		<%
 			if(searchWords != null){
 		%>
