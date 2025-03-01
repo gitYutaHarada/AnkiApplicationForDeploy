@@ -64,15 +64,17 @@ if(pageElementIds == null) {
 		%>
 	<div id="divide-thirds">
 		<div id="file-content">
-		<table>
-			<thead>
-				<tr id="question-answer">
-					<th>質問</th>
-					<th>解答</th>
-				</tr>
-			</thead>
 		<%
 			if(searchWords != null){
+		%>
+			<table>
+				<thead>
+					<tr id="question-answer">
+						<th>質問</th>
+						<th>解答</th>
+					</tr>
+				</thead>
+		<%
 				for(int id : searchWords){
 		%>
 					<tbody>
@@ -122,6 +124,15 @@ if(pageElementIds == null) {
 				}
 		%>	</table><%	
 			}else{
+		%>
+				<table>
+					<thead>
+						<tr id="question-answer">
+							<th>質問</th>
+							<th>解答</th>
+						</tr>
+					</thead>
+		<%
 				for(int elementNum = 0; elementNum < pageElementIds.size(); elementNum++) {
 		%>
 					<tbody>
@@ -169,9 +180,8 @@ if(pageElementIds == null) {
 					</tbody>
 		<%
 					}
-				}
 		%>
-			</table>	
+				</table>	
 		<%	
 		//firstElementId を返す。
 				for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 1; pageNum++){
@@ -182,6 +192,7 @@ if(pageElementIds == null) {
 					</form>
 		<%
 				}
+			}
 		}
 		%>
 		</div>
