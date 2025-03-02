@@ -30,11 +30,11 @@ if(pageElementIds == null) {
 		<button type="submit" name="action" value="back">マイページに戻る</button>
 	</form>
 	<p><strong><%=userBean.getName()%></strong>の<strong><%=dataOfFile.getFileName()%></strong>という名前のファイルの編集画面</p>
+	<div id="divide-thirds">
 		<% 
 			if (dataOfFile.getMaxId() == 0) {
 		%>
 				<p id="edit-action-msg">Ankiカードがありません</p>
-	<div id="divide-thirds">
 		<div id="file-content">
 			<table>
 				<thead>
@@ -48,7 +48,7 @@ if(pageElementIds == null) {
 		<%
 			} else {
 		%>
-				<div id="file-content">
+		<div id="file-content">
 		
 		<%
 				if(!"".equals(msg)){
