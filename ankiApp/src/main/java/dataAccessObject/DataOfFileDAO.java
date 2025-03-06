@@ -107,7 +107,7 @@ public class DataOfFileDAO {
 
 	public void deleteDataOfFile(DataOfFile dataOfFile, int selectId) {
 		PreparedStatement preparedStatement = null;
-		String deleteDataOfFileSql = "delete from file_contents where file_content_id = ?";
+		String deleteDataOfFileSql = "DELETE FROM file_contents WHERE file_content_id = ?";
 		int deleteDataOfFileInt = 0;
 		try {
 			dao.connectDB();
