@@ -105,14 +105,14 @@ public class DataOfFileDAO {
 
 	}
 
-	public void deleteDataOfFile(DataOfFile dataOfFile, int fileContentId) {
+	public void deleteDataOfFile(DataOfFile dataOfFile, int selectId) {
 		PreparedStatement preparedStatement = null;
 		String deleteDataOfFileSql = "delete from file_contents where file_content_id = ?";
 		int deleteDataOfFileInt = 0;
 		try {
 			dao.connectDB();
 			preparedStatement = dao.getConnection().prepareStatement(deleteDataOfFileSql);
-			preparedStatement.setInt(1, fileContentId);
+			preparedStatement.setInt(1, selectId);
 			deleteDataOfFileInt = preparedStatement.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -120,7 +120,7 @@ public class DataOfFileDAO {
 			dao.resourcesClose(preparedStatement);
 			dao.disconnect();
 		}
-		dataOfFile.removeElementById(fileContentId);
+		dataOfFile.removeElementById(selectId);
 	}
 	
 	public void editFileOfData(DataOfFile dataOfFile, int selectId, String editQuestion, String editAnswer) {
