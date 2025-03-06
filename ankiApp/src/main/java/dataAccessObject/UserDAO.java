@@ -2,8 +2,6 @@ package dataAccessObject;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashSet;
-import java.util.Set;
 
 import bean.UserBean;
 import bean.UserInformationBean;
@@ -30,7 +28,7 @@ public class UserDAO {
 
 			while (resultSet.next()) {
 				UserBean userBean = new UserBean();
-				userBean.setNo(resultSet.getInt("user_id"));
+				userBean.setUsesrId(resultSet.getInt("user_id"));
 				userBean.setName(resultSet.getString("name"));
 				userBean.setPassword(resultSet.getString("password"));
 
@@ -48,12 +46,8 @@ public class UserDAO {
 	}
 	
 	public int createUser(String name, String hashPass) {
-		PreparedStatement preparedStatementSerchMin = null;
 		PreparedStatement preparedStatementInsert = null;
-
-		ResultSet serchIdResultSet = null;
 		int insertInt = 0;
-		String searchNewMinIdSql = "SELECT user_id From users ORDER BY user_id";
 		String insertSql = "INSERT INTO users VALUES (?, ?, ?)";
 
 
@@ -64,19 +58,6 @@ public class UserDAO {
 				return 0;
 			}
 			dao.connectDB();
-
-			preparedStatementSerchMin = dao.getConnection().prepareStatement(searchNewMinIdSql);
-			serchIdResultSet = preparedStatementSerchMin.executeQuery();
-
-			Set<Integer> userIds = new HashSet<>();
-			//userIdsにすべてのIDを入れる
-			while (serchIdResultSet.next()) {
-				userIds.add(serchIdResultSet.getInt("user_id"));
-			}
-			//新しい最小のIDを探す
-			while (userIds.contains(newId)) {
-				newId++;
-			}
 			preparedStatementInsert = dao.getConnection().prepareStatement(insertSql);
 			preparedStatementInsert.setInt(1, newId);
 			preparedStatementInsert.setString(2, name);
@@ -86,9 +67,7 @@ public class UserDAO {
 			e.printStackTrace();
 		}finally {
 			try {
-				if(serchIdResultSet != null) serchIdResultSet.close();
 				if(preparedStatementInsert != null) preparedStatementInsert.close();
-				if(preparedStatementSerchMin != null) preparedStatementSerchMin.close();
 				dao.disconnect();
 			}catch(Exception e) {
 				e.printStackTrace();

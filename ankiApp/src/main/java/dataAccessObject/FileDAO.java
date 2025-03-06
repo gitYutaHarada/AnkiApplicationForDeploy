@@ -40,12 +40,7 @@ public class FileDAO {
 	public void addFileName(String name, String fileName) {
 		PreparedStatement preparedStatement = null;
 		int addFileDataInt = 0;
-		String tableName = "DATAOF_" + fileName + "_" + name;
-		String addFileDataSql = "CREATE TABLE " + tableName + "("
-				+ "data_id INT PRIMARY KEY AUTO_INCREMENT,"
-				+ "question varchar(100),"
-				+ "answer varchar(100)"
-				+ ");";
+		String addFileDataSql = "
 		try {
 			dao.connectDB();
 			preparedStatement = dao.getConnection().prepareStatement(addFileDataSql);

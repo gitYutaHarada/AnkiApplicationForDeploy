@@ -52,7 +52,6 @@ public class LoginController extends HttpServlet {
 	        	request.setAttribute("pass", pass);
 	        	
 	        	HttpSession session = request.getSession(true);
-	        	
 	        	UserBean userBean = new UserBean();
 	    		FileDAO fileDao = new FileDAO();
 	    		List <String> fileNamesList = fileDao.getAllFileName(name);

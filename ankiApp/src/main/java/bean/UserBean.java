@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserBean implements Serializable {
-    private int no;
+    private int usesrId;
     private String name;
     private String password;
     private List<String> fileNames = new ArrayList<>();;
@@ -25,15 +25,14 @@ public class UserBean implements Serializable {
         this.name = name;
     }
 
-    public int getNo() {
-        return no;
-    }
-
-    public void setNo(int no) {
-        this.no = no;
-    }
-
-    public String getPassword() {
+    public int getUsesrId() {
+		return usesrId;
+	}
+	public void setUsesrId(int usesrId) {
+		this.usesrId = usesrId;
+	}
+	
+	public String getPassword() {
         return password;
     }
 
