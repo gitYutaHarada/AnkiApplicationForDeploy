@@ -30,7 +30,7 @@ public class UserDAO {
 
 			while (resultSet.next()) {
 				UserBean userBean = new UserBean();
-				userBean.setNo(resultSet.getInt("id"));
+				userBean.setNo(resultSet.getInt("user_id"));
 				userBean.setName(resultSet.getString("name"));
 				userBean.setPassword(resultSet.getString("password"));
 
@@ -53,8 +53,8 @@ public class UserDAO {
 
 		ResultSet serchIdResultSet = null;
 		int insertInt = 0;
-		String searchNewMinIdSql = "SELECT id From user ORDER BY id";
-		String insertSql = "INSERT INTO user VALUES (?, ?, ?)";
+		String searchNewMinIdSql = "SELECT user_id From users ORDER BY user_id";
+		String insertSql = "INSERT INTO users VALUES (?, ?, ?)";
 
 
 		int newId = 1;
@@ -71,7 +71,7 @@ public class UserDAO {
 			Set<Integer> userIds = new HashSet<>();
 			//userIdsにすべてのIDを入れる
 			while (serchIdResultSet.next()) {
-				userIds.add(serchIdResultSet.getInt("id"));
+				userIds.add(serchIdResultSet.getInt("user_id"));
 			}
 			//新しい最小のIDを探す
 			while (userIds.contains(newId)) {
@@ -102,7 +102,7 @@ public class UserDAO {
 		String hashPass = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String getHashPassByNameSql = "SELECT password FROM user WHERE name = ?";
+		String getHashPassByNameSql = "SELECT password FROM users WHERE name = ?";
 		
 		try {
 			dao.connectDB();
@@ -126,7 +126,7 @@ public class UserDAO {
 		ResultSet resultSet = null;
 		PasswordUtils passwordUtils = new PasswordUtils();
 		String inputHashPass = passwordUtils.hashPass(pass);
-		String isLoginSql = "SELECT COUNT(*) FROM user WHERE name = ? AND password = ?";
+		String isLoginSql = "SELECT COUNT(*) FROM users WHERE name = ? AND password = ?";
 		Boolean isLogin = false;
 
 		try {
@@ -156,7 +156,7 @@ public class UserDAO {
 	public boolean isNameAvailable(String name) {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String isNameAvailableSql = "SELECT COUNT(*) FROM user WHERE name = ?";
+		String isNameAvailableSql = "SELECT COUNT(*) FROM users WHERE name = ?";
 		Boolean isNameAvailable = false;
 		try {
 			dao.connectDB();
