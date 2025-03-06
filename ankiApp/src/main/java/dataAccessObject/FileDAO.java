@@ -35,7 +35,7 @@ public class FileDAO {
 	public void addFileName(int userId, String fileName) {
 		PreparedStatement preparedStatement = null;
 		int addFileDataInt = 0;
-		String addFileDataSql = "INSERT INTO files (user_id, file_name)VALUES(?, ?)";
+		String addFileDataSql = "INSERT INTO files (user_id, file_name) VALUES(?, ?)";
 		try {
 			dao.connectDB();
 			preparedStatement = dao.getConnection().prepareStatement(addFileDataSql);
