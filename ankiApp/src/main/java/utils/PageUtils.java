@@ -30,7 +30,6 @@ public class PageUtils {
 	
 	public List<Integer> getPageElementIdsBySelectId(DataOfFile dataOfFile, int selectId){
 		List<Integer> pageElementIds = new ArrayList<>();
-		
 		//pageElementIdsを作るその中にselectIdが含まれていたらreturn　pageElementIds
 		//含まれていなかったら初期化してまた新しいpageElementIdsを作ってselectIdがあるかどうか確認
 		for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 2; pageNum++) {
@@ -39,6 +38,21 @@ public class PageUtils {
 			System.out.println(selectId);
 			if(pageElementIds.contains(selectId)) {
 				return pageElementIds;
+			}
+		}
+		return new ArrayList<>();
+	}
+	
+	public List<Integer> getPageElementBySelectIdForDelete(DataOfFile dataOfFile, int selectId){
+		List<Integer> pageElementIds = new ArrayList<>();
+		for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 2; pageNum++) {
+			pageElementIds = getPageElementIdsByPageNum(dataOfFile, pageNum);
+			int preId = 0;
+			for(int id : pageElementIds) {
+				if( preId * (id-selectId) < 0) {
+					return pageElementIds;
+				}
+				preId = id;
 			}
 		}
 		return new ArrayList<>();
