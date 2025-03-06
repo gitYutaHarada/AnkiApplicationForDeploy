@@ -52,7 +52,7 @@ public class FileDAO {
 	
 	public int deleteFile(int fileId) {
 		PreparedStatement preparedStatement = null;
-		String deleteFileSql = "DLETE FROM files where file_id = ?";
+		String deleteFileSql = "DELETE FROM files where file_id = ?";
 		int deleteDataInt = 0;
 		try {
 			dao.connectDB();
