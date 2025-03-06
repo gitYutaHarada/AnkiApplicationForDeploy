@@ -36,6 +36,7 @@ public class PageUtils {
 		for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 2; pageNum++) {
 			pageElementIds = getPageElementIdsByPageNum(dataOfFile, pageNum);
 			System.out.println(pageElementIds.contains(selectId));
+			System.out.println(selectId);
 			if(pageElementIds.contains(selectId)) {
 				return pageElementIds;
 			}

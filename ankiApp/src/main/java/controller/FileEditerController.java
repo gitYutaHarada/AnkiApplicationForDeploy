@@ -73,8 +73,9 @@ public class FileEditerController extends HttpServlet {
 			String selectAnswer = request.getParameter("selectAnswer");
 		    int selectId = Integer.parseInt((String)request.getParameter("selectId"));
 		    
-		    dataOfFileDao.deleteDataOfFile(dataOfFile, selectId);
 			List<Integer> pageElementIds = pageUtils.getPageElementIdsBySelectId(dataOfFile, selectId);
+		    dataOfFileDao.deleteDataOfFile(dataOfFile, selectId);
+
 			request.setAttribute("pageElementIds", pageElementIds);
 		    request.setAttribute("selectId", selectId);
 		}else if("edit".equals(action)) {
