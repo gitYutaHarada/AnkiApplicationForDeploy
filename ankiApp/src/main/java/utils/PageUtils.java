@@ -49,10 +49,10 @@ public class PageUtils {
 			pageElementIds = getPageElementIdsByPageNum(dataOfFile, pageNum);
 			int preId = 0;
 			for(int id : pageElementIds) {
-				if( preId * (id-selectId) < 0) {
+				if(selectId > preId && selectId < id) {
 					return pageElementIds;
 				}
-				preId = id - selectId;
+				preId = id;
 			}
 		}
 		return new ArrayList<>();
