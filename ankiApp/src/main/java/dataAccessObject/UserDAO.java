@@ -48,7 +48,7 @@ public class UserDAO {
 	public int createUser(String name, String hashPass) {
 		PreparedStatement preparedStatementInsert = null;
 		int insertInt = 0;
-		String insertSql = "INSERT INTO users VALUES (?, ?)";
+		String insertSql = "INSERT INTO users (name, hashPass) VALUES(?, ?)";
 		try {
 			if (!isNameAvailable(name)) {
 				return 0;

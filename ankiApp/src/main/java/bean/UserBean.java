@@ -35,7 +35,7 @@ public class UserBean implements Serializable {
         return password;
     }
 
-	public HashMap<Integer, String> getFileNames() {
+	public HashMap<Integer, String> getFileNamesMap() {
 		return fileNames;
 	}
 
