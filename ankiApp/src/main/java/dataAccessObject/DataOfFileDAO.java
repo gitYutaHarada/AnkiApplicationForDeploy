@@ -19,7 +19,6 @@ public class DataOfFileDAO {
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				System.out.println(resultSet.getInt("file_content_id") + resultSet.getString("question"));
 				dataOfFile.setElement(resultSet.getInt("file_content_id"), resultSet.getString("question"), resultSet.getString("answer"));
 			}
 			
