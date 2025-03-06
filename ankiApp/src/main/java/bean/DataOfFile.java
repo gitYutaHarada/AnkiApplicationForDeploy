@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataOfFile implements Serializable{
+	private int fileId;
 	private String fileName;
 	private int maxId = 0;
 	private int minId = 0;
@@ -13,6 +14,14 @@ public class DataOfFile implements Serializable{
 
 	
 	public DataOfFile() {
+	}
+	
+	public int getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
 	}
 
 	public String getFileName() {

@@ -52,8 +52,8 @@ public class AnkiTime extends HttpServlet {
 		DataOfFileDAO dataOfFileDao = new DataOfFileDAO();
 		StringUtils stringUtils = new StringUtils();
 		
-		dataOfFile.setMinId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileName(), userBean.getName(), "min"));
-		dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileName(), userBean.getName(), "max"));
+		dataOfFile.setMinId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileId(), "min"));
+		dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileId(), "max"));
 		String action = request.getParameter("action");
 		
 		

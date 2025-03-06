@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -50,15 +50,17 @@ public class LoginController extends HttpServlet {
 	    	if(userDao.isLogin(name, pass)) {
 	        	request.setAttribute("name", name);
 	        	request.setAttribute("pass", pass);
+	        	int userId = userDao.getUserId(name);
 	        	
 	        	HttpSession session = request.getSession(true);
 	        	UserBean userBean = new UserBean();
 	    		FileDAO fileDao = new FileDAO();
-	    		List <String> fileNamesList = fileDao.getAllFileName(name);
+	    		HashMap <Integer, String> fileNamesList = fileDao.getAllFileName(userId);
 	    		
+	    		userBean.setUserId(userId);
 	    		userBean.setName(name);
 	    		userBean.setPassword(pass);
-	    		userBean.setFileNamesList(fileNamesList);
+	    		userBean.setFileNamesMap(fileNamesList);
 	    		
 	    		session.setAttribute("userBean", userBean);
 	    		

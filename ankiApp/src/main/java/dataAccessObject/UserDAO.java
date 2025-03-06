@@ -28,7 +28,7 @@ public class UserDAO {
 
 			while (resultSet.next()) {
 				UserBean userBean = new UserBean();
-				userBean.setUsesrId(resultSet.getInt("user_id"));
+				userBean.setUserId(resultSet.getInt("user_id"));
 				userBean.setName(resultSet.getString("name"));
 				userBean.setPassword(resultSet.getString("password"));
 
@@ -153,6 +153,25 @@ public class UserDAO {
 		return isNameAvailable;
 	}
 
-
+	public int getUserId(String name) {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String getUserIdSql = "SELECT user_id FROM users WHERE name = ?";
+		int userId = 0;
+		try {
+			dao.connectDB();
+			preparedStatement = dao.getConnection().prepareStatement(getUserIdSql);
+			preparedStatement.setString(1, name);
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			userId = resultSet.getInt(1);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			dao.resourcesClose(preparedStatement, resultSet);
+			dao.disconnect();
+		}
+		return userId;
+	}
 
 }

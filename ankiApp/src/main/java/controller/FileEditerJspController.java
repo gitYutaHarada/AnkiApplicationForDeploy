@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import bean.DataOfFile;
 import bean.UserBean;
 import dataAccessObject.DataOfFileDAO;
-import utils.PageUtils;
+import dataAccessObject.FileDAO;
 
 /**
  * Servlet implementation class FileEditierController
@@ -48,15 +48,16 @@ public class FileEditerJspController extends HttpServlet {
 		HttpSession session = request.getSession();
 		//選択されたファイルの内容をデータベースから取ってきてBeanクラスに保存してセッション管理する。
 		DataOfFileDAO dataOfFileDao = new DataOfFileDAO();
-		PageUtils pageUtils = new PageUtils();
+		FileDAO fileDao = new FileDAO();
 	    UserBean userBean = (UserBean) session.getAttribute("userBean");
 	    String userName = userBean.getName();
 	    String fileName = request.getParameter("fileName");
-	    
 	    DataOfFile dataOfFile = new DataOfFile();
-		dataOfFileDao.setDataOfFile(dataOfFile, fileName, userName);
-		dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(fileName, userName, "max"));
+	    
+	    dataOfFile.setFileId(fileDao.getFileIdByFileName(fileName));
 		dataOfFile.setFileName(fileName);
+		dataOfFileDao.setDataOfFile(dataOfFile, dataOfFile.getFileId());
+		dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileId(), "max"));
 
 		session.setAttribute("dataOfFile", dataOfFile);
 		

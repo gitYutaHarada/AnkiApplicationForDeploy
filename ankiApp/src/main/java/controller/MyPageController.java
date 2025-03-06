@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -54,17 +54,20 @@ public class MyPageController extends HttpServlet {
 
 		if ("create".equals(action)) {
 			String createFileName = request.getParameter("createFileName");
-			userBean.addFile(createFileName);
-			fileDao.addFileName(userBean.getName(), createFileName);
+			int fileId = fileDao.getFileIdByFileName(createFileName);
+			fileDao.addFileName(userBean.getUserId(), createFileName);
+			userBean.addFile(fileId, createFileName);
 
 		} else if ("remove".equals(action)) {
 			String removeFileName = request.getParameter("removeFileName");
-			int deleteFileCount = fileDao.deleteFile(userBean.getName(), removeFileName);
+			int fileId = fileDao.getFileIdByFileName(removeFileName);
+			
+			int deleteFileCount = fileDao.deleteFile(fileId);
 			request.setAttribute("deleteFileCount", deleteFileCount);
 		}
 
-		List<String> fileNamesList = fileDao.getAllFileName(userBean.getName());
-		userBean.setFileNamesList(fileNamesList);
+		HashMap<Integer, String> fileNamesMap = fileDao.getAllFileName(userBean.getUserId());
+		userBean.setFileNamesMap(fileNamesMap);
 		session.setAttribute("userBean", userBean);
 
 		RequestDispatcher requestdispatcher = request.getRequestDispatcher("myPage.jsp");

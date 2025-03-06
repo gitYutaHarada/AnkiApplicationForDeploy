@@ -66,15 +66,14 @@ public class FileEditerController extends HttpServlet {
 			String msg = "質問や解答へ空白を入れることはできません";
 			request.setAttribute("msg", msg);
 		}else if ("create".equals(action)) {
-			dataOfFileDao.addData(dataOfFile, userBean.getName(), dataOfFile.getFileName(), createQuestion,
-					createAnswer);
-			dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileName(), userBean.getName(), "max"));
+			dataOfFileDao.addData(dataOfFile, dataOfFile.getFileId(), createQuestion, createAnswer);
+			dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileId(), "max"));
 		}else if("delete".equals(action)) {
 			String selectQuestion = request.getParameter("selectQuestion");
 			String selectAnswer = request.getParameter("selectAnswer");
 		    int selectId = Integer.parseInt((String)request.getParameter("selectId"));
-		    dataOfFileDao.deleteFileOfData(dataOfFile, selectId, userBean.getName());
-			dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileName(), userBean.getName(), "max"));
+		    dataOfFileDao.deleteDataOfFile(dataOfFile, selectId);
+			dataOfFile.setMaxId(dataOfFileDao.getDataOfFileMaxMin(dataOfFile.getFileId(), "max"));
 			
 			List<Integer> pageElementIds = pageUtils.getPageElementIdsBySelectId(dataOfFile, selectId);
 			request.setAttribute("pageElementIds", pageElementIds);
@@ -93,7 +92,7 @@ public class FileEditerController extends HttpServlet {
 			if(editAnswer == "") editAnswer = selectAnswer;
 		    int selectId = Integer.parseInt((String)request.getParameter("selectId"));
 
-		    dataOfFileDao.editFileOfData(dataOfFile, selectId, userBean.getName(), editQuestion, editAnswer);
+		    dataOfFileDao.editFileOfData(dataOfFile, selectId, editQuestion, editAnswer);
 
 		}else if("search".equals(action)){
 			String searchWord = request.getParameter("searchWord");

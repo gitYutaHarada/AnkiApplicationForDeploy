@@ -8,18 +8,18 @@ import bean.DataOfFile;
 public class DataOfFileDAO {
 	DAO dao = new DAO();
 	
-	public void setDataOfFile(DataOfFile dataOfFile, String fileName, String name){
+	public void setDataOfFile(DataOfFile dataOfFile, int fileId){
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String tableName = "DATAOF_" + fileName + "_" + name;
-		String getDataOfFileSql = "SELECT * FROM " + tableName;	
+		String getDataOfFileSql = "SELECT * FROM file_contents WHERE file_id = ?";	
 		try {
 			dao.connectDB();
 			preparedStatement = dao.getConnection().prepareStatement(getDataOfFileSql);
+			preparedStatement.setInt(1, fileId);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				dataOfFile.setElement(resultSet.getInt("data_id"), resultSet.getString("question"), resultSet.getString("answer"));
+				dataOfFile.setElement(resultSet.getInt("file_content_id"), resultSet.getString("question"), resultSet.getString("answer"));
 			}
 			
 		}catch(Exception e) {
@@ -30,21 +30,21 @@ public class DataOfFileDAO {
 		}
 	}
 	
-	public int getDataOfFileMaxMin(String fileName, String name, String maxMin) {
+	public int getDataOfFileMaxMin(int fileId, String maxMin) {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		int dataIdMaxMin = 0;
 		String getDataOfFileSql;
-		String tableName = "DATAOF_" + fileName + "_" + name;
 		if("max".equals(maxMin)) {
-			getDataOfFileSql = "SELECT MAX(data_id) AS maxMinDataId FROM " + tableName;
+			getDataOfFileSql = "SELECT MAX(file_content_id) AS maxMinDataId FROM file_contents WHERE file_id = ?";
 		}else {
-			getDataOfFileSql = "SELECT MIN(data_id) AS maxMinDataId FROM " + tableName;
+			getDataOfFileSql = "SELECT MIN(file_content_id) AS maxMinDataId FROM file_contents WHERE file_id = ?";
 		}
 	
 		try {
 			dao.connectDB();
 			preparedStatement = dao.getConnection().prepareStatement(getDataOfFileSql);
+			preparedStatement.setInt(1, fileId);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				dataIdMaxMin = resultSet.getInt("maxMinDataId");
@@ -59,15 +59,15 @@ public class DataOfFileDAO {
 	}
 
 	
-	public void addData(DataOfFile dataOfFile, String name, String fileName, String question, String answer) {
+	public void addData(DataOfFile dataOfFile, int fileId, String question, String answer) {
 		PreparedStatement preparedStatement = null;
-		String tableName = "DATAOF_" + dataOfFile.getFileName() + "_" + name;
-		String addDataSql = "INSERT INTO " + tableName + " (question, answer) VALUES(?, ?)";
+		String addDataSql = "INSERT INTO file_contents (file_id, question, answer) VALUES(?, ?, ?)";
 		try {
 			dao.connectDB();
 			preparedStatement = dao.getConnection().prepareStatement(addDataSql);
-			preparedStatement.setString(1, question);
-			preparedStatement.setString(2, answer);
+			preparedStatement.setInt(1, fileId);
+			preparedStatement.setString(2, question);
+			preparedStatement.setString(3, answer);
 			int addDataInt = preparedStatement.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -75,24 +75,25 @@ public class DataOfFileDAO {
 			dao.resourcesClose(preparedStatement);
 			dao.disconnect();
 		}
-		int id = serchIdByQuestion(name, fileName, question, answer);
+		int id = getId(fileId, question, answer);
 		dataOfFile.setElement(id, question, answer);
 	}
 	
-	public int serchIdByQuestion(String name, String fileName, String question, String answer) {
+	public int getId(int fileId, String question, String answer) {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String tableName = "DATAOF_" + fileName + "_" + name;
-		String serchIdSql = "SELECT data_id FROM " + tableName + " WHERE question = ?";
+		String getIdSql = "SELECT file_content_id FROM file_contents WHERE file_id = ? AND question = ? AND answer = ?";
 		int id = 0;
 		
 		try {
 			dao.connectDB();
-			preparedStatement = dao.getConnection().prepareStatement(serchIdSql);
-			preparedStatement.setString(1,  question);
+			preparedStatement = dao.getConnection().prepareStatement(getIdSql);
+			preparedStatement.setInt(1, fileId);
+			preparedStatement.setString(2,  question);
+			preparedStatement.setString(3, answer);
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()) {
-				id = resultSet.getInt("data_id");
+				id = resultSet.getInt("file_content_id");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,29 +105,27 @@ public class DataOfFileDAO {
 
 	}
 
-	public void deleteFileOfData(DataOfFile dataOfFile, int id, String name) {
+	public void deleteDataOfFile(DataOfFile dataOfFile, int fileContentId) {
 		PreparedStatement preparedStatement = null;
-		String tableName = "DATAOF_" + dataOfFile.getFileName() + "_" + name;
-		String deleteFileOfDataSql = "delete from " + tableName + " where data_id = ?";
-		int deleteFileOfDataInt = 0;
+		String deleteDataOfFileSql = "delete from file_contents where file_content_id = ?";
+		int deleteDataOfFileInt = 0;
 		try {
 			dao.connectDB();
-			preparedStatement = dao.getConnection().prepareStatement(deleteFileOfDataSql);
-			preparedStatement.setInt(1, id);
-			deleteFileOfDataInt = preparedStatement.executeUpdate();
+			preparedStatement = dao.getConnection().prepareStatement(deleteDataOfFileSql);
+			preparedStatement.setInt(1, fileContentId);
+			deleteDataOfFileInt = preparedStatement.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			dao.resourcesClose(preparedStatement);
 			dao.disconnect();
 		}
-		dataOfFile.removeElementById(id);
+		dataOfFile.removeElementById(fileContentId);
 	}
 	
-	public void editFileOfData(DataOfFile dataOfFile, int selectId, String name, String editQuestion, String editAnswer) {
+	public void editFileOfData(DataOfFile dataOfFile, int selectId, String editQuestion, String editAnswer) {
 		PreparedStatement preparedStatement = null;
-		String tableName = "DATAOF_" + dataOfFile.getFileName() + "_" + name;
-		String editFileOfDataSql = "UPDATE " + tableName + " SET question = ?,answer = ? WHERE data_id = ?";
+		String editFileOfDataSql = "UPDATE file_contents SET question = ?,answer = ? WHERE file_content_id = ?";
 		try {
 			dao.connectDB();
 			preparedStatement = dao.getConnection().prepareStatement(editFileOfDataSql);
