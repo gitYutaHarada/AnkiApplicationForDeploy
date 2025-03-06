@@ -48,18 +48,13 @@ public class UserDAO {
 	public int createUser(String name, String hashPass) {
 		PreparedStatement preparedStatementInsert = null;
 		int insertInt = 0;
-		String insertSql = "INSERT INTO users VALUES (?, ?, ?)";
-
-
-		int newId = 1;
-
+		String insertSql = "INSERT INTO users VALUES (?, ?)";
 		try {
 			if (!isNameAvailable(name)) {
 				return 0;
 			}
 			dao.connectDB();
 			preparedStatementInsert = dao.getConnection().prepareStatement(insertSql);
-			preparedStatementInsert.setInt(1, newId);
 			preparedStatementInsert.setString(2, name);
 			preparedStatementInsert.setString(3, hashPass);
 			insertInt = preparedStatementInsert.executeUpdate();
@@ -77,16 +72,16 @@ public class UserDAO {
 		return insertInt;
 	}
 	
-	public String getHashPassByName(String name) {
+	public String getHashPassByUserId(int userId) {
 		String hashPass = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String getHashPassByNameSql = "SELECT password FROM users WHERE name = ?";
+		String getHashPassByNameSql = "SELECT password FROM users WHERE userId = ?";
 		
 		try {
 			dao.connectDB();
 			preparedStatement = dao.getConnection().prepareStatement(getHashPassByNameSql);
-			preparedStatement.setString(1,name);
+			preparedStatement.setInt(1,userId);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				hashPass = resultSet.getString("password");
