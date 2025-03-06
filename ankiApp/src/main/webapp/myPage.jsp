@@ -42,7 +42,7 @@ if (request.getAttribute("deleteFileCount") != null)
 								<button type="submit">
 									<img src="/images/file.jpg" alt="Image <%=i - 1%>" name="" width="100" height="100">
 								</button>
-								<input type="hidden" name="fileName" value="<%=fileName)%>"> 
+								<input type="hidden" name="fileName" value="<%=fileName%>"> 
 							</form>
 							<br/>
 							<form action="/MyPageController" method="post" onsubmit="return confirmDelete()">
