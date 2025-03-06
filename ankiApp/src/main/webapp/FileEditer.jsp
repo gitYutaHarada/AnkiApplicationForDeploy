@@ -186,7 +186,7 @@ if(pageElementIds == null) {
 				</table>	
 		<%	
 		//firstElementId を返す。
-				for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 2; pageNum++){
+				for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 1; pageNum++){
 		%>
 					<form action="/FileEditerController" method="post">
 						<input type="hidden" name="pageNum" value="<%=pageNum %>">
