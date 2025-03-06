@@ -186,15 +186,24 @@ if(pageElementIds == null) {
 				</table>	
 		<%	
 		//firstElementId を返す。
-				for(int pageNum = 1; pageNum <= (dataOfFile.getDataOfFileSize() / 5) + 1; pageNum++){
+				if(dataOfFile.getDataOfFileSize() % 5 == 0){
+					for(int pageNum = 1; pageNum <= (dataOfFile.getDataOfFileSize() / 5); pageNum++){
 		%>
-					<form action="/FileEditerController" method="post">
-						<input type="hidden" name="pageNum" value="<%=pageNum %>">
-						<button type="submit" name="action" value="pageTransition"><%=pageNum %></button>
-					</form>
+						<form action="/FileEditerController" method="post">
+							<input type="hidden" name="pageNum" value="<%=pageNum %>">
+							<button type="submit" name="action" value="pageTransition"><%=pageNum %></button>
+						</form>
+		<%				
+					}			
+				}else{
+					for(int pageNum = 1; pageNum <= (dataOfFile.getDataOfFileSize() / 5) + 1; pageNum++){
+		%>
+						<form action="/FileEditerController" method="post">
+							<input type="hidden" name="pageNum" value="<%=pageNum %>">
+							<button type="submit" name="action" value="pageTransition"><%=pageNum %></button>
+						</form>
 		<%
-		System.out.println(pageNum);
-		System.out.println(dataOfFile.getDataOfFileSize());
+					}
 				}
 			}
 		%>
