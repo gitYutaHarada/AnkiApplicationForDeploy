@@ -35,6 +35,7 @@ public class PageUtils {
 		//含まれていなかったら初期化してまた新しいpageElementIdsを作ってselectIdがあるかどうか確認
 		for(int pageNum = 1; pageNum < (dataOfFile.getDataOfFileSize() / 5) + 2; pageNum++) {
 			pageElementIds = getPageElementIdsByPageNum(dataOfFile, pageNum);
+			System.out.println(pageElementIds.contains(selectId));
 			if(pageElementIds.contains(selectId)) {
 				return pageElementIds;
 			}
