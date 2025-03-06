@@ -52,7 +52,7 @@ public class PageUtils {
 				if( preId * (id-selectId) < 0) {
 					return pageElementIds;
 				}
-				preId = id;
+				preId = id - selectId;
 			}
 		}
 		return new ArrayList<>();
