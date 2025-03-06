@@ -193,6 +193,8 @@ if(pageElementIds == null) {
 						<button type="submit" name="action" value="pageTransition"><%=pageNum %></button>
 					</form>
 		<%
+		System.out.println(pageNum);
+		System.out.println(dataOfFile.getDataOfFileSize());
 				}
 			}
 		%>
